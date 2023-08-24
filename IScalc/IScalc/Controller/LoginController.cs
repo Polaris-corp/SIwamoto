@@ -75,14 +75,14 @@ namespace IScalc.Controller
             var ok = false;
             foreach (var item in logtimesList)
             {
-                ok |= item.results;
+                ok |= item.Results;
             }
             if (ok)
             {
                 return true;
             }
 
-            TimeSpan timeSpan = logtimesList[0].logtime - logtimesList[2].logtime;
+            TimeSpan timeSpan = logtimesList[0].Logtime - logtimesList[2].Logtime;
             if(3 < timeSpan.TotalMinutes)
             {
                 return true;
@@ -98,7 +98,7 @@ namespace IScalc.Controller
         /// <returns></returns>
         public bool Check_Last5Minutes(List<HistoryModel> logtimesList)
         {
-            DateTime last = logtimesList[0].logtime;
+            DateTime last = logtimesList[0].Logtime;
             return last.AddMinutes(5) < DateTime.Now;
         }
 

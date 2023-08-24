@@ -56,9 +56,9 @@ namespace IScalc.Service
                     while (reader.Read())
                     {
                         HistoryModel m = new HistoryModel();
-                        m.logtime = Convert.ToDateTime(reader["logtime"]);
-                        m.results = Convert.ToBoolean(reader["results"]);
-                        if(!m.results)
+                        m.Logtime = Convert.ToDateTime(reader["logtime"]);
+                        m.Results = Convert.ToBoolean(reader["results"]);
+                        if(!m.Results)
                         {
                             logtimesList.Add(m);
                         }

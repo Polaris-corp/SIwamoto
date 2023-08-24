@@ -11,7 +11,7 @@ namespace IScalc.Model
     /// </summary>
     public class HistoryModel
     {
-        public DateTime logtime { get; set; }
-        public bool results { get; set; }
+        public DateTime Logtime { get; set; }
+        public bool Results { get; set; }
     }
 }
