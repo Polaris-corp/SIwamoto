@@ -20,20 +20,12 @@ namespace IScalc.Service
         {
             using (MySqlConnection connection = new MySqlConnection(DbConnection.connectionString))
             {
-                try
-                {
                     MySqlCommand command = CreateInsertSql(usersID, results);
                     command.Connection = connection;
 
                     connection.Open();
                     command.ExecuteNonQuery();
                     return true;
-                }
-                catch(Exception ex) 
-                {
-                    return false;
-                    throw;
-                }
             }
         }
         /// <summary>
@@ -46,8 +38,6 @@ namespace IScalc.Service
             List<HistoryModel> logtimesList = new List<HistoryModel>();
             using (MySqlConnection connection = new MySqlConnection(DbConnection.connectionString))
             {
-                try
-                {
                     MySqlCommand command = CreateSelectSql(usersID);
                     command.Connection = connection;
 
@@ -63,11 +53,6 @@ namespace IScalc.Service
                             logtimesList.Add(m);
                         }
                     }
-                }
-                catch(Exception ex)
-                {
-                    throw;
-                }
                 return logtimesList;
             }
         }

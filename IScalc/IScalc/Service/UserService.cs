@@ -22,8 +22,6 @@ namespace IScalc.Service
         {
             using (MySqlConnection connection = new MySqlConnection(DbConnection.connectionString))
             {
-                try
-                {
                     MySqlCommand command = CreateSelectSql(Convert.ToInt32(id));
                     command.Connection = connection;
                     
@@ -35,11 +33,6 @@ namespace IScalc.Service
                             return true;
                         }
                     }
-                }
-                catch(Exception ex)
-                {
-                    throw;
-                }
             }
             return false;
         }
@@ -53,8 +46,6 @@ namespace IScalc.Service
         {
             using (MySqlConnection connection = new MySqlConnection(DbConnection.connectionString))
             {
-                try
-                {
                     MySqlCommand command = CreateSelectCountSql(Convert.ToInt32(id), pwd);
                     command.Connection = connection;
 
@@ -66,11 +57,6 @@ namespace IScalc.Service
                             return Convert.ToInt32(reader["cnt"]);
                         }
                     }
-                }
-                catch(Exception ex) 
-                {
-                    throw;
-                }
             }
             return -1;
         }

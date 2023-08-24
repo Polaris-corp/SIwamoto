@@ -36,10 +36,9 @@ namespace IScalc.View
                 MessageBox.Show(MessageItem.NOT_INPUT);
                 return;
             }
-
-            //IDがあるかチェック 
             try
             {
+                //IDがあるかチェック
                 if (!loginController.CheckUsersID(id))
                 {
                     MessageBox.Show(MessageItem.NOT_USER);
@@ -54,7 +53,7 @@ namespace IScalc.View
 
                     return;
                 }
-                
+
                 //そのIDの履歴直近3件取得 
                 List<HistoryModel> historyModels = loginController.Check3LoginHistory(id);
 
@@ -74,7 +73,7 @@ namespace IScalc.View
                 loginController.InsertHisotry(id, MessageItem.OK);
                 MessageBox.Show(MessageItem.LOGIN_SUCCES);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
