@@ -73,10 +73,13 @@ namespace IScalc.Service
         /// <returns>クエリ文に基づくコマンド</returns>
         private MySqlCommand CreateSelectSql(int id)
         {
-            string query = "SELECT" +
-                           " ID" +
-                           " FROM users" +
-                           " WHERE ID = @ID";
+            string query = @"SELECT 
+                                   ID
+                             FROM 
+                                   users
+                             WHERE
+                                   ID = @ID;";
+
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@ID", id);
             return command;
@@ -89,13 +92,14 @@ namespace IScalc.Service
         /// <returns></returns>
         private MySqlCommand CreateSelectCountSql(int id, string pwd)
         {
-            string query = "SELECT" +
-                           " COUNT(*)" +
-                           " AS cnt" +
-                           " FROM users" +
-                           " WHERE ID = @ID" +
-                           " AND" +
-                           " Pwd = @Pwd";
+            string query = @"SELECT
+                                   COUNT(*) AS cnt
+                             FROM
+                                   users
+                             WHERE
+                                   ID = @ID
+                                   AND Pwd = @Pwd;";
+
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@ID", id);
             command.Parameters.AddWithValue("@Pwd", pwd);

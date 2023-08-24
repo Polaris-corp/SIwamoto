@@ -67,15 +67,17 @@ namespace IScalc.Service
         /// <returns>作成したコマンド</returns>
         private MySqlCommand CreateInsertSql(string usersID, bool results)
         {
-            string query = "INSERT INTO loginhistory ("
-                      + " usersID"
-                      + " ,logtime"
-                      + " ,results"
-                      + ") VALUES ("
-                      + " @usersID"
-                      + " ,@logtime"
-                      + " ,@results"
-                      + " )";
+            string query = @"INSERT INTO 
+                                 loginhistory
+                             (
+                                 usersID
+                                 ,logtime
+                                 ,results
+                              ) VALUES (
+                                  @usersID
+                                 ,@logtime
+                                 ,@results
+                              );" ;
 
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@usersID", usersID);
@@ -94,15 +96,19 @@ namespace IScalc.Service
         /// <returns>作成したコマンド</returns>
         private MySqlCommand CreateSelectSql(string id)
         {
-            string query = "SELECT"
-                         + " logtime"
-                         + ",results"
-                         + " FROM loginhistory"
-                         + " WHERE usersID = @usersID"
-                         + " ORDER BY logtime DESC"
-                         + " LIMIT 3"
-                         + " ;";
-            
+            string query = @"SELECT
+                                   logtime
+                                   ,results
+                             FROM 
+                                   loginhistory
+                             WHERE 
+                                   usersID = @usersID
+                             ORDER BY
+                                   logtime DESC
+                             LIMIT 
+                                   3;";
+
+
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@usersID", id);
 
