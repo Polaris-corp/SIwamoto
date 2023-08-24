@@ -22,7 +22,7 @@ namespace IScalc.Service
             {
                 try
                 {
-                    MySqlCommand command = Create_InsertSql(usersID, results);
+                    MySqlCommand command = CreateInsertSql(usersID, results);
                     command.Connection = connection;
 
                     connection.Open();
@@ -48,7 +48,7 @@ namespace IScalc.Service
             {
                 try
                 {
-                    MySqlCommand command = Create_SelectSql(usersID);
+                    MySqlCommand command = CreateSelectSql(usersID);
                     command.Connection = connection;
 
                     connection.Open();
@@ -80,7 +80,7 @@ namespace IScalc.Service
         /// <param name="usersID">ユーザーが入力したID</param>
         /// <param name="results">ログイン結果</param>
         /// <returns>作成したコマンド</returns>
-        private MySqlCommand Create_InsertSql(string usersID, bool results)
+        private MySqlCommand CreateInsertSql(string usersID, bool results)
         {
             string query = "INSERT INTO loginhistory ("
                       + " usersID"
@@ -107,7 +107,7 @@ namespace IScalc.Service
         /// </summary>
         /// <param name="id">ユーザーが入力したID</param>
         /// <returns>作成したコマンド</returns>
-        private MySqlCommand Create_SelectSql(string id)
+        private MySqlCommand CreateSelectSql(string id)
         {
             string query = "SELECT"
                          + " logtime"

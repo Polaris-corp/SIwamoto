@@ -32,7 +32,7 @@ namespace IScalc.Controller
         /// <param name="id">ユーザーが入力したID</param>
         /// <param name="pwd">ユーザーが入力したPWD</param>
         /// <returns>紐づきデータがあれば「true」無ければ「false」</returns>
-        public bool Check_account(string id, string pwd)
+        public bool CheckAccount(string id, string pwd)
         {
             return userService.GetUsersAccountCount(id, pwd) == 1;
         }
@@ -43,7 +43,7 @@ namespace IScalc.Controller
         /// <param name="id">ユーザーが入力したID</param>
         /// <param name="res">ログイン結果</param>
         /// <returns></returns>
-        public bool Insert_Hisotry(string id ,bool res)
+        public bool InsertHisotry(string id ,bool res)
         {
             return historyService.InsertLoginHistory(id, res);
         }
@@ -54,7 +54,7 @@ namespace IScalc.Controller
         /// <param name="id"></param>
         /// <returns>直近3件で連続してログイン失敗した場合の
         /// ログイン試行した時間3件を追加したリスト</returns>
-        public List<HistoryModel> Check_3_Login_History(string id)
+        public List<HistoryModel> Check3LoginHistory(string id)
         {
             return historyService.CreateDateTimes(id);
                 
@@ -65,7 +65,7 @@ namespace IScalc.Controller
         /// </summary>
         /// <param name="logtimesList">直近3件のログイン失敗した時間のリスト(昇順)</param>
         /// <returns>どちらの条件も満たしていたら「false」それ以外は「true」</returns>
-        public bool Check_Logtime(List<HistoryModel> logtimesList)
+        public bool CheckLogtime(List<HistoryModel> logtimesList)
         {
             if(logtimesList.Count != 3)
             {
@@ -96,7 +96,7 @@ namespace IScalc.Controller
         /// </summary>
         /// <param name="logtimesList"></param>
         /// <returns></returns>
-        public bool Check_Last5Minutes(List<HistoryModel> logtimesList)
+        public bool CheckLast5Minutes(List<HistoryModel> logtimesList)
         {
             DateTime last = logtimesList[0].Logtime;
             return last.AddMinutes(5) < DateTime.Now;

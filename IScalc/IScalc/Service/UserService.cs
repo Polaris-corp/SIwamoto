@@ -24,7 +24,7 @@ namespace IScalc.Service
             {
                 try
                 {
-                    MySqlCommand command = Create_SelectSql(Convert.ToInt32(id));
+                    MySqlCommand command = CreateSelectSql(Convert.ToInt32(id));
                     command.Connection = connection;
                     
                     connection.Open();
@@ -55,7 +55,7 @@ namespace IScalc.Service
             {
                 try
                 {
-                    MySqlCommand command = Create_Select_CountSql(Convert.ToInt32(id), pwd);
+                    MySqlCommand command = CreateSelectCountSql(Convert.ToInt32(id), pwd);
                     command.Connection = connection;
 
                     connection.Open();
@@ -85,7 +85,7 @@ namespace IScalc.Service
         /// </summary>
         /// <param name="id">ユーザーが入力したID</param>
         /// <returns>クエリ文に基づくコマンド</returns>
-        private MySqlCommand Create_SelectSql(int id)
+        private MySqlCommand CreateSelectSql(int id)
         {
             string query = "SELECT" +
                            " ID" +
@@ -101,7 +101,7 @@ namespace IScalc.Service
         /// <param name="id">ユーザーが入力したID</param>
         /// <param name="pwd">ユーザーが入力したPWD</param>
         /// <returns></returns>
-        private MySqlCommand Create_Select_CountSql(int id, string pwd)
+        private MySqlCommand CreateSelectCountSql(int id, string pwd)
         {
             string query = "SELECT" +
                            " COUNT(*)" +

@@ -47,21 +47,21 @@ namespace IScalc.View
                 }
 
                 //IDとPWの紐づきデータのチェック
-                if (!loginController.Check_account(id, pwd))
+                if (!loginController.CheckAccount(id, pwd))
                 {
-                    loginController.Insert_Hisotry(id, MessageItem.NG);
+                    loginController.InsertHisotry(id, MessageItem.NG);
                     MessageBox.Show(MessageItem.WRONG_PWD);
 
                     return;
                 }
                 
                 //そのIDの履歴直近3件取得 
-                List<HistoryModel> historyModels = loginController.Check_3_Login_History(id);
+                List<HistoryModel> historyModels = loginController.Check3LoginHistory(id);
 
                 //ログイン履歴のチェック
-                if (!loginController.Check_Logtime(historyModels))
+                if (!loginController.CheckLogtime(historyModels))
                 {
-                    if (!loginController.Check_Last5Minutes(historyModels))
+                    if (!loginController.CheckLast5Minutes(historyModels))
                     {
                         string t = loginController.GetLockTime(historyModels[2].Logtime);
 
@@ -71,13 +71,18 @@ namespace IScalc.View
                 }
 
                 //ログイン成功
-                loginController.Insert_Hisotry(id, MessageItem.OK);
+                loginController.InsertHisotry(id, MessageItem.OK);
                 MessageBox.Show(MessageItem.LOGIN_SUCCES);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
