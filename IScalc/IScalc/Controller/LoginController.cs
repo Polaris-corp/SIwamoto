@@ -71,16 +71,6 @@ namespace IScalc.Controller
             {
                 return true;
             }
-            
-            var ok = false;
-            foreach (var item in logtimesList)
-            {
-                ok |= item.Results;
-            }
-            if (ok)
-            {
-                return true;
-            }
 
             TimeSpan timeSpan = logtimesList[0].Logtime - logtimesList[2].Logtime;
             if(3 < timeSpan.TotalMinutes)
