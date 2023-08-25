@@ -62,7 +62,7 @@ namespace IScalc.View
                 {
                     if (!loginController.CheckLast5Minutes(historyModels))
                     {
-                        string t = loginController.GetLockTime(historyModels[2].Logtime);
+                        string t = loginController.GetLockTime(historyModels[0].Logtime);
 
                         MessageBox.Show(string.Format(FormItem.REMAINING_TIME, t));
                         return;
@@ -76,6 +76,7 @@ namespace IScalc.View
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                Console.WriteLine(ex.StackTrace);
             }
         }
 
