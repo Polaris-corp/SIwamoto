@@ -33,7 +33,7 @@ namespace IScalc.View
             //入力チェック　
             if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(pwd))
             {
-                MessageBox.Show(MessageItem.NOT_INPUT);
+                MessageBox.Show(FormItem.NOT_INPUT);
                 return;
             }
             try
@@ -41,15 +41,15 @@ namespace IScalc.View
                 //IDがあるかチェック
                 if (!loginController.CheckUsersID(id))
                 {
-                    MessageBox.Show(MessageItem.NOT_USER);
+                    MessageBox.Show(FormItem.NOT_USER);
                     return;
                 }
 
                 //IDとPWの紐づきデータのチェック
                 if (!loginController.CheckAccount(id, pwd))
                 {
-                    loginController.InsertHisotry(id, MessageItem.NG);
-                    MessageBox.Show(MessageItem.WRONG_PWD);
+                    loginController.InsertHisotry(id, FormItem.NG);
+                    MessageBox.Show(FormItem.WRONG_PWD);
 
                     return;
                 }
@@ -64,14 +64,14 @@ namespace IScalc.View
                     {
                         string t = loginController.GetLockTime(historyModels[2].Logtime);
 
-                        MessageBox.Show(string.Format(MessageItem.REMAINING_TIME, t));
+                        MessageBox.Show(string.Format(FormItem.REMAINING_TIME, t));
                         return;
                     }
                 }
 
                 //ログイン成功
-                loginController.InsertHisotry(id, MessageItem.OK);
-                MessageBox.Show(MessageItem.LOGIN_SUCCES);
+                loginController.InsertHisotry(id, FormItem.OK);
+                MessageBox.Show(FormItem.LOGIN_SUCCES);
             }
             catch(Exception ex)
             {

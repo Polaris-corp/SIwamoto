@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace IScalc.Common
 {
     /// <summary>
-    /// ログイン画面に出力したいメッセージ
+    /// Formクラスで使用する定数
     /// </summary>
-    public static class MessageItem
+    public static class FormItem
     {
         public const string NOT_USER = "ユーザーが存在しません。";
         public const string NOT_INPUT = "ID,パスワードを入力してください。";
