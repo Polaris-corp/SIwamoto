@@ -57,13 +57,12 @@ namespace IScalc.Controller
         public List<HistoryModel> Check3LoginHistory(string id)
         {
             return historyService.CreateDateTimes(id);
-                
         }
 
         /// <summary>
         /// 3回連続で間違えているか、間違えていた場合その間隔が3分以内かの判定
         /// </summary>
-        /// <param name="logtimesList">直近3件のログイン失敗した時間のリスト(昇順)</param>
+        /// <param name="logtimesList">直近3件のログイン失敗した時間のリスト(降順)</param>
         /// <returns>どちらの条件も満たしていたら「false」それ以外は「true」</returns>
         public bool CheckLogtime(List<HistoryModel> logtimesList)
         {

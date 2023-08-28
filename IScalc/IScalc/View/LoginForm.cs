@@ -1,12 +1,11 @@
-﻿using System;
-using System.Data;
-using System.Data.SqlClient;
-using System.Windows.Forms;
-using MySqlConnector;
-using System.Collections.Generic;
-using IScalc.Common;
+﻿using IScalc.Common;
 using IScalc.Controller;
 using IScalc.Model;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
 
 namespace IScalc.View
 {
@@ -75,8 +74,26 @@ namespace IScalc.View
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
-                Console.WriteLine(ex.StackTrace);
+                string errFolderPath = @"C:\Users\USER\Source\Repos\SIwamoto\IScalc\IScalc";
+
+                if (!Directory.Exists(errFolderPath))
+                {
+                    Directory.CreateDirectory(errFolderPath);
+                }
+
+                string errorInfo = $"エラーメッセージ: {ex.Message}" +
+                                   $"\nスタックトレース:\n{ex.StackTrace}";
+
+                string filePath = Path.Combine(errFolderPath, $"error_{DateTime.Now:yyyyMMdd_HHmmss}.txt");
+
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    writer.WriteLine("---エラーログ開始---");
+                    writer.WriteLine(DateTime.Now.ToString());
+                    writer.WriteLine(errorInfo);
+                    writer.WriteLine("---エラーログ終了---");
+                    writer.WriteLine();
+                }
             }
         }
 
