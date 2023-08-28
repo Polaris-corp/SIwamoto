@@ -74,7 +74,8 @@ namespace IScalc.View
             }
             catch(Exception ex)
             {
-                loginController.WriteStackTraceToTxt(ex);
+                ErrorLog errorLog = new ErrorLog();
+                errorLog.WriteStackTraceToTxt(ex);
             }
         }
 

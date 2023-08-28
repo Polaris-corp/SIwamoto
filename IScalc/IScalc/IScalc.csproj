@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DbConnection.cs" />
+    <Compile Include="Common\ErrorLog.cs" />
     <Compile Include="Controller\LoginController.cs" />
     <Compile Include="Model\HistoryModel.cs" />
     <Compile Include="View\LoginForm.cs">
