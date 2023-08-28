@@ -74,7 +74,7 @@ namespace IScalc.View
             }
             catch(Exception ex)
             {
-                string errFolderPath = @"C:\Users\USER\Source\Repos\SIwamoto\IScalc\IScalc";
+                string errFolderPath = @"C:\Users\USER\Source\Repos\SIwamoto\IScalc\IScalc\ErrorLog";
 
                 if (!Directory.Exists(errFolderPath))
                 {
@@ -85,6 +85,7 @@ namespace IScalc.View
                                    $"\nスタックトレース:\n{ex.StackTrace}";
 
                 string filePath = Path.Combine(errFolderPath, $"error_{DateTime.Now:yyyyMMdd_HHmmss}.txt");
+
 
                 using (StreamWriter writer = new StreamWriter(filePath))
                 {
