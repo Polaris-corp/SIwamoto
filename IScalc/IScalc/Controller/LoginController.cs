@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using IScalc.Service;
 using IScalc.Model;
+using System.Diagnostics;
+using System.IO;
 
 namespace IScalc.Controller
 {
@@ -109,6 +111,31 @@ namespace IScalc.Controller
         public string GetLockTime(DateTime time)
         {
             return GetMinutesTimeSpanToString(time.AddMinutes(5) - DateTime.Now);
+        }
+
+        public void WriteStackTraceToTxt(Exception ex)
+        {
+            string errFolderPath = @"C:\Users\USER\Source\Repos\SIwamoto\IScalc\IScalc\ErrorLog";
+
+            if (!Directory.Exists(errFolderPath))
+            {
+                Directory.CreateDirectory(errFolderPath);
+            }
+
+            string errorInfo = $"エラーメッセージ: {ex.Message}" +
+                               $"\nスタックトレース:\n{ex.StackTrace}";
+
+            string filePath = Path.Combine(errFolderPath, $"error_{DateTime.Now:yyyyMMdd_HHmmss}.txt");
+
+
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                writer.WriteLine("---エラーログ開始---");
+                writer.WriteLine(DateTime.Now.ToString());
+                writer.WriteLine(errorInfo);
+                writer.WriteLine("---エラーログ終了---");
+                writer.WriteLine();
+            }
         }
     }
 }

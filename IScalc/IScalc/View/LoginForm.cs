@@ -74,27 +74,7 @@ namespace IScalc.View
             }
             catch(Exception ex)
             {
-                string errFolderPath = @"C:\Users\USER\Source\Repos\SIwamoto\IScalc\IScalc\ErrorLog";
-
-                if (!Directory.Exists(errFolderPath))
-                {
-                    Directory.CreateDirectory(errFolderPath);
-                }
-
-                string errorInfo = $"エラーメッセージ: {ex.Message}" +
-                                   $"\nスタックトレース:\n{ex.StackTrace}";
-
-                string filePath = Path.Combine(errFolderPath, $"error_{DateTime.Now:yyyyMMdd_HHmmss}.txt");
-
-
-                using (StreamWriter writer = new StreamWriter(filePath))
-                {
-                    writer.WriteLine("---エラーログ開始---");
-                    writer.WriteLine(DateTime.Now.ToString());
-                    writer.WriteLine(errorInfo);
-                    writer.WriteLine("---エラーログ終了---");
-                    writer.WriteLine();
-                }
+                loginController.WriteStackTraceToTxt(ex);
             }
         }
 

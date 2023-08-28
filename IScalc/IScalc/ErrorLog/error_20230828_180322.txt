@@ -1,0 +1,8 @@
+---エラーログ開始---
+2023/08/28 18:03:25
+エラーメッセージ: 種類 'System.Exception' の例外がスローされました。
+スタックトレース:
+   場所 IScalc.Controller.LoginController.CheckUsersID(String id) 場所 C:\Users\USER\Source\Repos\SIwamoto\IScalc\IScalc\Controller\LoginController.cs:行 26
+   場所 IScalc.View.LoginForm.button1_Click(Object sender, EventArgs e) 場所 C:\Users\USER\Source\Repos\SIwamoto\IScalc\IScalc\View\LoginForm.cs:行 41
+---エラーログ終了---
+
