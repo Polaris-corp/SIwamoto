@@ -6,31 +6,31 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
 
+
 namespace IScalc.Common
 {
     class ErrorLog
     {
         public void WriteStackTraceToTxt(Exception ex)
         {
-            string errFolderPath = "ErrorLogs";
 
-            if (!Directory.Exists(errFolderPath))
+            if (!Directory.Exists(ErrorLogItem.ErrorDirectoryPath))
             {
-                Directory.CreateDirectory(errFolderPath);
+                Directory.CreateDirectory(ErrorLogItem.ErrorDirectoryPath);
             }
 
-            string errorInfo = $"エラーメッセージ: {ex.Message}" +
-                               $"\nスタックトレース:\n{ex.StackTrace}";
+            
+            string errorInfo = (string.Format(ErrorLogItem.ErrorInfo, ex.Message, ex.StackTrace));
 
-            string filePath = Path.Combine(errFolderPath, $"errorLogs.txt");
+            string filePath = Path.Combine(ErrorLogItem.ErrorDirectoryPath, ErrorLogItem.ErrorFilePath);
 
 
-            using (StreamWriter writer = new StreamWriter(filePath, true))
+            using (StreamWriter writer = new StreamWriter(filePath, ErrorLogItem.Append))
             {
-                writer.WriteLine("---エラーログ開始---");
+                writer.WriteLine(ErrorLogItem.StartErrorMessage);
                 writer.WriteLine(DateTime.Now.ToString());
                 writer.WriteLine(errorInfo);
-                writer.WriteLine("---エラーログ終了---");
+                writer.WriteLine(ErrorLogItem.EndErrorMessage);
                 writer.WriteLine();
             }
         }

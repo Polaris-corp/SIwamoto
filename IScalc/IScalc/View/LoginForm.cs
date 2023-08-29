@@ -25,6 +25,7 @@ namespace IScalc.View
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
+            
             //IDとPWを受け取る　
             string id = textBox1.Text;
             string pwd = textBox2.Text;
@@ -32,7 +33,7 @@ namespace IScalc.View
             //入力チェック　
             if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(pwd))
             {
-                MessageBox.Show(FormItem.NOT_INPUT);
+                MessageBox.Show(FormMessageItem.NotInput);
                 return;
             }
             try
@@ -40,15 +41,15 @@ namespace IScalc.View
                 //IDがあるかチェック
                 if (!loginController.CheckUsersID(id))
                 {
-                    MessageBox.Show(FormItem.NOT_USER);
+                    MessageBox.Show(FormMessageItem.NotUser);
                     return;
                 }
 
                 //IDとPWの紐づきデータのチェック
                 if (!loginController.CheckAccount(id, pwd))
                 {
-                    loginController.InsertHisotry(id, FormItem.NG);
-                    MessageBox.Show(FormItem.WRONG_PWD);
+                    loginController.InsertHisotry(id, FormResults.Ng);
+                    MessageBox.Show(FormMessageItem.WrongPassword);
 
                     return;
                 }
@@ -63,14 +64,14 @@ namespace IScalc.View
                     {
                         string t = loginController.GetLockTime(historyModels[0].Logtime);
 
-                        MessageBox.Show(string.Format(FormItem.REMAINING_TIME, t));
+                        MessageBox.Show(string.Format(FormMessageItem.RemainigTime, t));
                         return;
                     }
                 }
 
                 //ログイン成功
-                loginController.InsertHisotry(id, FormItem.OK);
-                MessageBox.Show(FormItem.LOGIN_SUCCES);
+                loginController.InsertHisotry(id, FormResults.Ok);
+                MessageBox.Show(FormMessageItem.LoginSucces);
             }
             catch(Exception ex)
             {
@@ -81,7 +82,7 @@ namespace IScalc.View
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-
+            
         }
     }
 }
