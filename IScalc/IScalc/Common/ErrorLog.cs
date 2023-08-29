@@ -22,10 +22,10 @@ namespace IScalc.Common
             string errorInfo = $"エラーメッセージ: {ex.Message}" +
                                $"\nスタックトレース:\n{ex.StackTrace}";
 
-            string filePath = Path.Combine(errFolderPath, $"error_{DateTime.Now:yyyyMMdd_HHmmss}.txt");
+            string filePath = Path.Combine(errFolderPath, $"errorLogs.txt");
 
 
-            using (StreamWriter writer = new StreamWriter(filePath, false))
+            using (StreamWriter writer = new StreamWriter(filePath, true))
             {
                 writer.WriteLine("---エラーログ開始---");
                 writer.WriteLine(DateTime.Now.ToString());
