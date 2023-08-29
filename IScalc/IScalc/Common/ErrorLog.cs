@@ -12,7 +12,7 @@ namespace IScalc.Common
     {
         public void WriteStackTraceToTxt(Exception ex)
         {
-            string errFolderPath = @"C:\Users\USER\Source\Repos\SIwamoto\IScalc\IScalc\ErrorLog";
+            string errFolderPath = "ErrorLogs";
 
             if (!Directory.Exists(errFolderPath))
             {
@@ -25,7 +25,7 @@ namespace IScalc.Common
             string filePath = Path.Combine(errFolderPath, $"error_{DateTime.Now:yyyyMMdd_HHmmss}.txt");
 
 
-            using (StreamWriter writer = new StreamWriter(filePath))
+            using (StreamWriter writer = new StreamWriter(filePath, false))
             {
                 writer.WriteLine("---エラーログ開始---");
                 writer.WriteLine(DateTime.Now.ToString());
