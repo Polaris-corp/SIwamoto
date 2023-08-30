@@ -18,7 +18,7 @@ namespace IScalc.Service
         /// <param name="results">ログイン可否</param>
         public void InsertLoginHistory(string usersID, bool results, DateTime tryLoginTime)
         {
-            using (MySqlConnection connection = new MySqlConnection(DbConnection.connectionString))
+            using (MySqlConnection connection = new MySqlConnection(DbConnection.ConnectionString))
             {
                     MySqlCommand command = CreateInsertSql(usersID, results, tryLoginTime);
                     command.Connection = connection;
@@ -35,7 +35,7 @@ namespace IScalc.Service
         public List<HistoryModel> CreateDateTimes(string usersID)
         {
             List<HistoryModel> logtimesList = new List<HistoryModel>();
-            using (MySqlConnection connection = new MySqlConnection(DbConnection.connectionString))
+            using (MySqlConnection connection = new MySqlConnection(DbConnection.ConnectionString))
             {
                     MySqlCommand command = CreateSelectSql(usersID);
                     command.Connection = connection;

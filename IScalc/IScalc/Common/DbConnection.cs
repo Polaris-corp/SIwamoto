@@ -9,6 +9,6 @@ namespace IScalc.Common
     //データベースに接続するために必要な情報　※本来はここには用意しない
     public static class DbConnection
     {
-        public const string connectionString = "Server = localhost;Database = test;Uid = root1;Pwd = 1105";
+        public const string ConnectionString = "Server = localhost;Database = test;Uid = root1;Pwd = 1105";
     }
 }

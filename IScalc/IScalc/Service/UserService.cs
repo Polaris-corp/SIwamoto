@@ -20,7 +20,7 @@ namespace IScalc.Service
         /// <returns>データベース上にIDがあればtrue,なければfalse</returns>
         public bool ExistUsersID(string id)
         {
-            using (MySqlConnection connection = new MySqlConnection(DbConnection.connectionString))
+            using (MySqlConnection connection = new MySqlConnection(DbConnection.ConnectionString))
             {
                     MySqlCommand command = CreateSelectSql(Convert.ToInt32(id));
                     command.Connection = connection;
@@ -44,7 +44,7 @@ namespace IScalc.Service
         /// <returns>IDとPWDが一致する件数は必ず1件になるため、存在したら「1」、無ければ「-1」を返す</returns>
         public int GetUsersAccountCount(string id, string pwd)
         {
-            using (MySqlConnection connection = new MySqlConnection(DbConnection.connectionString))
+            using (MySqlConnection connection = new MySqlConnection(DbConnection.ConnectionString))
             {
                     MySqlCommand command = CreateSelectCountSql(Convert.ToInt32(id), pwd);
                     command.Connection = connection;
