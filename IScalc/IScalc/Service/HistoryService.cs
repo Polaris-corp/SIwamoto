@@ -20,7 +20,7 @@ namespace IScalc.Service
         {
             using (MySqlConnection connection = new MySqlConnection(DbConnection.ConnectionString))
             {
-                    MySqlCommand command = CreateInsertSql(usersID, results, tryLoginTime);
+                    MySqlCommand command = CreateInsertSql(Convert.ToInt32(usersID), results, tryLoginTime);
                     command.Connection = connection;
 
                     connection.Open();
@@ -37,7 +37,7 @@ namespace IScalc.Service
             List<HistoryModel> logtimesList = new List<HistoryModel>();
             using (MySqlConnection connection = new MySqlConnection(DbConnection.ConnectionString))
             {
-                    MySqlCommand command = CreateSelectSql(usersID);
+                    MySqlCommand command = CreateSelectSql(Convert.ToInt32(usersID));
                     command.Connection = connection;
 
                     connection.Open();
@@ -64,7 +64,7 @@ namespace IScalc.Service
         /// <param name="usersID">ユーザーが入力したID</param>
         /// <param name="results">ログイン結果</param>
         /// <returns>作成したコマンド</returns>
-        private MySqlCommand CreateInsertSql(string usersID, bool results, DateTime tryLoginTime)
+        private MySqlCommand CreateInsertSql(int usersID, bool results, DateTime tryLoginTime)
         {
             string query = @"INSERT INTO 
                                  loginhistory
@@ -93,7 +93,7 @@ namespace IScalc.Service
         /// </summary>
         /// <param name="id">ユーザーが入力したID</param>
         /// <returns>作成したコマンド</returns>
-        private MySqlCommand CreateSelectSql(string id)
+        private MySqlCommand CreateSelectSql(int id)
         {
             string query = @"SELECT
                                    logtime
