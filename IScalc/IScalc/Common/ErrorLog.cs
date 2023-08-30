@@ -11,7 +11,7 @@ namespace IScalc.Common
 {
     class ErrorLog
     {
-        public void WriteStackTraceToTxt(Exception ex)
+        public void WriteStackTraceToTxt(Exception ex,DateTime tryLoginTime)
         {
 
             if (!Directory.Exists(ErrorLogItem.ErrorDirectoryPath))
@@ -28,7 +28,7 @@ namespace IScalc.Common
             using (StreamWriter writer = new StreamWriter(filePath, ErrorLogItem.Append))
             {
                 writer.WriteLine(ErrorLogItem.StartErrorMessage);
-                writer.WriteLine(DateTime.Now.ToString());
+                writer.WriteLine(tryLoginTime.ToString());
                 writer.WriteLine(errorInfo);
                 writer.WriteLine(ErrorLogItem.EndErrorMessage);
                 writer.WriteLine();

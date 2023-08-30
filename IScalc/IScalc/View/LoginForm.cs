@@ -29,13 +29,16 @@ namespace IScalc.View
             //IDとPWを受け取る　
             string id = textBox1.Text;
             string pwd = textBox2.Text;
-            
             //入力チェック　
             if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(pwd))
             {
                 MessageBox.Show(FormMessageItem.NotInput);
                 return;
             }
+            
+            //現在時刻の取得
+            DateTime tryLoginTime = DateTime.Now;
+
             try
             {
                 //IDがあるかチェック
@@ -48,7 +51,7 @@ namespace IScalc.View
                 //IDとPWの紐づきデータのチェック
                 if (!loginController.CheckAccount(id, pwd))
                 {
-                    loginController.InsertHisotry(id, FormResults.Ng);
+                    loginController.InsertHisotry(id, FormResults.Ng, tryLoginTime);
                     MessageBox.Show(FormMessageItem.WrongPassword);
 
                     return;
@@ -60,9 +63,9 @@ namespace IScalc.View
                 //ログイン履歴のチェック
                 if (!loginController.CheckLogtime(historyModels))
                 {
-                    if (!loginController.CheckLast5Minutes(historyModels))
+                    if (!loginController.CheckLast5Minutes(historyModels, tryLoginTime))
                     {
-                        string t = loginController.GetLockTime(historyModels[0].Logtime);
+                        string t = loginController.GetLockTime(historyModels[0].Logtime, tryLoginTime);
 
                         MessageBox.Show(string.Format(FormMessageItem.RemainigTime, t));
                         return;
@@ -70,19 +73,19 @@ namespace IScalc.View
                 }
 
                 //ログイン成功
-                loginController.InsertHisotry(id, FormResults.Ok);
+                loginController.InsertHisotry(id , FormResults.Ok, tryLoginTime);
                 MessageBox.Show(FormMessageItem.LoginSucces);
             }
             catch(Exception ex)
             {
                 ErrorLog errorLog = new ErrorLog();
-                errorLog.WriteStackTraceToTxt(ex);
+                errorLog.WriteStackTraceToTxt(ex, tryLoginTime);
             }
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            
+           
         }
     }
 }

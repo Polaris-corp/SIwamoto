@@ -21,7 +21,7 @@ namespace IScalc.Controller
         /// ユーザーIDの確認
         /// </summary>
         /// <param name="id">ユーザーが入力したID</param>
-        /// <returns>ユーザーIDがあるか(true, false)</returns>
+        /// <returns>ユーザーIDがあるか(有る: true, 無し: false)</returns>
         public bool CheckUsersID(string id)
         {
             return userService.ExistUsersID(id);
@@ -44,17 +44,17 @@ namespace IScalc.Controller
         /// <param name="id">ユーザーが入力したID</param>
         /// <param name="res">ログイン結果</param>
         /// <returns></returns>
-        public bool InsertHisotry(string id ,bool res)
+        public void InsertHisotry(string id ,bool res ,DateTime tryLoginTime)
         {
-            return historyService.InsertLoginHistory(id, res);
+             historyService.InsertLoginHistory(id, res, tryLoginTime);
         }
 
         /// <summary>
         /// 直近3件ログイン履歴のチェック
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>直近3件で連続してログイン失敗した場合の
-        /// ログイン試行した時間3件を追加したリスト</returns>
+        /// <returns>直近3件でログイン失敗した場合のログイン試行した時間を追加したリスト(0～3件、降順)
+        /// </returns>
         public List<HistoryModel> Check3LoginHistory(string id)
         {
             return historyService.CreateDateTimes(id);
@@ -63,7 +63,7 @@ namespace IScalc.Controller
         /// <summary>
         /// 3回連続で間違えているか、間違えていた場合その間隔が3分以内かの判定
         /// </summary>
-        /// <param name="logtimesList">直近3件のログイン失敗した時間のリスト(降順)</param>
+        /// <param name="logtimesList">直近のログイン失敗した時間のリスト(0～3件、降順)</param>
         /// <returns>どちらの条件も満たしていたら「false」それ以外は「true」</returns>
         public bool CheckLogtime(List<HistoryModel> logtimesList)
         {
@@ -71,14 +71,8 @@ namespace IScalc.Controller
             {
                 return true;
             }
-
-            TimeSpan timeSpan = logtimesList[0].Logtime - logtimesList[2].Logtime;
-            if(3 < timeSpan.TotalMinutes)
-            {
-                return true;
-            }
-
-            return false;
+          
+            return 3 < (logtimesList[0].Logtime - logtimesList[2].Logtime).TotalMinutes;
         }
 
         /// <summary>
@@ -86,10 +80,10 @@ namespace IScalc.Controller
         /// </summary>
         /// <param name="logtimesList"></param>
         /// <returns></returns>
-        public bool CheckLast5Minutes(List<HistoryModel> logtimesList)
+        public bool CheckLast5Minutes(List<HistoryModel> logtimesList, DateTime tryLoginTime)
         {
             DateTime last = logtimesList[0].Logtime;
-            return last.AddMinutes(5) < DateTime.Now;
+            return last.AddMinutes(5) < tryLoginTime;
         }
 
         /// <summary>
@@ -105,11 +99,11 @@ namespace IScalc.Controller
         /// <summary>
         /// timeに5分足したものから現在時刻を引く
         /// </summary>
-        /// <param name="time">直近3件の失敗した時間の一番古い時間</param>
+        /// <param name="time">直近3件の失敗した時間の一番新しい時間</param>
         /// <returns></returns>
-        public string GetLockTime(DateTime time)
+        public string GetLockTime(DateTime time, DateTime tryLoginTime)
         {
-            return GetMinutesTimeSpanToString(time.AddMinutes(5) - DateTime.Now);
+            return GetMinutesTimeSpanToString(time.AddMinutes(5) - tryLoginTime);
         }
 
         

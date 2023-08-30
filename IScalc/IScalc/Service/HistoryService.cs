@@ -16,20 +16,19 @@ namespace IScalc.Service
         /// </summary>
         /// <param name="usersID">UserID</param>
         /// <param name="results">ログイン可否</param>
-        public bool InsertLoginHistory(string usersID, bool results)
+        public void InsertLoginHistory(string usersID, bool results, DateTime tryLoginTime)
         {
             using (MySqlConnection connection = new MySqlConnection(DbConnection.connectionString))
             {
-                    MySqlCommand command = CreateInsertSql(usersID, results);
+                    MySqlCommand command = CreateInsertSql(usersID, results, tryLoginTime);
                     command.Connection = connection;
 
                     connection.Open();
                     command.ExecuteNonQuery();
-                    return true;
             }
         }
         /// <summary>
-        /// ログインに失敗した直近3件のログイン時間をリストに追加
+        /// 直近3件の中でログインに失敗したログイン時間をリストに追加
         /// </summary>
         /// <param name="usersID"></param>
         /// <returns>生成したリスト</returns>
@@ -65,7 +64,7 @@ namespace IScalc.Service
         /// <param name="usersID">ユーザーが入力したID</param>
         /// <param name="results">ログイン結果</param>
         /// <returns>作成したコマンド</returns>
-        private MySqlCommand CreateInsertSql(string usersID, bool results)
+        private MySqlCommand CreateInsertSql(string usersID, bool results, DateTime tryLoginTime)
         {
             string query = @"INSERT INTO 
                                  loginhistory
@@ -81,7 +80,7 @@ namespace IScalc.Service
 
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@usersID", usersID);
-            command.Parameters.AddWithValue("@logtime", DateTime.Now);
+            command.Parameters.AddWithValue("@logtime", tryLoginTime);
             command.Parameters.AddWithValue("@results", results);
 
             return command;
