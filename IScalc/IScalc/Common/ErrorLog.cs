@@ -22,7 +22,7 @@ namespace IScalc.Common
             
             string errorInfo = (string.Format(ErrorLogItem.ErrorInfo, ex.Message, ex.StackTrace));
 
-            string filePath = Path.Combine(ErrorLogItem.ErrorDirectoryPath, ErrorLogItem.ErrorFilePath);
+            string filePath = Path.Combine(ErrorLogItem.ErrorDirectoryPath, ErrorLogItem.ErrorFileName);
 
 
             using (StreamWriter writer = new StreamWriter(filePath, ErrorLogItem.Append))

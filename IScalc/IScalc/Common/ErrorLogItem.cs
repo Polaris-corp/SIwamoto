@@ -9,7 +9,7 @@ namespace IScalc.Common
     class ErrorLogItem
     {
         public const string ErrorDirectoryPath = @".\ErrorLogs";
-        public const string ErrorFilePath = "errorLogs.txt";
+        public const string ErrorFileName = "errorLogs.txt";
         public const string ErrorInfo = "エラーメッセージ: {0}" 
                                       + "\r\nスタックトレース:\r\n{1}";
 
