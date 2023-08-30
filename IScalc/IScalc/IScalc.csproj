@@ -74,6 +74,7 @@
     <Compile Include="Common\ErrorLog.cs" />
     <Compile Include="Common\ErrorLogItem.cs" />
     <Compile Include="Common\FormResults.cs" />
+    <Compile Include="Common\VariousNumbers.cs" />
     <Compile Include="Controller\LoginController.cs" />
     <Compile Include="Model\HistoryModel.cs" />
     <Compile Include="View\LoginForm.cs">

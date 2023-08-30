@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IScalc.Service;
 using IScalc.Model;
+using IScalc.Common;
 
 
 namespace IScalc.Controller
@@ -67,12 +68,12 @@ namespace IScalc.Controller
         /// <returns>どちらの条件も満たしていたら「false」それ以外は「true」</returns>
         public bool CheckLogtime(List<HistoryModel> logtimesList)
         {
-            if(logtimesList.Count != 3)
+            if(logtimesList.Count != VariousNumbers.JudgeNum)
             {
                 return true;
             }
           
-            return 3 < (logtimesList[0].Logtime - logtimesList[2].Logtime).TotalMinutes;
+            return VariousNumbers.JudgeNum < (logtimesList[0].Logtime - logtimesList[2].Logtime).TotalMinutes;
         }
 
         /// <summary>
@@ -83,7 +84,7 @@ namespace IScalc.Controller
         public bool CheckLast5Minutes(List<HistoryModel> logtimesList, DateTime tryLoginTime)
         {
             DateTime last = logtimesList[0].Logtime;
-            return last.AddMinutes(5) < tryLoginTime;
+            return last.AddMinutes(VariousNumbers.AddMin) < tryLoginTime;
         }
 
         /// <summary>
@@ -103,7 +104,7 @@ namespace IScalc.Controller
         /// <returns></returns>
         public string GetLockTime(DateTime time, DateTime tryLoginTime)
         {
-            return GetMinutesTimeSpanToString(time.AddMinutes(5) - tryLoginTime);
+            return GetMinutesTimeSpanToString(time.AddMinutes(VariousNumbers.AddMin) - tryLoginTime);
         }
 
         
