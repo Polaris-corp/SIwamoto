@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IScalc.Common
 {
-    class ErrorLogItem
+   public static class ErrorLogItem
     {
         public const string ErrorDirectoryPath = @".\ErrorLogs";
         public const string ErrorFileName = "errorLogs.txt";

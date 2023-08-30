@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IScalc.Common
 {
-    public class VariousNumbers
+    public static class VariousNumbers
     {
         public const int AddMin = 5;
         public const int JudgeNum = 3;
