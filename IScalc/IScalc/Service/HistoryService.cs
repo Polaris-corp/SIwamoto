@@ -16,11 +16,11 @@ namespace IScalc.Service
         /// </summary>
         /// <param name="usersID">UserID</param>
         /// <param name="results">ログイン可否</param>
-        public void InsertLoginHistory(string usersID, bool results, DateTime tryLoginTime)
+        public void InsertLoginHistory(int usersID, bool results, DateTime tryLoginTime)
         {
             using (MySqlConnection connection = new MySqlConnection(DbConnection.ConnectionString))
             {
-                    MySqlCommand command = CreateInsertSql(Convert.ToInt32(usersID), results, tryLoginTime);
+                    MySqlCommand command = CreateInsertSql(usersID, results, tryLoginTime);
                     command.Connection = connection;
 
                     connection.Open();
@@ -28,31 +28,28 @@ namespace IScalc.Service
             }
         }
         /// <summary>
-        /// 直近3件の中でログインに失敗したログイン時間をリストに追加
+        /// 直近3件の中でログインに失敗したログイン時間の最も古い時刻と新しい時刻をHistoryModelのプロパティの値に代入する
         /// </summary>
         /// <param name="usersID"></param>
-        /// <returns>生成したリスト</returns>
-        public List<HistoryModel> CreateDateTimes(string usersID)
+        /// <returns></returns>
+        public HistoryModel CreateDateTimes(int usersID)
         {
-            List<HistoryModel> logtimesList = new List<HistoryModel>();
+            
             using (MySqlConnection connection = new MySqlConnection(DbConnection.ConnectionString))
             {
-                    MySqlCommand command = CreateSelectSql(Convert.ToInt32(usersID));
-                    command.Connection = connection;
+                HistoryModel historyModel = new HistoryModel();
+                MySqlCommand command = CreateSelectSql(usersID);
 
-                    connection.Open();
-                    var reader =  command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        HistoryModel m = new HistoryModel();
-                        m.Logtime = Convert.ToDateTime(reader["logtime"]);
-                        m.Results = Convert.ToBoolean(reader["results"]);
-                        if(!m.Results)
-                        {
-                            logtimesList.Add(m);
-                        }
-                    }
-                return logtimesList;
+                command.Connection = connection;
+                connection.Open();
+                var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    historyModel.Count = Convert.ToInt32(reader["cnt"]);
+                    historyModel.LatestLogtime = Convert.ToDateTime(reader["maxT"]);
+                    historyModel.OldestLogtime = Convert.ToDateTime(reader["minT"]);
+                }
+                return historyModel;
             }
         }
 
@@ -88,7 +85,8 @@ namespace IScalc.Service
 
 
         /// <summary>
-        /// ユーザーが入力したIDのログイン履歴直近3件を指定して取得するクエリ文
+        /// ユーザーが入力したIDのログイン履歴直近3件を指定して取得し、
+        /// そこから最新のログイン試行時間と最古のログイン試行時間、失敗した回数を取得するクエリ文
         /// に基づくコマンド作成
         /// </summary>
         /// <param name="id">ユーザーが入力したID</param>
@@ -96,17 +94,27 @@ namespace IScalc.Service
         private MySqlCommand CreateSelectSql(int id)
         {
             string query = @"SELECT
-                                   logtime
-                                   ,results
-                             FROM 
-                                   loginhistory
-                             WHERE 
-                                   usersID = @usersID
-                             ORDER BY
-                                   logtime DESC
-                             LIMIT 
-                                   3;";
-
+                                    IFNULL(MAX(logtime), CURRENT_TIMESTAMP) AS maxT
+                                    , IFNULL(MIN(logtime),CURRENT_TIMESTAMP) AS minT
+                                    , COUNT(results) AS cnt 
+                             FROM
+                                 ( 
+                                  SELECT
+                                        l.logtime
+                                        , l.results
+                                  FROM
+                                        loginhistory AS l 
+                                  WHERE
+                                        usersID = @usersID
+                                  ORDER BY
+                                        logtime DESC 
+                                  LIMIT
+                                        3
+                                 )
+                             AS 
+                                    loghist 
+                             WHERE
+                                    results = 0;";
 
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@usersID", id);

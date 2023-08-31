@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using IScalc.Service;
 
 namespace IScalc.View
 {
@@ -35,37 +36,45 @@ namespace IScalc.View
                 MessageBox.Show(FormMessageItem.NotInput);
                 return;
             }
-            
+
+            if (!int.TryParse(id,out int userid))
+            {
+                MessageBox.Show(FormMessageItem.Warning);
+                return;
+            }
             //現在時刻の取得
             DateTime tryLoginTime = DateTime.Now;
 
             try
             {
                 //IDがあるかチェック
-                if (!loginController.CheckUsersID(id))
+                if (!loginController.CheckUsersID(userid))
                 {
                     MessageBox.Show(FormMessageItem.NotUser);
                     return;
                 }
 
                 //IDとPWの紐づきデータのチェック
-                if (!loginController.CheckAccount(id, pwd))
+                if (!loginController.CheckAccount(userid, pwd))
                 {
-                    loginController.InsertHisotry(id, FormResults.Ng, tryLoginTime);
+                    loginController.InsertHisotry(userid, FormResults.Ng, tryLoginTime);
                     MessageBox.Show(FormMessageItem.WrongPassword);
 
                     return;
                 }
 
                 //そのIDの履歴直近3件取得 
-                List<HistoryModel> historyModels = loginController.Check3LoginHistory(id);
+                HistoryModel historyModels = loginController.Check3LoginHistory(userid);
+                DateTime latestLogTime = historyModels.LatestLogtime;
+                DateTime oldestLogTime = historyModels.OldestLogtime;
+                int count = historyModels.Count;
 
                 //ログイン履歴のチェック
-                if (!loginController.CheckLogtime(historyModels))
+                if (!loginController.CheckLogtime(latestLogTime,oldestLogTime,count))
                 {
-                    if (!loginController.CheckLast5Minutes(historyModels, tryLoginTime))
+                    if (!loginController.CheckLast5Minutes(latestLogTime, tryLoginTime))
                     {
-                        string t = loginController.GetLockTime(historyModels[0].Logtime, tryLoginTime);
+                        string t = loginController.GetLockTime(latestLogTime, tryLoginTime);
 
                         MessageBox.Show(string.Format(FormMessageItem.RemainigTime, t));
                         return;
@@ -73,7 +82,7 @@ namespace IScalc.View
                 }
 
                 //ログイン成功
-                loginController.InsertHisotry(id , FormResults.Ok, tryLoginTime);
+                loginController.InsertHisotry(userid , FormResults.Ok, tryLoginTime);
                 MessageBox.Show(FormMessageItem.LoginSucces);
             }
             catch(Exception ex)

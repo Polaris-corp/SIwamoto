@@ -18,11 +18,11 @@ namespace IScalc.Service
         /// </summary>
         /// <param name="id">ユーザーが入力したID</param>
         /// <returns>データベース上にIDがあればtrue,なければfalse</returns>
-        public bool ExistUsersID(string id)
+        public bool ExistUsersID(int id)
         {
             using (MySqlConnection connection = new MySqlConnection(DbConnection.ConnectionString))
             {
-                    MySqlCommand command = CreateSelectSql(Convert.ToInt32(id));
+                    MySqlCommand command = CreateSelectSql(id);
                     command.Connection = connection;
                     
                     connection.Open();
@@ -42,11 +42,11 @@ namespace IScalc.Service
         /// <param name="id">ユーザーが入力したID</param>
         /// <param name="pwd">ユーザーが入力したPWD</param>
         /// <returns>IDとPWDが一致する件数は必ず1件になるため、存在したら「1」、無ければ「-1」を返す</returns>
-        public int GetUsersAccountCount(string id, string pwd)
+        public int GetUsersAccountCount(int id, string pwd)
         {
             using (MySqlConnection connection = new MySqlConnection(DbConnection.ConnectionString))
             {
-                    MySqlCommand command = CreateSelectCountSql(Convert.ToInt32(id), pwd);
+                    MySqlCommand command = CreateSelectCountSql(id, pwd);
                     command.Connection = connection;
 
                     connection.Open();

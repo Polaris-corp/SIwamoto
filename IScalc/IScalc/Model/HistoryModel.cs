@@ -12,6 +12,10 @@ namespace IScalc.Model
     public class HistoryModel
     {
         public DateTime Logtime { get; set; }
+        public DateTime LatestLogtime { get; set; }
+        public DateTime OldestLogtime { get; set; }
         public bool Results { get; set; }
+        public int Count { get; set; }
+        
     }
 }

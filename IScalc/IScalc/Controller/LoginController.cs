@@ -23,7 +23,7 @@ namespace IScalc.Controller
         /// </summary>
         /// <param name="id">ユーザーが入力したID</param>
         /// <returns>ユーザーIDがあるか(有る: true, 無し: false)</returns>
-        public bool CheckUsersID(string id)
+        public bool CheckUsersID(int id)
         {
             return userService.ExistUsersID(id);
         }
@@ -34,7 +34,7 @@ namespace IScalc.Controller
         /// <param name="id">ユーザーが入力したID</param>
         /// <param name="pwd">ユーザーが入力したPWD</param>
         /// <returns>紐づきデータがあれば「true」無ければ「false」</returns>
-        public bool CheckAccount(string id, string pwd)
+        public bool CheckAccount(int id, string pwd)
         {
             return userService.GetUsersAccountCount(id, pwd) == 1;
         }
@@ -45,7 +45,7 @@ namespace IScalc.Controller
         /// <param name="id">ユーザーが入力したID</param>
         /// <param name="res">ログイン結果</param>
         /// <returns></returns>
-        public void InsertHisotry(string id ,bool res ,DateTime tryLoginTime)
+        public void InsertHisotry(int id ,bool res ,DateTime tryLoginTime)
         {
              historyService.InsertLoginHistory(id, res, tryLoginTime);
         }
@@ -56,7 +56,7 @@ namespace IScalc.Controller
         /// <param name="id"></param>
         /// <returns>直近3件でログイン失敗した場合のログイン試行した時間を追加したリスト(0～3件、降順)
         /// </returns>
-        public List<HistoryModel> Check3LoginHistory(string id)
+        public HistoryModel Check3LoginHistory(int id)
         {
             return historyService.CreateDateTimes(id);
         }
@@ -66,14 +66,14 @@ namespace IScalc.Controller
         /// </summary>
         /// <param name="logtimesList">直近のログイン失敗した時間のリスト(0～3件、降順)</param>
         /// <returns>どちらの条件も満たしていたら「false」それ以外は「true」</returns>
-        public bool CheckLogtime(List<HistoryModel> logtimesList)
+        public bool CheckLogtime(DateTime latestLogTime, DateTime oldestLogTime, int count)
         {
-            if(logtimesList.Count != VariousNumbers.JudgeNum)
+            if(count != VariousNumbers.JudgeNum)
             {
                 return true;
             }
           
-            return VariousNumbers.JudgeNum < (logtimesList[0].Logtime - logtimesList[2].Logtime).TotalMinutes;
+            return VariousNumbers.JudgeNum < (latestLogTime - oldestLogTime).TotalMinutes;
         }
 
         /// <summary>
@@ -81,9 +81,9 @@ namespace IScalc.Controller
         /// </summary>
         /// <param name="logtimesList"></param>
         /// <returns></returns>
-        public bool CheckLast5Minutes(List<HistoryModel> logtimesList, DateTime tryLoginTime)
+        public bool CheckLast5Minutes(DateTime latestLogTime, DateTime tryLoginTime)
         {
-            DateTime last = logtimesList[0].Logtime;
+            DateTime last = latestLogTime;
             return last.AddMinutes(VariousNumbers.AddMin) < tryLoginTime;
         }
 
