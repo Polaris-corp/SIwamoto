@@ -54,7 +54,8 @@ namespace IScalc.Controller
         /// 直近3件ログイン履歴のチェック
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>直近3件でログイン失敗した場合のログイン試行した時間を追加したリスト(0～3件、降順)
+        /// <returns>直近3件の履歴の中で最新のログイン試行時間、最古のログイン試行時間、ログイン失敗数を
+        /// HistoryModelのプロパティに代入する
         /// </returns>
         public HistoryModel Check3LoginHistory(int id)
         {
@@ -62,10 +63,12 @@ namespace IScalc.Controller
         }
 
         /// <summary>
-        /// 3回連続で間違えているか、間違えていた場合その間隔が3分以内かの判定
+        /// ログイン失敗数が3回以下か、3回失敗していたらその間が3分経過しているかの判定
         /// </summary>
-        /// <param name="logtimesList">直近のログイン失敗した時間のリスト(0～3件、降順)</param>
-        /// <returns>どちらの条件も満たしていたら「false」それ以外は「true」</returns>
+        /// <param name="latestLogTime">最新のログイン試行時間</param>
+        /// <param name="oldestLogTime">最古のログイン試行時間</param>
+        /// <param name="count">ログイン失敗数</param>
+        /// <returns></returns>
         public bool CheckLogtime(DateTime latestLogTime, DateTime oldestLogTime, int count)
         {
             if(count != VariousNumbers.JudgeNum)

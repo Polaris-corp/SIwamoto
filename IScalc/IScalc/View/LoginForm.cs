@@ -63,7 +63,7 @@ namespace IScalc.View
                     return;
                 }
 
-                //そのIDの履歴直近3件取得 
+                //そのIDの履歴直近3件の最新のログイン試行時間、最古のログイン試行時間、ログイン失敗数を取得 
                 HistoryModel historyModels = loginController.Check3LoginHistory(userid);
                 DateTime latestLogTime = historyModels.LatestLogtime;
                 DateTime oldestLogTime = historyModels.OldestLogtime;
