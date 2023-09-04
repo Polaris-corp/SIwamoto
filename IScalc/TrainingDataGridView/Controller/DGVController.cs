@@ -13,9 +13,9 @@ namespace TrainingDataGridView.Controller
 
         UsersService dgvService = new UsersService();
         
-        public DataTable IndicateUsersInfo(DataTable dt)
+        public DataTable IndicateUsersInfo()
         {
-            return dgvService.ShowUsersData(dt);
+             return dgvService.ShowUsersData();
         }
     }
 }

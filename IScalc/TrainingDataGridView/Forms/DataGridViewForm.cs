@@ -21,32 +21,55 @@ namespace TrainingDataGridView.Forms
         }
 
         DGVController dgvController = new DGVController();
-        TextModel textModel = new TextModel();
-        
         DataTable dt = new DataTable();
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = dt;
-            dgvController.IndicateUsersInfo(dt);
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
+            GetDataTableItem();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            textModel.Form2Button = ButtonName.NewAccount;
-            AccountForm accountForm = new AccountForm();
-            accountForm.ShowDialog();
+            LoadAccountForm(ConstValues.Fresh, new UsersModel());
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            textModel.Form2Button = ButtonName.ExistingAccount;
-            AccountForm accountForm = new AccountForm();
+            LoadAccountForm(ConstValues.Update, GetDgvRowItem());
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            GetDataTableItem();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private UsersModel GetDgvRowItem()
+        {
+            DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+            UsersModel user = new UsersModel();
+            user.Id = selectedRow.Cells["ID"].Value.ToString();
+            user.Name = selectedRow.Cells["Name"].Value.ToString();
+            user.Pwd = selectedRow.Cells["Pwd"].Value.ToString();
+            return user;
+        }
+
+        private void GetDataTableItem()
+        {
+            dt = dgvController.IndicateUsersInfo();
+            dataGridView1.DataSource = dt;
+        }
+
+        private void LoadAccountForm(bool flg, UsersModel user)
+        {
+            AccountForm accountForm = new AccountForm(flg);
+            accountForm.user = user;
             accountForm.ShowDialog();
+            accountForm.Dispose();
         }
     }
 }

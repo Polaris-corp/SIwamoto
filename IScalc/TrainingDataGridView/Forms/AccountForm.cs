@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TrainingDataGridView.Common;
 using TrainingDataGridView.Model;
+using TrainingDataGridView.Controller;
 
 namespace TrainingDataGridView.Forms
 {
@@ -17,24 +18,44 @@ namespace TrainingDataGridView.Forms
         public AccountForm()
         {
             InitializeComponent();
+            button1.Text = ConstValues.NewAccount;
         }
 
-        TextModel textModel = new TextModel();
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
+        public AccountForm(bool update)
         {
+            InitializeComponent();
+            flg = update;
 
+            button1.Text = update ? ConstValues.NewAccount : ConstValues.UpdateAccount;
+        }
+        ACcontroller accountController = new ACcontroller();
+
+        bool flg = true;
+        public UsersModel user { get; set; }
+
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string Name = textBox2.Text;
+            string Pwd = textBox3.Text;
+
+            if (flg)
+            {
+                accountController.InsertAccountInfo(Name, Pwd);
+            }
+            else
+            {
+                accountController.UpdateAccountInfo(Convert.ToInt32(user.Id), Name, Pwd);
+            }
+            this.Close();
         }
 
         private void AccountForm_Load(object sender, EventArgs e)
         {
-            button1.Text = textModel.Form2Button;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            DataGridViewForm dataGridView = new DataGridViewForm();
-            this.Close();
+            label4.Text = user.Id;
+            textBox2.Text = user.Name;
+            textBox3.Text = user.Pwd;
         }
     }
 }

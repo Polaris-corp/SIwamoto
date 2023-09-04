@@ -69,8 +69,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\ButtonName.cs" />
+    <Compile Include="Common\ConstValues.cs" />
     <Compile Include="Common\DbConnection.cs" />
+    <Compile Include="Controller\ACcontroller.cs" />
     <Compile Include="Controller\DGVController.cs" />
     <Compile Include="Forms\AccountForm.cs">
       <SubType>Form</SubType>
@@ -78,7 +79,7 @@
     <Compile Include="Forms\AccountForm.Designer.cs">
       <DependentUpon>AccountForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\TextModel.cs" />
+    <Compile Include="Model\UsersModel.cs" />
     <Compile Include="Service\UsersService.cs" />
     <Compile Include="Forms\DataGridViewForm.cs">
       <SubType>Form</SubType>
