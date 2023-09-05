@@ -18,7 +18,8 @@ namespace TrainingDataGridView.Forms
         public AccountForm()
         {
             InitializeComponent();
-            button1.Text = ConstValues.NewAccount;
+            btnCreateOrUpdate.Text = ConstValues.NewAccount;
+            
         }
 
         public AccountForm(bool update)
@@ -26,16 +27,18 @@ namespace TrainingDataGridView.Forms
             InitializeComponent();
             flg = update;
 
-            button1.Text = update ? ConstValues.NewAccount : ConstValues.UpdateAccount;
+            btnCreateOrUpdate.Text = update ? ConstValues.NewAccount : ConstValues.UpdateAccount;
+            
         }
         ACcontroller accountController = new ACcontroller();
+        DGVController dgvController = new DGVController();
 
         bool flg = true;
         public UsersModel user { get; set; }
+        DataTable dt = new DataTable();
 
 
-
-        private void button1_Click(object sender, EventArgs e)
+        private void btnCreateOrUpdate_Click(object sender, EventArgs e)
         {
             string Name = textBox2.Text;
             string Pwd = textBox3.Text;
@@ -56,6 +59,50 @@ namespace TrainingDataGridView.Forms
             label4.Text = user.Id;
             textBox2.Text = user.Name;
             textBox3.Text = user.Pwd;
+            GetDataTableItem();
+            if (flg)
+            {
+                btnDelete.Enabled = false;
+                btnDelete.Visible = false;
+            }
+            else
+            {
+                btnDelete.Enabled = true;
+                btnDelete.Visible = true;
+            }
+        }
+
+        private void Delete_Click(object sender, EventArgs e)
+        {
+            accountController.DeleteAccountInfo(Convert.ToInt32(user.Id));
+        }
+
+        private void ShowDeletedAccount_Click(object sender, EventArgs e)
+        {
+            GetDeletedDataTableItem();
+        }
+
+        private void btnShowAll_Click(object sender, EventArgs e)
+        {
+            GetAllDataTableItem();
+        }
+
+        private void GetDataTableItem()
+        {
+            dt = dgvController.IndicateUsersInfo();
+            dataGridView1.DataSource = dt;
+        }
+
+        private void GetAllDataTableItem()
+        {
+            dt = accountController.GetAllUserInfo();
+            dataGridView1.DataSource = dt;
+        }
+
+        private void GetDeletedDataTableItem()
+        {
+            dt = accountController.GetDeletedUserInfo();
+            dataGridView1.DataSource = dt;
         }
     }
 }

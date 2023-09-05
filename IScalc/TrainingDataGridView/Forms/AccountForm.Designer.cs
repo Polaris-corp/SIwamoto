@@ -31,11 +31,16 @@ namespace TrainingDataGridView.Forms
         {
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnCreateOrUpdate = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnShowDeleted = new System.Windows.Forms.Button();
+            this.btnShowAll = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // textBox2
@@ -52,15 +57,15 @@ namespace TrainingDataGridView.Forms
             this.textBox3.Size = new System.Drawing.Size(174, 19);
             this.textBox3.TabIndex = 2;
             // 
-            // button1
+            // btnCreateOrUpdate
             // 
-            this.button1.Location = new System.Drawing.Point(349, 194);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(283, 127);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Form2Button";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnCreateOrUpdate.Location = new System.Drawing.Point(347, 251);
+            this.btnCreateOrUpdate.Name = "btnCreateOrUpdate";
+            this.btnCreateOrUpdate.Size = new System.Drawing.Size(155, 76);
+            this.btnCreateOrUpdate.TabIndex = 3;
+            this.btnCreateOrUpdate.Text = "Form2Button";
+            this.btnCreateOrUpdate.UseVisualStyleBackColor = true;
+            this.btnCreateOrUpdate.Click += new System.EventHandler(this.btnCreateOrUpdate_Click);
             // 
             // label1
             // 
@@ -92,28 +97,74 @@ namespace TrainingDataGridView.Forms
             // label4
             // 
             this.label4.Font = new System.Drawing.Font("MS UI Gothic", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label4.Location = new System.Drawing.Point(101, 52);
+            this.label4.Location = new System.Drawing.Point(99, 42);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(181, 22);
             this.label4.TabIndex = 7;
-            this.label4.Text = "ID";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(514, 251);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(155, 76);
+            this.btnDelete.TabIndex = 8;
+            this.btnDelete.Text = "ユーザー情報削除";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.Delete_Click);
+            // 
+            // btnShowDeleted
+            // 
+            this.btnShowDeleted.Location = new System.Drawing.Point(180, 251);
+            this.btnShowDeleted.Name = "btnShowDeleted";
+            this.btnShowDeleted.Size = new System.Drawing.Size(155, 76);
+            this.btnShowDeleted.TabIndex = 9;
+            this.btnShowDeleted.Text = "削除されたユーザー情報表示";
+            this.btnShowDeleted.UseVisualStyleBackColor = true;
+            this.btnShowDeleted.Click += new System.EventHandler(this.ShowDeletedAccount_Click);
+            // 
+            // btnShowAll
+            // 
+            this.btnShowAll.Location = new System.Drawing.Point(13, 251);
+            this.btnShowAll.Name = "btnShowAll";
+            this.btnShowAll.Size = new System.Drawing.Size(155, 76);
+            this.btnShowAll.TabIndex = 10;
+            this.btnShowAll.Text = "ユーザー情報全件表示";
+            this.btnShowAll.UseVisualStyleBackColor = true;
+            this.btnShowAll.Click += new System.EventHandler(this.btnShowAll_Click);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(323, 27);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 21;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(348, 190);
+            this.dataGridView1.TabIndex = 11;
             // 
             // AccountForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(685, 351);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.btnShowAll);
+            this.Controls.Add(this.btnShowDeleted);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnCreateOrUpdate);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox2);
             this.Name = "AccountForm";
             this.Text = "AccountForm";
             this.Load += new System.EventHandler(this.AccountForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -126,6 +177,10 @@ namespace TrainingDataGridView.Forms
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnCreateOrUpdate;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnShowDeleted;
+        private System.Windows.Forms.Button btnShowAll;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

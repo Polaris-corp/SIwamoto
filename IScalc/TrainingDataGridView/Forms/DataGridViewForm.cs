@@ -28,22 +28,22 @@ namespace TrainingDataGridView.Forms
             GetDataTableItem();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnNew_Click(object sender, EventArgs e)
         {
             LoadAccountForm(ConstValues.Fresh, new UsersModel());
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnUpDate_Click(object sender, EventArgs e)
         {
             LoadAccountForm(ConstValues.Update, GetDgvRowItem());
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void btnUpDateDB_Click(object sender, EventArgs e)
         {
             GetDataTableItem();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void btnDelete_Click(object sender, EventArgs e)
         {
 
         }
@@ -70,6 +70,11 @@ namespace TrainingDataGridView.Forms
             accountForm.user = user;
             accountForm.ShowDialog();
             accountForm.Dispose();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

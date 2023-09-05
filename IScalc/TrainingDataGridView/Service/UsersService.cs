@@ -13,17 +13,17 @@ namespace TrainingDataGridView.Service
     {
         public DataTable ShowUsersData()
         {
-            using(MySqlConnection connection = new MySqlConnection(DbConnection.ConnectionString))
-            {
-                MySqlCommand command = CreateDGVSelectSql();
-                command.Connection = connection;
-                DataTable dt = new DataTable();
-                connection.Open();
-                var sda = new MySqlDataAdapter(command);
-                sda.Fill(dt);
-                return dt;
-            }
-            
+            return CreateDT(CreateDGVSelectSql()); ;
+        }
+
+        public DataTable ShowAllUserData()
+        {
+            return CreateDT(CreateGetAllAccountInfoSql());
+        }
+
+        public DataTable ShowDeletedUserData()
+        {
+            return CreateDT(CreateGetDeletedAccountInfoSql());
         }
 
         public void InsertAcInfo(string name, string pwd)
@@ -34,6 +34,11 @@ namespace TrainingDataGridView.Service
         public void UpdateAccountInfo(int id, string name, string pwd)
         {
             ExecutionSql(CreateUpdateSql(id, name, pwd));
+        }
+
+        public void DeleteAccountInfo(int id)
+        {
+            ExecutionSql(CreateAccountDeleteSql(id));
         }
 
         private void ExecutionSql(MySqlCommand command)
@@ -47,10 +52,56 @@ namespace TrainingDataGridView.Service
             }
         }
 
+        private DataTable CreateDT(MySqlCommand command)
+        {
+            using (MySqlConnection connection = new MySqlConnection(DbConnection.ConnectionString))
+            {
+                command.Connection = connection;
+                DataTable dt = new DataTable();
+                connection.Open();
+                var sda = new MySqlDataAdapter(command);
+                sda.Fill(dt);
+                return dt;
+            }
+        }
+
         private MySqlCommand CreateDGVSelectSql()
         {
+            string query = @"SELECT 
+                                   ID
+                                   , Name
+                                   , Pwd
+                             FROM 
+                                   users
+                             WHERE 
+                                   deleted = 0;";
+
+            MySqlCommand command = new MySqlCommand(query);
+            return command;
+        }
+
+        private MySqlCommand CreateGetDeletedAccountInfoSql()
+        {
+            string query = @"SELECT 
+                                   ID
+                                   , Name
+                                   , Pwd
+                             FROM 
+                                   users
+                             WHERE 
+                                   deleted = 1;";
+
+            MySqlCommand command = new MySqlCommand(query);
+            return command;
+        }
+
+        private MySqlCommand CreateGetAllAccountInfoSql()
+        {
             string query = @"SELECT
-                                    * 
+                                    ID
+                                    , Name
+                                    , Pwd
+                                    , deleted
                              FROM
                                     users;";
 
@@ -64,10 +115,10 @@ namespace TrainingDataGridView.Service
                                  users
                              (
                                  Name
-                                 ,Pwd
+                                 , Pwd
                               ) VALUES (
                                  @Name
-                                 ,@Pwd
+                                 , @Pwd
                               );";
 
 
@@ -92,6 +143,21 @@ namespace TrainingDataGridView.Service
             command.Parameters.AddWithValue("@ID", id);
             command.Parameters.AddWithValue("@Name", name);
             command.Parameters.AddWithValue("@Pwd", pwd);
+
+            return command;
+        }
+
+        private MySqlCommand CreateAccountDeleteSql(int id)
+        {
+            string query = @"UPDATE
+                                   users
+                             SET
+                                   deleted = 1
+                             WHERE
+                                   ID = @ID;";
+
+            MySqlCommand command = new MySqlCommand(query);
+            command.Parameters.AddWithValue("@ID", id);
 
             return command;
         }
