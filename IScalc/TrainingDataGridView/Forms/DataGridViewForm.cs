@@ -43,11 +43,6 @@ namespace TrainingDataGridView.Forms
             GetDataTableItem();
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private UsersModel GetDgvRowItem()
         {
             DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
