@@ -29,7 +29,7 @@ namespace TrainingDataGridView.Forms
             btnCreateOrUpdate.Text = update ? ConstValues.NewAccount : ConstValues.UpdateAccount;
         }
 
-        ACcontroller accountController = new ACcontroller();
+        AccountController accountController = new AccountController();
         DGVController dgvController = new DGVController();
 
         bool flg = true;

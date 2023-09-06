@@ -71,7 +71,7 @@
   <ItemGroup>
     <Compile Include="Common\ConstValues.cs" />
     <Compile Include="Common\DbConnection.cs" />
-    <Compile Include="Controller\ACcontroller.cs" />
+    <Compile Include="Controller\AccountController.cs" />
     <Compile Include="Controller\DGVController.cs" />
     <Compile Include="Forms\AccountForm.cs">
       <SubType>Form</SubType>

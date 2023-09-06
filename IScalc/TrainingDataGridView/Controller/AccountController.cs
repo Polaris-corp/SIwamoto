@@ -8,7 +8,7 @@ using System.Data;
 
 namespace TrainingDataGridView.Controller
 {
-    public class ACcontroller
+    public class AccountController
     {
         UsersService dgvService = new UsersService();
 
