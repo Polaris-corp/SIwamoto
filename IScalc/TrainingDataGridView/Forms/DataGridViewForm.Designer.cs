@@ -31,8 +31,8 @@ namespace TrainingDataGridView.Forms
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnNew = new System.Windows.Forms.Button();
-            this.btnUpDate = new System.Windows.Forms.Button();
-            this.btnUpDateDB = new System.Windows.Forms.Button();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.btnUpdateDB = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -61,25 +61,25 @@ namespace TrainingDataGridView.Forms
             this.btnNew.UseVisualStyleBackColor = true;
             this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
-            // btnUpDate
+            // btnUpdate
             // 
-            this.btnUpDate.Location = new System.Drawing.Point(282, 324);
-            this.btnUpDate.Name = "btnUpDate";
-            this.btnUpDate.Size = new System.Drawing.Size(204, 103);
-            this.btnUpDate.TabIndex = 2;
-            this.btnUpDate.Text = "更新";
-            this.btnUpDate.UseVisualStyleBackColor = true;
-            this.btnUpDate.Click += new System.EventHandler(this.btnUpDate_Click);
+            this.btnUpdate.Location = new System.Drawing.Point(282, 324);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(204, 103);
+            this.btnUpdate.TabIndex = 2;
+            this.btnUpdate.Text = "更新";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
-            // btnUpDateDB
+            // btnUpdateDB
             // 
-            this.btnUpDateDB.Location = new System.Drawing.Point(539, 63);
-            this.btnUpDateDB.Name = "btnUpDateDB";
-            this.btnUpDateDB.Size = new System.Drawing.Size(224, 190);
-            this.btnUpDateDB.TabIndex = 3;
-            this.btnUpDateDB.Text = "データベース更新";
-            this.btnUpDateDB.UseVisualStyleBackColor = true;
-            this.btnUpDateDB.Click += new System.EventHandler(this.btnUpDateDB_Click);
+            this.btnUpdateDB.Location = new System.Drawing.Point(539, 68);
+            this.btnUpdateDB.Name = "btnUpdateDB";
+            this.btnUpdateDB.Size = new System.Drawing.Size(224, 190);
+            this.btnUpdateDB.TabIndex = 3;
+            this.btnUpdateDB.Text = "データベース更新";
+            this.btnUpdateDB.UseVisualStyleBackColor = true;
+            this.btnUpdateDB.Click += new System.EventHandler(this.btnUpdateDB_Click);
             // 
             // btnClose
             // 
@@ -97,8 +97,8 @@ namespace TrainingDataGridView.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.btnUpDateDB);
-            this.Controls.Add(this.btnUpDate);
+            this.Controls.Add(this.btnUpdateDB);
+            this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.btnNew);
             this.Controls.Add(this.dataGridView1);
             this.Name = "DataGridViewForm";
@@ -113,8 +113,8 @@ namespace TrainingDataGridView.Forms
 
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnNew;
-        private System.Windows.Forms.Button btnUpDate;
-        private System.Windows.Forms.Button btnUpDateDB;
+        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.Button btnUpdateDB;
         private System.Windows.Forms.Button btnClose;
     }
 }

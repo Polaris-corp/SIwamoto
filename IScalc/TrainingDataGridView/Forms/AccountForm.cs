@@ -15,12 +15,11 @@ namespace TrainingDataGridView.Forms
 {
     public partial class AccountForm : Form
     {
-        public AccountForm()
-        {
-            InitializeComponent();
-            btnCreateOrUpdate.Text = ConstValues.NewAccount;
-            
-        }
+        //public AccountForm()
+        //{
+        //    InitializeComponent();
+        //    btnCreateOrUpdate.Text = ConstValues.NewAccount;
+        //}
 
         public AccountForm(bool update)
         {
@@ -28,8 +27,8 @@ namespace TrainingDataGridView.Forms
             flg = update;
 
             btnCreateOrUpdate.Text = update ? ConstValues.NewAccount : ConstValues.UpdateAccount;
-            
         }
+
         ACcontroller accountController = new ACcontroller();
         DGVController dgvController = new DGVController();
 
@@ -37,11 +36,10 @@ namespace TrainingDataGridView.Forms
         public UsersModel user { get; set; }
         DataTable dt = new DataTable();
 
-
         private void btnCreateOrUpdate_Click(object sender, EventArgs e)
         {
-            string Name = textBox2.Text;
-            string Pwd = textBox3.Text;
+            string Name = userNameTextBox.Text;
+            string Pwd = userPwdTextBox.Text;
 
             if (flg)
             {
@@ -56,9 +54,9 @@ namespace TrainingDataGridView.Forms
 
         private void AccountForm_Load(object sender, EventArgs e)
         {
-            label4.Text = user.Id;
-            textBox2.Text = user.Name;
-            textBox3.Text = user.Pwd;
+            userIDlabel.Text = user.Id;
+            userNameTextBox.Text = user.Name;
+            userPwdTextBox.Text = user.Pwd;
             GetDataTableItem();
             if (flg)
             {

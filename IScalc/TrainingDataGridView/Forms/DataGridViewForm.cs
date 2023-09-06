@@ -33,12 +33,12 @@ namespace TrainingDataGridView.Forms
             LoadAccountForm(ConstValues.Fresh, new UsersModel());
         }
 
-        private void btnUpDate_Click(object sender, EventArgs e)
+        private void btnUpdate_Click(object sender, EventArgs e)
         {
             LoadAccountForm(ConstValues.Update, GetDgvRowItem());
         }
 
-        private void btnUpDateDB_Click(object sender, EventArgs e)
+        private void btnUpdateDB_Click(object sender, EventArgs e)
         {
             GetDataTableItem();
         }

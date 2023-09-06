@@ -13,7 +13,7 @@ namespace TrainingDataGridView.Service
     {
         public DataTable ShowUsersData()
         {
-            return CreateDT(CreateDGVSelectSql()); ;
+            return CreateDT(CreateDGVSelectSql());
         }
 
         public DataTable ShowAllUserData()
