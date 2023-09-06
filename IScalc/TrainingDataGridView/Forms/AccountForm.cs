@@ -24,7 +24,7 @@ namespace TrainingDataGridView.Forms
         public AccountForm(bool update)
         {
             InitializeComponent();
-            flg = update;
+            CreateOrUpdateflg = update;
 
             btnCreateOrUpdate.Text = update ? ConstValues.NewAccount : ConstValues.UpdateAccount;
         }
@@ -32,7 +32,7 @@ namespace TrainingDataGridView.Forms
         AccountController accountController = new AccountController();
         DGVController dgvController = new DGVController();
 
-        bool flg = true;
+        bool CreateOrUpdateflg = true;
         public UsersModel user { get; set; }
         DataTable dt = new DataTable();
 
@@ -41,7 +41,7 @@ namespace TrainingDataGridView.Forms
             string Name = userNameTextBox.Text;
             string Pwd = userPwdTextBox.Text;
 
-            if (flg)
+            if (CreateOrUpdateflg)
             {
                 accountController.InsertAccountInfo(Name, Pwd);
             }
@@ -58,7 +58,7 @@ namespace TrainingDataGridView.Forms
             userNameTextBox.Text = user.Name;
             userPwdTextBox.Text = user.Pwd;
             GetDataTableItem();
-            if (flg)
+            if (CreateOrUpdateflg)
             {
                 btnDelete.Enabled = false;
                 btnDelete.Visible = false;
