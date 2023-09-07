@@ -31,7 +31,7 @@ namespace TrainingDataGridView.Forms
         {
             this.userNameTextBox = new System.Windows.Forms.TextBox();
             this.userPwdTextBox = new System.Windows.Forms.TextBox();
-            this.btnCreateOrUpdate = new System.Windows.Forms.Button();
+            this.btnCreate = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -59,13 +59,13 @@ namespace TrainingDataGridView.Forms
             // 
             // btnCreateOrUpdate
             // 
-            this.btnCreateOrUpdate.Location = new System.Drawing.Point(347, 251);
-            this.btnCreateOrUpdate.Name = "btnCreateOrUpdate";
-            this.btnCreateOrUpdate.Size = new System.Drawing.Size(155, 76);
-            this.btnCreateOrUpdate.TabIndex = 3;
-            this.btnCreateOrUpdate.Text = "Form2Button";
-            this.btnCreateOrUpdate.UseVisualStyleBackColor = true;
-            this.btnCreateOrUpdate.Click += new System.EventHandler(this.btnCreateOrUpdate_Click);
+            this.btnCreate.Location = new System.Drawing.Point(347, 251);
+            this.btnCreate.Name = "btnCreateOrUpdate";
+            this.btnCreate.Size = new System.Drawing.Size(155, 76);
+            this.btnCreate.TabIndex = 3;
+            this.btnCreate.Text = "Form2Button";
+            this.btnCreate.UseVisualStyleBackColor = true;
+            this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
             // label1
             // 
@@ -158,7 +158,7 @@ namespace TrainingDataGridView.Forms
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnCreateOrUpdate);
+            this.Controls.Add(this.btnCreate);
             this.Controls.Add(this.userPwdTextBox);
             this.Controls.Add(this.userNameTextBox);
             this.Name = "AccountForm";
@@ -177,7 +177,7 @@ namespace TrainingDataGridView.Forms
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label userIDlabel;
-        private System.Windows.Forms.Button btnCreateOrUpdate;
+        private System.Windows.Forms.Button btnCreate;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnShowDeleted;
         private System.Windows.Forms.Button btnShowAll;
