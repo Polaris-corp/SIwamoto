@@ -18,6 +18,8 @@ namespace IScalc.View
         }
 
         LoginController loginController = new LoginController();
+        DataGridViewForm dataGridView = new DataGridViewForm();
+
 
         /// <summary>
         /// ログインボタンが押されたときの処理
@@ -84,7 +86,6 @@ namespace IScalc.View
                 //ログイン成功
                 loginController.InsertHisotry(userid, FormResults.Ok, tryLoginTime);
                 MessageBox.Show(FormMessageItem.LoginSucces);
-                DataGridViewForm dataGridView = new DataGridViewForm();
                 dataGridView.ShowDialog();
                 dataGridView.Dispose();
             }
@@ -100,14 +101,13 @@ namespace IScalc.View
            
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void CreateAccount_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-
+            AccountForm accountForm = new AccountForm(true);
+            UsersModel user = new UsersModel();
+            accountForm.user = user;
+            accountForm.ShowDialog();
+            accountForm.Dispose();
         }
     }
 }

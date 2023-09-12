@@ -34,9 +34,7 @@ namespace IScalc.View
         public UsersModel user { get; set; }
         DataTable dt = new DataTable();
 
-        
        
-
         private void GetDataTableItem()
         {
             dt = accountController.GetUserInfo();
