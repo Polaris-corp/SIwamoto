@@ -71,5 +71,11 @@ namespace TrainingDataGridView.Forms
         {
             this.Close();
         }
+
+        private void btnShowDeletedUser_Click(object sender, EventArgs e)
+        {
+            dt = dgvController.GetDeletedUserInfo();
+            dataGridView1.DataSource = dt;
+        }
     }
 }

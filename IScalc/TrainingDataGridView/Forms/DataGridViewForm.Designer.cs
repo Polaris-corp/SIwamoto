@@ -34,6 +34,7 @@ namespace TrainingDataGridView.Forms
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnUpdateDB = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
+            this.ShowDeletedUserbtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,15 +68,15 @@ namespace TrainingDataGridView.Forms
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(204, 103);
             this.btnUpdate.TabIndex = 2;
-            this.btnUpdate.Text = "更新";
+            this.btnUpdate.Text = "ユーザー情報変更";
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // btnUpdateDB
             // 
-            this.btnUpdateDB.Location = new System.Drawing.Point(539, 68);
+            this.btnUpdateDB.Location = new System.Drawing.Point(539, 12);
             this.btnUpdateDB.Name = "btnUpdateDB";
-            this.btnUpdateDB.Size = new System.Drawing.Size(224, 190);
+            this.btnUpdateDB.Size = new System.Drawing.Size(204, 94);
             this.btnUpdateDB.TabIndex = 3;
             this.btnUpdateDB.Text = "データベース更新";
             this.btnUpdateDB.UseVisualStyleBackColor = true;
@@ -83,7 +84,7 @@ namespace TrainingDataGridView.Forms
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(539, 324);
+            this.btnClose.Location = new System.Drawing.Point(539, 323);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(204, 103);
             this.btnClose.TabIndex = 5;
@@ -91,11 +92,22 @@ namespace TrainingDataGridView.Forms
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // ShowDeletedUserbtn
+            // 
+            this.ShowDeletedUserbtn.Location = new System.Drawing.Point(539, 163);
+            this.ShowDeletedUserbtn.Name = "ShowDeletedUserbtn";
+            this.ShowDeletedUserbtn.Size = new System.Drawing.Size(204, 103);
+            this.ShowDeletedUserbtn.TabIndex = 6;
+            this.ShowDeletedUserbtn.Text = "削除されたユーザー表示";
+            this.ShowDeletedUserbtn.UseVisualStyleBackColor = true;
+            this.ShowDeletedUserbtn.Click += new System.EventHandler(this.btnShowDeletedUser_Click);
+            // 
             // DataGridViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ShowDeletedUserbtn);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnUpdateDB);
             this.Controls.Add(this.btnUpdate);
@@ -116,6 +128,7 @@ namespace TrainingDataGridView.Forms
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnUpdateDB;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button ShowDeletedUserbtn;
     }
 }
 

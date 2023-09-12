@@ -17,5 +17,10 @@ namespace TrainingDataGridView.Controller
         {
              return dgvService.ShowUsersData();
         }
+
+        public DataTable GetDeletedUserInfo()
+        {
+            return dgvService.ShowDeletedUserData();
+        }
     }
 }
