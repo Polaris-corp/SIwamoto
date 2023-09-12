@@ -24,7 +24,7 @@ namespace IScalc.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button1_Click(object sender, EventArgs e)
+        private void Loginbtn_Click(object sender, EventArgs e)
         {
             
             //IDとPWを受け取る　
@@ -70,7 +70,7 @@ namespace IScalc.View
                 int count = historyModels.Count;
 
                 //ログイン履歴のチェック
-                if (!loginController.CheckLogtime(latestLogTime,oldestLogTime,count))
+                if (!loginController.CheckLogtime(latestLogTime, oldestLogTime, count))
                 {
                     if (!loginController.CheckLast5Minutes(latestLogTime, tryLoginTime))
                     {
@@ -82,13 +82,13 @@ namespace IScalc.View
                 }
 
                 //ログイン成功
-                loginController.InsertHisotry(userid , FormResults.Ok, tryLoginTime);
+                loginController.InsertHisotry(userid, FormResults.Ok, tryLoginTime);
                 MessageBox.Show(FormMessageItem.LoginSucces);
-                TrainingDataGridView.Forms.DataGridViewForm dataGridView = new TrainingDataGridView.Forms.DataGridViewForm();
+                DataGridViewForm dataGridView = new DataGridViewForm();
                 dataGridView.ShowDialog();
                 dataGridView.Dispose();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ErrorLog errorLog = new ErrorLog();
                 errorLog.WriteStackTraceToTxt(ex, tryLoginTime);
@@ -98,6 +98,16 @@ namespace IScalc.View
         private void LoginForm_Load(object sender, EventArgs e)
         {
            
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -28,23 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.Loginbutton = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.CreateACbutton = new System.Windows.Forms.Button();
+            this.ForgotPassbutton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // button1
+            // Loginbutton
             // 
-            this.button1.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.button1.Location = new System.Drawing.Point(299, 273);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(228, 107);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "ログイン";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.Loginbutton.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.Loginbutton.Location = new System.Drawing.Point(29, 284);
+            this.Loginbutton.Name = "Loginbutton";
+            this.Loginbutton.Size = new System.Drawing.Size(228, 107);
+            this.Loginbutton.TabIndex = 0;
+            this.Loginbutton.Text = "ログイン";
+            this.Loginbutton.UseVisualStyleBackColor = false;
+            this.Loginbutton.Click += new System.EventHandler(this.Loginbtn_Click);
             // 
             // textBox1
             // 
@@ -84,6 +86,28 @@
             this.label2.Text = "PW";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // CreateACbutton
+            // 
+            this.CreateACbutton.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.CreateACbutton.Location = new System.Drawing.Point(286, 284);
+            this.CreateACbutton.Name = "CreateACbutton";
+            this.CreateACbutton.Size = new System.Drawing.Size(228, 107);
+            this.CreateACbutton.TabIndex = 5;
+            this.CreateACbutton.Text = "新規登録";
+            this.CreateACbutton.UseVisualStyleBackColor = false;
+            this.CreateACbutton.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // ForgotPassbutton
+            // 
+            this.ForgotPassbutton.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.ForgotPassbutton.Location = new System.Drawing.Point(543, 284);
+            this.ForgotPassbutton.Name = "ForgotPassbutton";
+            this.ForgotPassbutton.Size = new System.Drawing.Size(228, 107);
+            this.ForgotPassbutton.TabIndex = 6;
+            this.ForgotPassbutton.Text = "パスワードを忘れたら";
+            this.ForgotPassbutton.UseVisualStyleBackColor = false;
+            this.ForgotPassbutton.Click += new System.EventHandler(this.button3_Click);
+            // 
             // LoginForm
             // 
             this.AllowDrop = true;
@@ -91,11 +115,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ForgotPassbutton);
+            this.Controls.Add(this.CreateACbutton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.Loginbutton);
             this.Name = "LoginForm";
             this.Text = "ログイン画面";
             this.Load += new System.EventHandler(this.LoginForm_Load);
@@ -106,11 +132,13 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button Loginbutton;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button CreateACbutton;
+        private System.Windows.Forms.Button ForgotPassbutton;
     }
 }
 

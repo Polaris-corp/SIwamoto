@@ -49,6 +49,7 @@ namespace TrainingDataGridView.Forms
             this.userNameTextBox.Name = "userNameTextBox";
             this.userNameTextBox.Size = new System.Drawing.Size(174, 19);
             this.userNameTextBox.TabIndex = 1;
+            this.userNameTextBox.TextChanged += new System.EventHandler(this.userNameTextBox_TextChanged);
             // 
             // userPwdTextBox
             // 
@@ -56,6 +57,7 @@ namespace TrainingDataGridView.Forms
             this.userPwdTextBox.Name = "userPwdTextBox";
             this.userPwdTextBox.Size = new System.Drawing.Size(174, 19);
             this.userPwdTextBox.TabIndex = 2;
+            this.userPwdTextBox.TextChanged += new System.EventHandler(this.userPwdTextBox_TextChanged);
             // 
             // btnCreate
             // 
@@ -75,6 +77,7 @@ namespace TrainingDataGridView.Forms
             this.label1.TabIndex = 4;
             this.label1.Text = "ID";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -84,6 +87,7 @@ namespace TrainingDataGridView.Forms
             this.label2.TabIndex = 5;
             this.label2.Text = "Name";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
@@ -93,6 +97,7 @@ namespace TrainingDataGridView.Forms
             this.label3.TabIndex = 6;
             this.label3.Text = "PassWord";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // userIDlabel
             // 
@@ -102,6 +107,7 @@ namespace TrainingDataGridView.Forms
             this.userIDlabel.Size = new System.Drawing.Size(181, 22);
             this.userIDlabel.TabIndex = 7;
             this.userIDlabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.userIDlabel.Click += new System.EventHandler(this.userIDlabel_Click);
             // 
             // btnDelete
             // 
@@ -144,6 +150,7 @@ namespace TrainingDataGridView.Forms
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(348, 190);
             this.dataGridView1.TabIndex = 11;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // AccountForm
             // 

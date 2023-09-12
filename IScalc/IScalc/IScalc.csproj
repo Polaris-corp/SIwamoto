@@ -70,17 +70,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ConstValues.cs" />
     <Compile Include="Common\DbConnection.cs" />
     <Compile Include="Common\ErrorLog.cs" />
     <Compile Include="Common\ErrorLogItem.cs" />
     <Compile Include="Common\FormResults.cs" />
     <Compile Include="Common\VariousNumbers.cs" />
+    <Compile Include="Controller\AccountController.cs" />
+    <Compile Include="Controller\DGVController.cs" />
     <Compile Include="Controller\LoginController.cs" />
     <Compile Include="Model\HistoryModel.cs" />
-    <Compile Include="View\LoginForm.cs">
+    <Compile Include="Model\UsersModel.cs" />
+    <Compile Include="Service\DGVService.cs" />
+    <Compile Include="Fomrs\AccountForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\LoginForm.Designer.cs">
+    <Compile Include="Fomrs\AccountForm.Designer.cs">
+      <DependentUpon>AccountForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Fomrs\DataGridViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Fomrs\DataGridViewForm.Designer.cs">
+      <DependentUpon>DataGridViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Fomrs\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Fomrs\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Service\HistoryService.cs" />
@@ -88,7 +105,13 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\UserService.cs" />
-    <EmbeddedResource Include="View\LoginForm.resx">
+    <EmbeddedResource Include="Fomrs\AccountForm.resx">
+      <DependentUpon>AccountForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fomrs\DataGridViewForm.resx">
+      <DependentUpon>DataGridViewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fomrs\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -113,12 +136,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TrainingDataGridView\TrainingDataGridView.csproj">
-      <Project>{c8e9d618-12fa-4bc8-89d9-19968a02dc20}</Project>
-      <Name>TrainingDataGridView</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
