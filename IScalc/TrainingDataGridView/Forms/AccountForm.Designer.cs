@@ -43,24 +43,24 @@ namespace TrainingDataGridView.Forms
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // textBox2
+            // userNameTextBox
             // 
             this.userNameTextBox.Location = new System.Drawing.Point(103, 100);
-            this.userNameTextBox.Name = "textBox2";
+            this.userNameTextBox.Name = "userNameTextBox";
             this.userNameTextBox.Size = new System.Drawing.Size(174, 19);
             this.userNameTextBox.TabIndex = 1;
             // 
-            // textBox3
+            // userPwdTextBox
             // 
             this.userPwdTextBox.Location = new System.Drawing.Point(103, 156);
-            this.userPwdTextBox.Name = "textBox3";
+            this.userPwdTextBox.Name = "userPwdTextBox";
             this.userPwdTextBox.Size = new System.Drawing.Size(174, 19);
             this.userPwdTextBox.TabIndex = 2;
             // 
-            // btnCreateOrUpdate
+            // btnCreate
             // 
             this.btnCreate.Location = new System.Drawing.Point(347, 251);
-            this.btnCreate.Name = "btnCreateOrUpdate";
+            this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(155, 76);
             this.btnCreate.TabIndex = 3;
             this.btnCreate.Text = "Form2Button";
@@ -94,11 +94,11 @@ namespace TrainingDataGridView.Forms
             this.label3.Text = "PassWord";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label4
+            // userIDlabel
             // 
             this.userIDlabel.Font = new System.Drawing.Font("MS UI Gothic", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.userIDlabel.Location = new System.Drawing.Point(99, 42);
-            this.userIDlabel.Name = "label4";
+            this.userIDlabel.Name = "userIDlabel";
             this.userIDlabel.Size = new System.Drawing.Size(181, 22);
             this.userIDlabel.TabIndex = 7;
             this.userIDlabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -119,9 +119,9 @@ namespace TrainingDataGridView.Forms
             this.btnShowDeleted.Name = "btnShowDeleted";
             this.btnShowDeleted.Size = new System.Drawing.Size(155, 76);
             this.btnShowDeleted.TabIndex = 9;
-            this.btnShowDeleted.Text = "削除されたユーザー情報表示";
+            this.btnShowDeleted.Text = "ユーザーの復旧";
             this.btnShowDeleted.UseVisualStyleBackColor = true;
-            this.btnShowDeleted.Click += new System.EventHandler(this.ShowDeletedAccount_Click);
+            this.btnShowDeleted.Click += new System.EventHandler(this.RestorationUser_Click);
             // 
             // btnShowAll
             // 

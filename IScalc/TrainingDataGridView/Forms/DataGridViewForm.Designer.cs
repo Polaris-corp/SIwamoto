@@ -68,7 +68,7 @@ namespace TrainingDataGridView.Forms
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(204, 103);
             this.btnUpdate.TabIndex = 2;
-            this.btnUpdate.Text = "ユーザー情報変更";
+            this.btnUpdate.Text = "ユーザー情報変更/復旧";
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 

@@ -74,6 +74,11 @@ namespace TrainingDataGridView.Forms
 
         private void btnShowDeletedUser_Click(object sender, EventArgs e)
         {
+            GetDeletedDataTableItem();
+        }
+
+        private void GetDeletedDataTableItem()
+        {
             dt = dgvController.GetDeletedUserInfo();
             dataGridView1.DataSource = dt;
         }

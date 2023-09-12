@@ -41,6 +41,11 @@ namespace TrainingDataGridView.Service
             ExecutionSql(CreateAccountDeleteSql(id));
         }
 
+        public void RestorationAccountInfo(int id)
+        {
+            ExecutionSql(CreateAccountRestorationSql(id));
+        }        
+
         private void ExecutionSql(MySqlCommand command)
         {
             using (MySqlConnection connection = new MySqlConnection(DbConnection.ConnectionString))
@@ -153,6 +158,21 @@ namespace TrainingDataGridView.Service
                                    users
                              SET
                                    deleted = 1
+                             WHERE
+                                   ID = @ID;";
+
+            MySqlCommand command = new MySqlCommand(query);
+            command.Parameters.AddWithValue("@ID", id);
+
+            return command;
+        }
+
+        private MySqlCommand CreateAccountRestorationSql(int id)
+        {
+            string query = @"UPDATE
+                                   users
+                             SET
+                                   deleted = 0
                              WHERE
                                    ID = @ID;";
 

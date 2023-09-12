@@ -73,11 +73,13 @@ namespace TrainingDataGridView.Forms
         private void Delete_Click(object sender, EventArgs e)
         {
             accountController.DeleteAccountInfo(Convert.ToInt32(user.Id));
+            GetDataTableItem();
         }
 
-        private void ShowDeletedAccount_Click(object sender, EventArgs e)
+        private void RestorationUser_Click(object sender, EventArgs e)
         {
-            GetDeletedDataTableItem();
+            accountController.RestorationAccountInfo(Convert.ToInt32(user.Id));
+            GetDataTableItem();
         }
 
         private void btnShowAll_Click(object sender, EventArgs e)
@@ -97,10 +99,6 @@ namespace TrainingDataGridView.Forms
             dataGridView1.DataSource = dt;
         }
 
-        private void GetDeletedDataTableItem()
-        {
-            dt = accountController.GetDeletedUserInfo();
-            dataGridView1.DataSource = dt;
-        }
+       
     }
 }

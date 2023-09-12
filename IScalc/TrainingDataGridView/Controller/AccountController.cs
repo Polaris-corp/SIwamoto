@@ -27,6 +27,11 @@ namespace TrainingDataGridView.Controller
             dgvService.DeleteAccountInfo(id);
         }
 
+        public void RestorationAccountInfo(int id)
+        {
+            dgvService.RestorationAccountInfo(id);
+        }
+
         public DataTable GetAllUserInfo()
         {
             return dgvService.ShowAllUserData();
