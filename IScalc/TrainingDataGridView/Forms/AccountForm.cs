@@ -87,7 +87,7 @@ namespace TrainingDataGridView.Forms
 
         private void GetDataTableItem()
         {
-            dt = dgvController.IndicateUsersInfo();
+            dt = accountController.GetUserInfo();
             dataGridView1.DataSource = dt;
         }
 
