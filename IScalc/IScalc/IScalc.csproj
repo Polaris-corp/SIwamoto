@@ -114,6 +114,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\TrainingDataGridView\TrainingDataGridView.csproj">
+      <Project>{c8e9d618-12fa-4bc8-89d9-19968a02dc20}</Project>
+      <Name>TrainingDataGridView</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

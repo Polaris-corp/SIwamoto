@@ -84,6 +84,9 @@ namespace IScalc.View
                 //ログイン成功
                 loginController.InsertHisotry(userid , FormResults.Ok, tryLoginTime);
                 MessageBox.Show(FormMessageItem.LoginSucces);
+                TrainingDataGridView.Forms.DataGridViewForm dataGridView = new TrainingDataGridView.Forms.DataGridViewForm();
+                dataGridView.ShowDialog();
+                dataGridView.Dispose();
             }
             catch(Exception ex)
             {
