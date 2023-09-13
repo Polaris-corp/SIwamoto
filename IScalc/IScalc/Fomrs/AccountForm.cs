@@ -15,15 +15,12 @@ namespace IScalc.View
 {
     public partial class AccountForm : Form
     {
-        //public AccountForm()
-        //{
-        //    InitializeComponent();
-        //}
-
-        public AccountForm(bool update)
+       
+        public AccountForm(bool update, UsersModel usersInfo)
         {
             InitializeComponent();
             Createflg = update;
+            user = usersInfo;
 
             btnCreate.Text = update ? ConstValues.NewAccount : ConstValues.UpdateAccount;
         }
@@ -31,10 +28,8 @@ namespace IScalc.View
         AccountController accountController = new AccountController();
 
         bool Createflg = true;
-        public UsersModel user { get; set; }
-        DataTable dt = new DataTable();
-
-       
+        UsersModel user;
+        
         private void AccountForm_Load_1(object sender, EventArgs e)
         {
             userIDlabel.Text = user.Id;
@@ -63,7 +58,7 @@ namespace IScalc.View
             {
                 if(string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Pwd))
                 {
-                    MessageBox.Show("名前及びパスワードを設定してください。");
+                    MessageBox.Show(FormMessageItem.AccountFormWarning);
                     return;
                 }
                 else

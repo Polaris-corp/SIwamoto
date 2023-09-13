@@ -17,6 +17,6 @@ namespace IScalc.Common
         public const string WrongPassword = "ID,パスワードが違います。";
         public const string RemainigTime = "あと{0}でログイン可能です。";
         public const string Warning = "IDは数字で入力してください。";
-        
+        public const string AccountFormWarning = "名前及びパスワードを設定してください。";
     }
 }

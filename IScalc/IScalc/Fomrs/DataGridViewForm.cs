@@ -42,8 +42,7 @@ namespace IScalc.View
 
         private void LoadAccountForm(bool flg, UsersModel user)
         {
-            AccountForm accountForm = new AccountForm(flg);
-            accountForm.user = user;
+            AccountForm accountForm = new AccountForm(flg, user);
             accountForm.ShowDialog();
             accountForm.Dispose();
             GetDataTableItem();
