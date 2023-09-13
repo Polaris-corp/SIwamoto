@@ -22,5 +22,10 @@ namespace IScalc.Controller
         {
             return dgvService.ShowDeletedUserData();
         }
+
+        public DataTable GetAllUserInfo()
+        {
+            return dgvService.ShowAllUserData();
+        }
     }
 }

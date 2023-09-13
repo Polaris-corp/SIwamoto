@@ -11,6 +11,7 @@ using IScalc.Controller;
 using IScalc.Common;
 using IScalc.Model;
 
+
 namespace IScalc.View
 {
     public partial class DataGridViewForm : Form
@@ -54,8 +55,15 @@ namespace IScalc.View
             dataGridView1.DataSource = dt;
         }
 
+        private void GetAllDataTableItem()
+        {
+            dt = dgvController.GetAllUserInfo();
+            dataGridView1.DataSource = dt;
+        }
+
         private void DataGridViewForm_Load(object sender, EventArgs e)
         {
+            comboBox1.SelectedIndex = 0;
             GetDataTableItem();
         }
 
@@ -82,6 +90,22 @@ namespace IScalc.View
         private void ShowDeletedUserbtn_Click(object sender, EventArgs e)
         {
             GetDeletedDataTableItem();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(comboBox1.SelectedIndex == 0)
+            {
+                GetDataTableItem();
+            }
+            else if(comboBox1.SelectedIndex == 1)
+            {
+                GetDeletedDataTableItem();
+            }
+            else
+            {
+                GetAllDataTableItem();
+            }
         }
     }
 }

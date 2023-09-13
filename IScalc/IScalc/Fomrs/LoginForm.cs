@@ -49,22 +49,6 @@ namespace IScalc.View
 
             try
             {
-                //IDがあるかチェック
-                if (!loginController.CheckUsersID(userid))
-                {
-                    MessageBox.Show(FormMessageItem.NotUser);
-                    return;
-                }
-
-                //IDとPWの紐づきデータのチェック
-                if (!loginController.CheckAccount(userid, pwd))
-                {
-                    loginController.InsertHisotry(userid, FormResults.Ng, tryLoginTime);
-                    MessageBox.Show(FormMessageItem.WrongPassword);
-
-                    return;
-                }
-
                 //そのIDの履歴直近3件の最新のログイン試行時間、最古のログイン試行時間、ログイン失敗数を取得 
                 HistoryModel historyModels = loginController.Check3LoginHistory(userid);
                 DateTime latestLogTime = historyModels.LatestLogtime;
@@ -83,9 +67,18 @@ namespace IScalc.View
                     }
                 }
 
+                //IDとPWの紐づきデータのチェック
+                if (!loginController.CheckAccount(userid, pwd))
+                {
+                    loginController.InsertHisotry(userid, FormResults.Ng, tryLoginTime);
+                    MessageBox.Show(FormMessageItem.WrongPassword);
+
+                    return;
+                }
+
+
                 //ログイン成功
                 loginController.InsertHisotry(userid, FormResults.Ok, tryLoginTime);
-                MessageBox.Show(FormMessageItem.LoginSucces);
                 dataGridView.ShowDialog();
                 dataGridView.Dispose();
             }
@@ -101,13 +94,6 @@ namespace IScalc.View
            
         }
 
-        private void CreateAccount_Click(object sender, EventArgs e)
-        {
-            AccountForm accountForm = new AccountForm(true);
-            UsersModel user = new UsersModel();
-            accountForm.user = user;
-            accountForm.ShowDialog();
-            accountForm.Dispose();
-        }
+       
     }
 }

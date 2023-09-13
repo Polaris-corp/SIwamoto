@@ -11,10 +11,10 @@ namespace IScalc.Common
     /// </summary>
     public static class FormMessageItem
     {
-        public const string NotUser = "ユーザーが存在しません。";
+        public const string NotUser = "ID,パスワードが違います。";
         public const string NotInput = "ID,パスワードを入力してください。";
         public const string LoginSucces = "ログイン成功";
-        public const string WrongPassword = "パスワードが違います。";
+        public const string WrongPassword = "ID,パスワードが違います。";
         public const string RemainigTime = "あと{0}でログイン可能です。";
         public const string Warning = "IDは数字で入力してください。";
         

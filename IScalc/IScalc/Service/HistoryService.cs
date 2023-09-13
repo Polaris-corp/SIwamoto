@@ -110,9 +110,7 @@ namespace IScalc.Service
                                         logtime DESC 
                                   LIMIT
                                         3
-                                 )
-                             AS 
-                                    loghist 
+                                 ) AS loghist 
                              WHERE
                                     results = 0;";
 
