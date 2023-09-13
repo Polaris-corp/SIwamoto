@@ -35,24 +35,11 @@ namespace IScalc.View
         DataTable dt = new DataTable();
 
        
-        private void GetDataTableItem()
-        {
-            dt = accountController.GetUserInfo(ConstValues.Arrive);
-            dataGridView1.DataSource = dt;
-        }
-
-        private void GetAllDataTableItem()
-        {
-            dt = accountController.GetAllUserInfo();
-            dataGridView1.DataSource = dt;
-        }
-
         private void AccountForm_Load_1(object sender, EventArgs e)
         {
             userIDlabel.Text = user.Id;
             userNameTextBox.Text = user.Name;
             userPwdTextBox.Text = user.Pwd;
-            GetDataTableItem();
             if (Createflg)
             {
                 btnDelete.Enabled = false;
@@ -87,18 +74,12 @@ namespace IScalc.View
         private void btnDelete_Click(object sender, EventArgs e)
         {
             accountController.DeleteAccountInfo(Convert.ToInt32(user.Id));
-            GetDataTableItem();
         }
 
         private void btnRestorationUser_Click(object sender, EventArgs e)
         {
             accountController.RestorationAccountInfo(Convert.ToInt32(user.Id));
-            GetDataTableItem();
         }
 
-        private void btnShowAll_Click_1(object sender, EventArgs e)
-        {
-            GetAllDataTableItem();
-        }
     }
 }
