@@ -29,9 +29,6 @@ namespace IScalc.View
         /// </summary>
         private void InitializeComponent()
         {
-            this.ShowDeletedUserbtn = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.btnUpdateDB = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnNew = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -39,39 +36,9 @@ namespace IScalc.View
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // ShowDeletedUserbtn
-            // 
-            this.ShowDeletedUserbtn.Location = new System.Drawing.Point(562, 169);
-            this.ShowDeletedUserbtn.Name = "ShowDeletedUserbtn";
-            this.ShowDeletedUserbtn.Size = new System.Drawing.Size(204, 103);
-            this.ShowDeletedUserbtn.TabIndex = 12;
-            this.ShowDeletedUserbtn.Text = "削除されたユーザー表示";
-            this.ShowDeletedUserbtn.UseVisualStyleBackColor = true;
-            this.ShowDeletedUserbtn.Click += new System.EventHandler(this.ShowDeletedUserbtn_Click);
-            // 
-            // btnClose
-            // 
-            this.btnClose.Location = new System.Drawing.Point(562, 329);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(204, 103);
-            this.btnClose.TabIndex = 11;
-            this.btnClose.Text = "閉じる";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click_1);
-            // 
-            // btnUpdateDB
-            // 
-            this.btnUpdateDB.Location = new System.Drawing.Point(562, 18);
-            this.btnUpdateDB.Name = "btnUpdateDB";
-            this.btnUpdateDB.Size = new System.Drawing.Size(204, 94);
-            this.btnUpdateDB.TabIndex = 10;
-            this.btnUpdateDB.Text = "データベース更新";
-            this.btnUpdateDB.UseVisualStyleBackColor = true;
-            this.btnUpdateDB.Click += new System.EventHandler(this.btnUpdateDB_Click_1);
-            // 
             // btnUpdate
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(305, 330);
+            this.btnUpdate.Location = new System.Drawing.Point(562, 242);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(204, 103);
             this.btnUpdate.TabIndex = 9;
@@ -81,7 +48,7 @@ namespace IScalc.View
             // 
             // btnNew
             // 
-            this.btnNew.Location = new System.Drawing.Point(48, 330);
+            this.btnNew.Location = new System.Drawing.Point(562, 105);
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(204, 103);
             this.btnNew.TabIndex = 8;
@@ -100,7 +67,7 @@ namespace IScalc.View
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 21;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(501, 272);
+            this.dataGridView1.Size = new System.Drawing.Size(501, 354);
             this.dataGridView1.TabIndex = 7;
             // 
             // comboBox1
@@ -121,9 +88,6 @@ namespace IScalc.View
             // 
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.ShowDeletedUserbtn);
-            this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.btnUpdateDB);
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.btnNew);
             this.Controls.Add(this.dataGridView1);
@@ -135,10 +99,6 @@ namespace IScalc.View
         }
 
         #endregion
-
-        private System.Windows.Forms.Button ShowDeletedUserbtn;
-        private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Button btnUpdateDB;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnNew;
         private System.Windows.Forms.DataGridView dataGridView1;

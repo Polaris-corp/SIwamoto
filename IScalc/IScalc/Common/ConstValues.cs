@@ -12,6 +12,7 @@ namespace IScalc.Common
         public const string UpdateAccount = "更新";
         public const bool Fresh = true;
         public const bool Update = false;
+
         public const bool Deleted = true;
         public const bool Arrive = false;
     }

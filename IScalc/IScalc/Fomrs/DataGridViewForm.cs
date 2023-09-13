@@ -49,7 +49,6 @@ namespace IScalc.View
             GetDataTableItem();
         }
 
-
         private void GetDeletedDataTableItem()
         {
             dt = dgvController.GetDeletedUserInfo(ConstValues.Deleted);
@@ -76,21 +75,6 @@ namespace IScalc.View
         private void btnUpdate_Click_1(object sender, EventArgs e)
         {
             LoadAccountForm(ConstValues.Update, GetDgvRowItem());
-        }
-
-        private void btnUpdateDB_Click_1(object sender, EventArgs e)
-        {
-            GetDataTableItem();
-        }
-
-        private void btnClose_Click_1(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void ShowDeletedUserbtn_Click(object sender, EventArgs e)
-        {
-            GetDeletedDataTableItem();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

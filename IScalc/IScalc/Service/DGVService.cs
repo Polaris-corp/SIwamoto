@@ -86,8 +86,6 @@ namespace IScalc.Service
             return command;
         }
 
-       
-
         private MySqlCommand CreateGetAllAccountInfoSql()
         {
             string query = @"SELECT
