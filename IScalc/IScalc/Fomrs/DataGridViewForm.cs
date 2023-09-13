@@ -34,7 +34,7 @@ namespace IScalc.View
             return user;
         }
 
-        private void GetDataTableItem()
+        private void ShowDataTableItem()
         {
             dt = dgvController.IndicateUsersInfo(ConstValues.Arrive);
             dataGridView1.DataSource = dt;
@@ -45,16 +45,16 @@ namespace IScalc.View
             AccountForm accountForm = new AccountForm(flg, user);
             accountForm.ShowDialog();
             accountForm.Dispose();
-            GetDataTableItem();
+            ShowDataTableItem();
         }
 
-        private void GetDeletedDataTableItem()
+        private void ShowDeletedDataTableItem()
         {
             dt = dgvController.GetDeletedUserInfo(ConstValues.Deleted);
             dataGridView1.DataSource = dt;
         }
 
-        private void GetAllDataTableItem()
+        private void ShowAllDataTableItem()
         {
             dt = dgvController.GetAllUserInfo();
             dataGridView1.DataSource = dt;
@@ -63,7 +63,7 @@ namespace IScalc.View
         private void DataGridViewForm_Load(object sender, EventArgs e)
         {
             comboBox1.SelectedIndex = 0;
-            GetDataTableItem();
+            ShowDataTableItem();
         }
 
         private void btnNew_Click_1(object sender, EventArgs e)
@@ -80,15 +80,15 @@ namespace IScalc.View
         {
             if(comboBox1.SelectedIndex == 0)
             {
-                GetDataTableItem();
+                ShowDataTableItem();
             }
             else if(comboBox1.SelectedIndex == 1)
             {
-                GetDeletedDataTableItem();
+                ShowDeletedDataTableItem();
             }
             else
             {
-                GetAllDataTableItem();
+                ShowAllDataTableItem();
             }
         }
     }
