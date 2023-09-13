@@ -61,7 +61,15 @@ namespace IScalc.View
 
             if (Createflg)
             {
-                accountController.InsertAccountInfo(Name, Pwd);
+                if(string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Pwd))
+                {
+                    MessageBox.Show("名前及びパスワードを設定してください。");
+                    return;
+                }
+                else
+                {
+                    accountController.InsertAccountInfo(Name, Pwd);
+                }
             }
             else
             {
