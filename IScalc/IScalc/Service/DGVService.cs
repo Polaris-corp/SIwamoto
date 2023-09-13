@@ -33,7 +33,7 @@ namespace IScalc.Service
 
         public void UpdateAccountInfo(int id, string name, string pwd)
         {
-            ExecutionSql(CreateUpdateSql(id, name, pwd));
+            //ExecutionSql(CreateUpdateSql(id, name, pwd));
         }
 
         public void DeleteAccountInfo(int id)
@@ -127,23 +127,23 @@ namespace IScalc.Service
             return command;
         }
 
-        private MySqlCommand CreateUpdateSql(int id, string name, string pwd)
-        {
-            string query = @"UPDATE 
-                                 users 
-                             SET
-                                 Name = @Name
-                                 , Pwd = @Pwd 
-                             WHERE
-                                 ID = @ID;";
+        //private MySqlCommand CreateUpdateSql(int id, string name, string pwd)
+        //{
+        //    string query = @"UPDATE 
+        //                         users 
+        //                     SET
+        //                         Name = @Name
+        //                         , Pwd = @Pwd 
+        //                     WHERE
+        //                         ID = @ID;";
 
-            MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@ID", id);
-            command.Parameters.AddWithValue("@Name", name);
-            command.Parameters.AddWithValue("@Pwd", pwd);
+        //    MySqlCommand command = new MySqlCommand(query);
+        //    command.Parameters.AddWithValue("@ID", id);
+        //    command.Parameters.AddWithValue("@Name", name);
+        //    command.Parameters.AddWithValue("@Pwd", pwd);
 
-            return command;
-        }
+        //    return command;
+        //}
 
         private MySqlCommand CreateAccountDeleteSql(int id)
         {

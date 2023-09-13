@@ -81,6 +81,8 @@ namespace IScalc.View
                 loginController.InsertHisotry(userid, FormResults.Ok, tryLoginTime);
                 dataGridView.ShowDialog();
                 dataGridView.Dispose();
+                textBox1.Text = "";
+                textBox2.Text = "";
             }
             catch (Exception ex)
             {

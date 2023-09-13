@@ -29,7 +29,6 @@ namespace IScalc.View
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnRestorationUser = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.userIDlabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -38,21 +37,14 @@ namespace IScalc.View
             this.btnCreate = new System.Windows.Forms.Button();
             this.userPwdTextBox = new System.Windows.Forms.TextBox();
             this.userNameTextBox = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnRestorationUser
-            // 
-            this.btnRestorationUser.Location = new System.Drawing.Point(156, 299);
-            this.btnRestorationUser.Name = "btnRestorationUser";
-            this.btnRestorationUser.Size = new System.Drawing.Size(155, 76);
-            this.btnRestorationUser.TabIndex = 20;
-            this.btnRestorationUser.Text = "ユーザーの復旧";
-            this.btnRestorationUser.UseVisualStyleBackColor = true;
-            this.btnRestorationUser.Click += new System.EventHandler(this.btnRestorationUser_Click);
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(490, 299);
+            this.btnDelete.Location = new System.Drawing.Point(259, 14);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(155, 76);
             this.btnDelete.TabIndex = 19;
@@ -102,7 +94,7 @@ namespace IScalc.View
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(155, 76);
             this.btnCreate.TabIndex = 14;
-            this.btnCreate.Text = "新規/更新";
+            this.btnCreate.Text = "新規登録";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click_1);
             // 
@@ -120,13 +112,31 @@ namespace IScalc.View
             this.userNameTextBox.Size = new System.Drawing.Size(174, 19);
             this.userNameTextBox.TabIndex = 12;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btnUpdate);
+            this.panel1.Controls.Add(this.btnDelete);
+            this.panel1.Location = new System.Drawing.Point(170, 289);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(460, 105);
+            this.panel1.TabIndex = 21;
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(43, 14);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(155, 76);
+            this.btnUpdate.TabIndex = 21;
+            this.btnUpdate.Text = "更新";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
             // AccountForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnRestorationUser);
-            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.userIDlabel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -137,13 +147,13 @@ namespace IScalc.View
             this.Name = "AccountForm";
             this.Text = "AccountForm";
             this.Load += new System.EventHandler(this.AccountForm_Load_1);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Button btnRestorationUser;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Label userIDlabel;
         private System.Windows.Forms.Label label3;
@@ -152,5 +162,7 @@ namespace IScalc.View
         private System.Windows.Forms.Button btnCreate;
         private System.Windows.Forms.TextBox userPwdTextBox;
         private System.Windows.Forms.TextBox userNameTextBox;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btnUpdate;
     }
 }

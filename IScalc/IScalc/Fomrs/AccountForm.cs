@@ -16,18 +16,15 @@ namespace IScalc.View
     public partial class AccountForm : Form
     {
        
-        public AccountForm(bool update, UsersModel usersInfo)
+        public AccountForm(bool Fresh, UsersModel usersInfo)
         {
             InitializeComponent();
-            Createflg = update;
             user = usersInfo;
-
-            btnCreate.Text = update ? ConstValues.NewAccount : ConstValues.UpdateAccount;
+            panel1.Visible = !Fresh;
         }
 
         AccountController accountController = new AccountController();
 
-        bool Createflg = true;
         UsersModel user;
         
         private void AccountForm_Load_1(object sender, EventArgs e)
@@ -35,15 +32,6 @@ namespace IScalc.View
             userIDlabel.Text = user.Id;
             userNameTextBox.Text = user.Name;
             userPwdTextBox.Text = user.Pwd;
-            if (Createflg)
-            {
-                btnDelete.Visible = false;
-                btnRestorationUser.Visible = false;
-            }
-            else
-            {
-                btnDelete.Visible = true;
-            }
         }
 
         private void btnCreate_Click_1(object sender, EventArgs e)
@@ -56,16 +44,8 @@ namespace IScalc.View
                 MessageBox.Show(FormMessageItem.AccountFormWarning);
                 return;
             }
-            if (Createflg)
-            {
-                accountController.InsertAccountInfo(Name, Pwd);
-            }
-            else
-            {
-                accountController.UpdateAccountInfo(Convert.ToInt32(user.Id), Name, Pwd);
-                this.Close();
-            }
-            
+
+            accountController.InsertAccountInfo(Name, Pwd);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -73,12 +53,19 @@ namespace IScalc.View
             accountController.DeleteAccountInfo(Convert.ToInt32(user.Id));
         }
 
-        private void btnRestorationUser_Click(object sender, EventArgs e)
+        //private void btnRestorationUser_Click(object sender, EventArgs e)
+        //{
+        //    string Name = userNameTextBox.Text;
+        //    string Pwd = userPwdTextBox.Text;
+        //    accountController.RestorationAccountInfo(Convert.ToInt32(user.Id), Name, Pwd);
+        //}
+
+        private void btnUpdate_Click(object sender, EventArgs e)
         {
             string Name = userNameTextBox.Text;
             string Pwd = userPwdTextBox.Text;
             accountController.RestorationAccountInfo(Convert.ToInt32(user.Id), Name, Pwd);
+            this.Close();
         }
-
     }
 }
