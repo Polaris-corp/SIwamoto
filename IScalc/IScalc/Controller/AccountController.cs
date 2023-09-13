@@ -27,9 +27,9 @@ namespace IScalc.Controller
             dgvService.DeleteAccountInfo(id);
         }
 
-        public void RestorationAccountInfo(int id)
+        public void RestorationAccountInfo(int id, string name, string pwd)
         {
-            dgvService.RestorationAccountInfo(id);
+            dgvService.RestorationAccountInfo(id, name, pwd);
         }
 
         public DataTable GetAllUserInfo()

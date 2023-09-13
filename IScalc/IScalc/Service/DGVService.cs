@@ -41,9 +41,9 @@ namespace IScalc.Service
             ExecutionSql(CreateAccountDeleteSql(id));
         }
 
-        public void RestorationAccountInfo(int id)
+        public void RestorationAccountInfo(int id, string name, string pwd)
         {
-            ExecutionSql(CreateAccountRestorationSql(id));
+            ExecutionSql(CreateAccountRestorationSql(id, name, pwd));
         }
 
         private void ExecutionSql(MySqlCommand command)
@@ -53,8 +53,15 @@ namespace IScalc.Service
                 command.Connection = connection;
 
                 connection.Open();
-                command.ExecuteNonQuery();
-            }
+                try 
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                }
         }
 
         private DataTable CreateDT(MySqlCommand command)
@@ -153,18 +160,21 @@ namespace IScalc.Service
             return command;
         }
 
-        private MySqlCommand CreateAccountRestorationSql(int id)
+        private MySqlCommand CreateAccountRestorationSql(int id, string name, string pwd)
         {
             string query = @"UPDATE
                                    users
                              SET
-                                   deleted = 0
+                                   Name = @Name
+                                   ,Pwd = @Pwd
+                                   ,deleted = 0
                              WHERE
                                    ID = @ID;";
 
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@ID", id);
-
+            command.Parameters.AddWithValue("@Name", name);
+            command.Parameters.AddWithValue("@Pwd", pwd);
             return command;
         }
     }

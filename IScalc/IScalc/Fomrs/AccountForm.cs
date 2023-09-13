@@ -37,14 +37,11 @@ namespace IScalc.View
             userPwdTextBox.Text = user.Pwd;
             if (Createflg)
             {
-                btnDelete.Enabled = false;
                 btnDelete.Visible = false;
-                btnRestorationUser.Enabled = false;
                 btnRestorationUser.Visible = false;
             }
             else
             {
-                btnDelete.Enabled = true;
                 btnDelete.Visible = true;
             }
         }
@@ -54,17 +51,14 @@ namespace IScalc.View
             string Name = userNameTextBox.Text;
             string Pwd = userPwdTextBox.Text;
 
+            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Pwd))
+            {
+                MessageBox.Show(FormMessageItem.AccountFormWarning);
+                return;
+            }
             if (Createflg)
             {
-                if(string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Pwd))
-                {
-                    MessageBox.Show(FormMessageItem.AccountFormWarning);
-                    return;
-                }
-                else
-                {
-                    accountController.InsertAccountInfo(Name, Pwd);
-                }
+                accountController.InsertAccountInfo(Name, Pwd);
             }
             else
             {
@@ -81,7 +75,9 @@ namespace IScalc.View
 
         private void btnRestorationUser_Click(object sender, EventArgs e)
         {
-            accountController.RestorationAccountInfo(Convert.ToInt32(user.Id));
+            string Name = userNameTextBox.Text;
+            string Pwd = userPwdTextBox.Text;
+            accountController.RestorationAccountInfo(Convert.ToInt32(user.Id), Name, Pwd);
         }
 
     }
