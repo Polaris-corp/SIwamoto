@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using MySqlConnector;
 using IScalc.Common;
+using IScalc.Model;
 
 namespace IScalc.Service
 {
@@ -26,14 +27,9 @@ namespace IScalc.Service
             return CreateDT(CreateDGVSelectSql(deleted));
         }
 
-        public void InsertAcInfo(string name, string pwd)
+        public void InsertAcInfo(UsersModel user)
         {
-            ExecutionSql(CreateInsertSql(name, pwd));
-        }
-
-        public void UpdateAccountInfo(int id, string name, string pwd)
-        {
-            //ExecutionSql(CreateUpdateSql(id, name, pwd));
+            ExecutionSql(CreateInsertSql(user));
         }
 
         public void DeleteAccountInfo(int id)
@@ -41,9 +37,9 @@ namespace IScalc.Service
             ExecutionSql(CreateAccountDeleteSql(id));
         }
 
-        public void RestorationAccountInfo(int id, string name, string pwd)
+        public void UpdateAccountInfo(UsersModel user)
         {
-            ExecutionSql(CreateAccountRestorationSql(id, name, pwd));
+            ExecutionSql(CreateAccountRestorationSql(user));
         }
 
         private void ExecutionSql(MySqlCommand command)
@@ -83,6 +79,7 @@ namespace IScalc.Service
                                    ID
                                    , Name
                                    , Pwd
+                                   , deleted
                              FROM 
                                    users
                              WHERE 
@@ -107,43 +104,28 @@ namespace IScalc.Service
             return command;
         }
 
-        private MySqlCommand CreateInsertSql(string name, string pwd)
+        private MySqlCommand CreateInsertSql(UsersModel user)
         {
             string query = @"INSERT INTO
                                  users
                              (
                                  Name
                                  , Pwd
+                                 , deleted
                               ) VALUES (
                                  @Name
                                  , @Pwd
+                                 , @deleted
                               );";
 
 
             MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@Name", name);
-            command.Parameters.AddWithValue("@Pwd", pwd);
+            command.Parameters.AddWithValue("@Name", user.Name);
+            command.Parameters.AddWithValue("@Pwd", user.Pwd);
+            command.Parameters.AddWithValue("@deleted", user.Deleted);
 
             return command;
         }
-
-        //private MySqlCommand CreateUpdateSql(int id, string name, string pwd)
-        //{
-        //    string query = @"UPDATE 
-        //                         users 
-        //                     SET
-        //                         Name = @Name
-        //                         , Pwd = @Pwd 
-        //                     WHERE
-        //                         ID = @ID;";
-
-        //    MySqlCommand command = new MySqlCommand(query);
-        //    command.Parameters.AddWithValue("@ID", id);
-        //    command.Parameters.AddWithValue("@Name", name);
-        //    command.Parameters.AddWithValue("@Pwd", pwd);
-
-        //    return command;
-        //}
 
         private MySqlCommand CreateAccountDeleteSql(int id)
         {
@@ -160,21 +142,22 @@ namespace IScalc.Service
             return command;
         }
 
-        private MySqlCommand CreateAccountRestorationSql(int id, string name, string pwd)
+        private MySqlCommand CreateAccountRestorationSql(UsersModel user)
         {
             string query = @"UPDATE
                                    users
                              SET
                                    Name = @Name
                                    ,Pwd = @Pwd
-                                   ,deleted = 0
+                                   ,deleted = @deleted
                              WHERE
                                    ID = @ID;";
 
             MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@ID", id);
-            command.Parameters.AddWithValue("@Name", name);
-            command.Parameters.AddWithValue("@Pwd", pwd);
+            command.Parameters.AddWithValue("@ID", user.Id);
+            command.Parameters.AddWithValue("@Name", user.Name);
+            command.Parameters.AddWithValue("@Pwd", user.Pwd);
+            command.Parameters.AddWithValue("@deleted", user.Deleted);
             return command;
         }
     }

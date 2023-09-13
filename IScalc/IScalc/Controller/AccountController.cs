@@ -5,21 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using IScalc.Service;
 using System.Data;
+using IScalc.Model;
 
 namespace IScalc.Controller
 {
     public class AccountController
     {
         DGVService dgvService = new DGVService();
+        
 
-        public void InsertAccountInfo(string Name, string Pwd)
+        public void InsertAccountInfo(UsersModel user)
         {
-            dgvService.InsertAcInfo(Name, Pwd);
-        }
-
-        public void UpdateAccountInfo(int id, string name, string pwd)
-        {
-            dgvService.UpdateAccountInfo(id, name, pwd);
+            dgvService.InsertAcInfo(user);
         }
 
         public void DeleteAccountInfo(int id)
@@ -27,9 +24,9 @@ namespace IScalc.Controller
             dgvService.DeleteAccountInfo(id);
         }
 
-        public void RestorationAccountInfo(int id, string name, string pwd)
+        public void UpdateAccountInfo(UsersModel user)
         {
-            dgvService.RestorationAccountInfo(id, name, pwd);
+            dgvService.UpdateAccountInfo(user);
         }
 
         public DataTable GetAllUserInfo()

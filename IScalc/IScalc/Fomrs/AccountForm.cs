@@ -16,11 +16,11 @@ namespace IScalc.View
     public partial class AccountForm : Form
     {
        
-        public AccountForm(bool Fresh, UsersModel usersInfo)
+        public AccountForm(bool Update, UsersModel usersInfo)
         {
             InitializeComponent();
             user = usersInfo;
-            panel1.Visible = !Fresh;
+            panel1.Visible = Update;
         }
 
         AccountController accountController = new AccountController();
@@ -32,20 +32,22 @@ namespace IScalc.View
             userIDlabel.Text = user.Id;
             userNameTextBox.Text = user.Name;
             userPwdTextBox.Text = user.Pwd;
+            chkDeleted.Checked = user.Deleted;
         }
 
         private void btnCreate_Click_1(object sender, EventArgs e)
         {
-            string Name = userNameTextBox.Text;
-            string Pwd = userPwdTextBox.Text;
+            user.Name = userNameTextBox.Text;
+            user.Pwd = userPwdTextBox.Text;
+            user.Deleted = chkDeleted.Checked;
 
-            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Pwd))
+            if (string.IsNullOrEmpty(user.Name) || string.IsNullOrEmpty(user.Pwd))
             {
                 MessageBox.Show(FormMessageItem.AccountFormWarning);
                 return;
             }
 
-            accountController.InsertAccountInfo(Name, Pwd);
+            accountController.InsertAccountInfo(user);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -53,19 +55,21 @@ namespace IScalc.View
             accountController.DeleteAccountInfo(Convert.ToInt32(user.Id));
         }
 
-        //private void btnRestorationUser_Click(object sender, EventArgs e)
-        //{
-        //    string Name = userNameTextBox.Text;
-        //    string Pwd = userPwdTextBox.Text;
-        //    accountController.RestorationAccountInfo(Convert.ToInt32(user.Id), Name, Pwd);
-        //}
-
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            string Name = userNameTextBox.Text;
-            string Pwd = userPwdTextBox.Text;
-            accountController.RestorationAccountInfo(Convert.ToInt32(user.Id), Name, Pwd);
+            user.Name = userNameTextBox.Text;
+            user.Pwd = userPwdTextBox.Text;
+            user.Deleted = chkDeleted.Checked;
+
+            if (string.IsNullOrEmpty(user.Name) || string.IsNullOrEmpty(user.Pwd))
+            {
+                MessageBox.Show(FormMessageItem.AccountFormWarning);
+                return;
+            }
+            accountController.UpdateAccountInfo(user);
             this.Close();
         }
+
+       
     }
 }

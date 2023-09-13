@@ -31,6 +31,7 @@ namespace IScalc.View
             user.Id = selectedRow.Cells["ID"].Value.ToString();
             user.Name = selectedRow.Cells["Name"].Value.ToString();
             user.Pwd = selectedRow.Cells["Pwd"].Value.ToString();
+            user.Deleted = Convert.ToBoolean(selectedRow.Cells["deleted"].Value);
             return user;
         }
 

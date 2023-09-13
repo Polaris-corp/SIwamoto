@@ -39,6 +39,7 @@ namespace IScalc.View
             this.userNameTextBox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnUpdate = new System.Windows.Forms.Button();
+            this.chkDeleted = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -131,11 +132,22 @@ namespace IScalc.View
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
+            // chkDeleted
+            // 
+            this.chkDeleted.AutoSize = true;
+            this.chkDeleted.Location = new System.Drawing.Point(360, 254);
+            this.chkDeleted.Name = "chkDeleted";
+            this.chkDeleted.Size = new System.Drawing.Size(72, 16);
+            this.chkDeleted.TabIndex = 22;
+            this.chkDeleted.Text = "使用不可";
+            this.chkDeleted.UseVisualStyleBackColor = true;
+            // 
             // AccountForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.chkDeleted);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.userIDlabel);
             this.Controls.Add(this.label3);
@@ -164,5 +176,6 @@ namespace IScalc.View
         private System.Windows.Forms.TextBox userNameTextBox;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.CheckBox chkDeleted;
     }
 }

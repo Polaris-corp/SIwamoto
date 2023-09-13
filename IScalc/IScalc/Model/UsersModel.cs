@@ -13,9 +13,11 @@ namespace IScalc.Model
             Id = "";
             Name = "";
             Pwd = "";
+            Deleted = false;
         }
         public string Id { get; set; }
         public string Name { get; set; }
         public string Pwd { get; set; }
+        public bool Deleted { get; set; }
     }
 }
