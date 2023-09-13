@@ -36,7 +36,7 @@ namespace IScalc.View
 
         private void GetDataTableItem()
         {
-            dt = dgvController.IndicateUsersInfo();
+            dt = dgvController.IndicateUsersInfo(ConstValues.Arrive);
             dataGridView1.DataSource = dt;
         }
 
@@ -46,12 +46,13 @@ namespace IScalc.View
             accountForm.user = user;
             accountForm.ShowDialog();
             accountForm.Dispose();
+            GetDataTableItem();
         }
 
 
         private void GetDeletedDataTableItem()
         {
-            dt = dgvController.GetDeletedUserInfo();
+            dt = dgvController.GetDeletedUserInfo(ConstValues.Deleted);
             dataGridView1.DataSource = dt;
         }
 

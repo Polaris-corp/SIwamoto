@@ -37,14 +37,14 @@ namespace IScalc.Controller
             return dgvService.ShowAllUserData();
         }
 
-        public DataTable GetDeletedUserInfo()
+        public DataTable GetDeletedUserInfo(bool deleted)
         {
-            return dgvService.ShowDeletedUserData();
+            return dgvService.ShowDeletedUserData(deleted);
         }
 
-        public DataTable GetUserInfo()
+        public DataTable GetUserInfo(bool arrive)
         {
-            return dgvService.ShowUsersData();
+            return dgvService.ShowUsersData(arrive);
         }
     }
 }

@@ -11,9 +11,9 @@ namespace IScalc.Service
 {
     public class DGVService
     {
-        public DataTable ShowUsersData()
+        public DataTable ShowUsersData(bool arrive)
         {
-            return CreateDT(CreateDGVSelectSql());
+            return CreateDT(CreateDGVSelectSql(arrive));
         }
 
         public DataTable ShowAllUserData()
@@ -21,9 +21,9 @@ namespace IScalc.Service
             return CreateDT(CreateGetAllAccountInfoSql());
         }
 
-        public DataTable ShowDeletedUserData()
+        public DataTable ShowDeletedUserData(bool deleted)
         {
-            return CreateDT(CreateGetDeletedAccountInfoSql());
+            return CreateDT(CreateDGVSelectSql(deleted));
         }
 
         public void InsertAcInfo(string name, string pwd)
@@ -70,7 +70,7 @@ namespace IScalc.Service
             }
         }
 
-        private MySqlCommand CreateDGVSelectSql()
+        private MySqlCommand CreateDGVSelectSql(bool deletedFlg)
         {
             string query = @"SELECT 
                                    ID
@@ -79,26 +79,14 @@ namespace IScalc.Service
                              FROM 
                                    users
                              WHERE 
-                                   deleted = 0;";
+                                   deleted = @deleted;";
 
             MySqlCommand command = new MySqlCommand(query);
+            command.Parameters.AddWithValue("@deleted", deletedFlg);
             return command;
         }
 
-        private MySqlCommand CreateGetDeletedAccountInfoSql()
-        {
-            string query = @"SELECT 
-                                   ID
-                                   , Name
-                                   , Pwd
-                             FROM 
-                                   users
-                             WHERE 
-                                   deleted = 1;";
-
-            MySqlCommand command = new MySqlCommand(query);
-            return command;
-        }
+       
 
         private MySqlCommand CreateGetAllAccountInfoSql()
         {

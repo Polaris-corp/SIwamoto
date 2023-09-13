@@ -13,14 +13,14 @@ namespace IScalc.Controller
     {
         DGVService dgvService = new DGVService();
 
-        public DataTable IndicateUsersInfo()
+        public DataTable IndicateUsersInfo(bool arrive)
         {
-            return dgvService.ShowUsersData();
+            return dgvService.ShowUsersData(arrive);
         }
 
-        public DataTable GetDeletedUserInfo()
+        public DataTable GetDeletedUserInfo(bool arrive)
         {
-            return dgvService.ShowDeletedUserData();
+            return dgvService.ShowUsersData(arrive);
         }
 
         public DataTable GetAllUserInfo()

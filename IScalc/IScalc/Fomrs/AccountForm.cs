@@ -37,7 +37,7 @@ namespace IScalc.View
        
         private void GetDataTableItem()
         {
-            dt = accountController.GetUserInfo();
+            dt = accountController.GetUserInfo(ConstValues.Arrive);
             dataGridView1.DataSource = dt;
         }
 
@@ -79,8 +79,9 @@ namespace IScalc.View
             else
             {
                 accountController.UpdateAccountInfo(Convert.ToInt32(user.Id), Name, Pwd);
+                this.Close();
             }
-            this.Close();
+            
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
