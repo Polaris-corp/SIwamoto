@@ -8,6 +8,10 @@ namespace IScalc.Model
 {
     public class UsersModel
     {
+        /// <summary>
+        /// ユーザーがデータグリッドビューで選択したIDのID,Name,Pwd,deletedを入れるためのモデル
+        /// 新規登録時のIDはデータベース側でPrimaryKeyかつAutoIncrementなので空で問題ない
+        /// </summary>
         public UsersModel()
         {
             Id = "";
