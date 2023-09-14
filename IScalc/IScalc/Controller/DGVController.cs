@@ -18,9 +18,9 @@ namespace IScalc.Controller
             return dgvService.ShowUsersData(arrive);
         }
 
-        public DataTable GetDeletedUserInfo(bool arrive)
+        public DataTable GetDeletedUserInfo(bool deleted)
         {
-            return dgvService.ShowUsersData(arrive);
+            return dgvService.ShowUsersData(deleted);
         }
 
         public DataTable GetAllUserInfo()
