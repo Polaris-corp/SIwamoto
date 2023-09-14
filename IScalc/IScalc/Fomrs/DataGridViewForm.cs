@@ -51,7 +51,7 @@ namespace IScalc.View
 
         private void ShowDeletedDataTableItem()
         {
-            dt = dgvController.GetDeletedUserInfo(ConstValues.Deleted);
+            dt = dgvController.IndicateUsersInfo(ConstValues.Deleted);
             dataGridView1.DataSource = dt;
         }
 
@@ -64,7 +64,7 @@ namespace IScalc.View
         private void DataGridViewForm_Load(object sender, EventArgs e)
         {
             comboBox1.SelectedIndex = 0;
-            ShowDataTableItem();
+            //ShowDataTableItem();
         }
 
         private void btnNew_Click_1(object sender, EventArgs e)
