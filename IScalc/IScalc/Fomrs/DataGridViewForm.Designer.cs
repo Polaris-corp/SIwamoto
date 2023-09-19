@@ -92,6 +92,7 @@ namespace IScalc.View
             this.Controls.Add(this.btnNew);
             this.Controls.Add(this.dataGridView1);
             this.Name = "DataGridViewForm";
+            this.Text = "ユーザー情報";
             this.Load += new System.EventHandler(this.DataGridViewForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

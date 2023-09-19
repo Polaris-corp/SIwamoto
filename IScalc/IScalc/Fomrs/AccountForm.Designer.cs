@@ -147,8 +147,8 @@ namespace IScalc.View
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.chkDeleted);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.chkDeleted);
             this.Controls.Add(this.userIDlabel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -157,7 +157,7 @@ namespace IScalc.View
             this.Controls.Add(this.userPwdTextBox);
             this.Controls.Add(this.userNameTextBox);
             this.Name = "AccountForm";
-            this.Text = "AccountForm";
+            this.Text = "ユーザー情報変更";
             this.Load += new System.EventHandler(this.AccountForm_Load_1);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

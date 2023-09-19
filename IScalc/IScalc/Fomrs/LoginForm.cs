@@ -18,7 +18,6 @@ namespace IScalc.View
         }
 
         LoginController loginController = new LoginController();
-        DataGridViewForm dataGridView = new DataGridViewForm();
 
 
         /// <summary>
@@ -79,8 +78,11 @@ namespace IScalc.View
 
                 //ログイン成功
                 loginController.InsertHisotry(userid, FormResults.Ok, tryLoginTime);
+                
+                DataGridViewForm dataGridView = new DataGridViewForm();
                 dataGridView.ShowDialog();
                 dataGridView.Dispose();
+
                 textBox1.Text = "";
                 textBox2.Text = "";
             }
@@ -93,9 +95,7 @@ namespace IScalc.View
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-           
+            
         }
-
-       
     }
 }

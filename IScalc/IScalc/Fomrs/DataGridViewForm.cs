@@ -93,7 +93,7 @@ namespace IScalc.View
         private void DataGridViewForm_Load(object sender, EventArgs e)
         {
             comboBox1.SelectedIndex = 0;
-            //ShowDataTableItem();
+            ShowDataTableItem();
         }
 
         /// <summary>
