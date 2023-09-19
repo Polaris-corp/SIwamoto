@@ -62,7 +62,7 @@ namespace IScalc.View
             AccountForm accountForm = new AccountForm(flg, user);
             accountForm.ShowDialog();
             accountForm.Dispose();
-            ShowDataTableItem();
+            SortingShowTableItem();
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace IScalc.View
         private void DataGridViewForm_Load(object sender, EventArgs e)
         {
             comboBox1.SelectedIndex = 0;
-            ShowDataTableItem();
+            SortingShowTableItem();
         }
 
         /// <summary>
@@ -123,11 +123,16 @@ namespace IScalc.View
         /// <param name="e"></param>
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(comboBox1.SelectedIndex == 0)
+            SortingShowTableItem();
+        }
+
+        private void SortingShowTableItem()
+        {
+            if (comboBox1.SelectedIndex == 0)
             {
                 ShowDataTableItem();
             }
-            else if(comboBox1.SelectedIndex == 1)
+            else if (comboBox1.SelectedIndex == 1)
             {
                 ShowDeletedDataTableItem();
             }
