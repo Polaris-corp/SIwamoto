@@ -10,6 +10,8 @@ namespace IScalc.Common
     {
         public const string NewAccount = "新規登録";
         public const string UpdateAccount = "更新";
+        public const string RowsError = "ユーザー情報を選択してください。";
+
         public const bool Fresh = false;
         public const bool Update = true;
 

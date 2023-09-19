@@ -113,6 +113,11 @@ namespace IScalc.View
         /// <param name="e"></param>
         private void btnUpdate_Click_1(object sender, EventArgs e)
         {
+           if(dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show(ConstValues.RowsError);
+                return;
+            }
             LoadAccountForm(ConstValues.Update, GetDgvRowItem());
         }
 
