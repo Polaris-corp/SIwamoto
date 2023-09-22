@@ -29,6 +29,7 @@ namespace IScalc.View
             InitializeComponent();
             user = usersInfo;
             panel1.Visible = Update;
+
         }
 
         AccountController accountController = new AccountController();
@@ -98,5 +99,7 @@ namespace IScalc.View
             accountController.UpdateAccountInfo(user);
             this.Close();
         }
+
+       
     }
 }

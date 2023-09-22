@@ -98,7 +98,8 @@ namespace IScalc.Service
                                    users
                              WHERE
                                    ID = @ID
-                                   AND Pwd = @Pwd;";
+                                   AND Pwd = @Pwd
+                                   AND deleted = 0;";
 
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@ID", id);

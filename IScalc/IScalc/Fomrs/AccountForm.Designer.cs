@@ -117,7 +117,7 @@ namespace IScalc.View
             // 
             this.panel1.Controls.Add(this.btnUpdate);
             this.panel1.Controls.Add(this.btnDelete);
-            this.panel1.Location = new System.Drawing.Point(170, 289);
+            this.panel1.Location = new System.Drawing.Point(166, 289);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(460, 105);
             this.panel1.TabIndex = 21;

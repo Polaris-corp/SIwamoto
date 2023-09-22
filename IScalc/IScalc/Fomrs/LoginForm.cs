@@ -48,22 +48,10 @@ namespace IScalc.View
 
             try
             {
-                //そのIDの履歴直近3件の最新のログイン試行時間、最古のログイン試行時間、ログイン失敗数を取得 
-                HistoryModel historyModels = loginController.Check3LoginHistory(userid);
-                DateTime latestLogTime = historyModels.LatestLogtime;
-                DateTime oldestLogTime = historyModels.OldestLogtime;
-                int count = historyModels.Count;
-
                 //ログイン履歴のチェック
-                if (!loginController.CheckLogtime(latestLogTime, oldestLogTime, count))
+                if (!CheckLoginHistory(userid, tryLoginTime))
                 {
-                    if (!loginController.CheckLast5Minutes(latestLogTime, tryLoginTime))
-                    {
-                        string t = loginController.GetLockTime(latestLogTime, tryLoginTime);
-
-                        MessageBox.Show(string.Format(FormMessageItem.RemainigTime, t));
-                        return;
-                    }
+                    return;
                 }
 
                 //IDとPWの紐づきデータのチェック
@@ -96,6 +84,29 @@ namespace IScalc.View
         private void LoginForm_Load(object sender, EventArgs e)
         {
             
+        }
+
+        private bool CheckLoginHistory(int userid, DateTime tryLogtime)
+        {
+            //そのIDの履歴直近3件の最新のログイン試行時間、最古のログイン試行時間、ログイン失敗数を取得
+            HistoryModel historyModels = loginController.Check3LoginHistory(userid);
+            DateTime latestLogTime = historyModels.LatestLogtime;
+            DateTime oldestLogTime = historyModels.OldestLogtime;
+            int count = historyModels.Count;
+
+            //ログイン履歴のチェック
+            if (!loginController.CheckLogtime(latestLogTime, oldestLogTime, count))
+            {
+                if (!loginController.CheckLast5Minutes(latestLogTime, tryLogtime))
+                {
+                    string t = loginController.GetLockTime(latestLogTime, tryLogtime);
+
+                    MessageBox.Show(string.Format(FormMessageItem.RemainigTime, t));
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
