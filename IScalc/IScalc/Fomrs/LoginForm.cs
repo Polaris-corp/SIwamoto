@@ -48,8 +48,10 @@ namespace IScalc.View
 
             try
             {
+                
+            HistoryModel historyModels = loginController.Check3LoginHistory(userid);
                 //ログイン履歴のチェック
-                if (!CheckLoginHistory(userid, tryLoginTime))
+                if (!CheckLoginHistory(historyModels, tryLoginTime))
                 {
                     return;
                 }
@@ -86,10 +88,9 @@ namespace IScalc.View
             
         }
 
-        private bool CheckLoginHistory(int userid, DateTime tryLogtime)
+        private bool CheckLoginHistory(HistoryModel historyModels, DateTime tryLogtime)
         {
             //そのIDの履歴直近3件の最新のログイン試行時間、最古のログイン試行時間、ログイン失敗数を取得
-            HistoryModel historyModels = loginController.Check3LoginHistory(userid);
             DateTime latestLogTime = historyModels.LatestLogtime;
             DateTime oldestLogTime = historyModels.OldestLogtime;
             int count = historyModels.Count;
