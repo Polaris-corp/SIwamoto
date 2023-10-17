@@ -19,6 +19,7 @@ namespace MineSweeper
             CreateMineSweeperForm();
             InitializeMineSweeperForm();
         }
+        #region 変数宣言
         int rows = 9;
         int cols = 9;
         int boms = 16;
@@ -30,6 +31,9 @@ namespace MineSweeper
 
         Button[,] cells;
         CellState[,] cellmodels;
+        TimeSpan starttime;
+        TimeSpan endtime;
+        #endregion
 
         private void MineSweeperForm_Load(object sender, EventArgs e)
         {
@@ -60,6 +64,21 @@ namespace MineSweeper
 
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            rows = int.Parse(txtRow.Text);
+            cols = int.Parse(txtCol.Text);
+            boms = int.Parse(txtBom.Text);
+            DeleteControls();
+            CreateMineSweeperForm();
+            InitializeMineSweeperForm();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void CreateMineSweeperForm()
         {
             cells = null;
@@ -79,6 +98,7 @@ namespace MineSweeper
                     cells[row, col].Size = new Size(50, 50);
                     cells[row, col].Location = new Point(col * 50, row * 50);
                     cells[row, col].Tag = new Point(col, row);
+                    cells[row, col].ForeColor = Color.White; 
                     cells[row, col].MouseDown += new MouseEventHandler(this.button_MouseDown);
                     this.Controls.Add(cells[row, col]);
                 }
@@ -148,6 +168,7 @@ namespace MineSweeper
                 }
                 else
                 {
+                    cells[row, col].ForeColor = Color.Red;
                     cells[row, col].Text = "🏁";
                 }
                 cellmodels[row, col].IsFlagged = !cellmodels[row, col].IsFlagged;
@@ -159,6 +180,8 @@ namespace MineSweeper
             if (clickcount == 0)
             {
                 ResetMine(row, col);
+                DateTime startdateTime = DateTime.Now;
+                starttime = startdateTime.TimeOfDay;
             }
 
             if (cellmodels[row, col].IsFlagged)
@@ -174,6 +197,7 @@ namespace MineSweeper
             if (cellmodels[row, col].IsMineLayered)
             {
                 cells[row, col].BackColor = Color.DarkGreen;
+                cells[row, col].ForeColor = Color.Black;
                 cells[row, col].Text = "💣";
                 MessageBox.Show("GameOver");
                 //ResetMineSweeperForm();
@@ -191,13 +215,21 @@ namespace MineSweeper
             }
             else
             {
+                cells[row, col].ForeColor = Color.White;
                 cells[row, col].Text = count.ToString();
             }
 
             //if (CheckGameClear())
             if(clickcount == rows * cols - boms)
             {
+                DateTime enddateTime = DateTime.Now;
+                endtime = enddateTime.TimeOfDay;
+                TimeSpan resulttime = endtime - starttime;
+                string minute = resulttime.Minutes.ToString();
+                string second = resulttime.Seconds.ToString();
                 MessageBox.Show("GameClear!");
+                MessageBox.Show(string.Format("{0}分{1}秒かかりました。", minute, second));
+
                 RevealCells();
             }
         }
@@ -277,26 +309,14 @@ namespace MineSweeper
                     ChangeCell(i, j);
                     if(cellmodels[i, j].IsMineLayered)
                     {
+                        cells[i, j].ForeColor = Color.Black;
                         cells[i, j].Text = "💣";
                     }
                 }
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            rows = int.Parse(txtRow.Text);
-            cols = int.Parse(txtCol.Text);
-            boms = int.Parse(txtBom.Text);
-            DeleteControls();
-            CreateMineSweeperForm();
-            InitializeMineSweeperForm();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 
     public class RowCol
