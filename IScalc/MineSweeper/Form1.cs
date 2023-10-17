@@ -16,41 +16,23 @@ namespace MineSweeper
         public MineSweeperForm()
         {
             InitializeComponent();
-            FormBorderStyle = FormBorderStyle.FixedDialog;
+            CreateMineSweeperForm();
             InitializeMineSweeperForm();
         }
-        const int rows = 9;
-        const int cols = 9;
+        int rows = 9;
+        int cols = 9;
+        int boms = 16;
 
         //右→下→左→上→右上→右下→左上→左下
         static int[] dcol = new int[] { 1, 0, -1, 0, 1, 1, -1, -1 };
         static int[] drow = new int[] { 0, -1, 0, 1, -1, 1, -1, 1 };
         int clickcount = 0;
 
-        Button[,] cells = new Button[rows, cols];
-        CellState[,] cellmodels = new CellState[rows, cols];
+        Button[,] cells;
+        CellState[,] cellmodels;
 
         private void MineSweeperForm_Load(object sender, EventArgs e)
         {
-            for (int row = 0; row < rows; row++)
-            {
-                for (int col = 0; col < cols; col++)
-                {
-                    cellmodels[row, col] = new CellState();
-
-                    cells[row, col] = new Button();
-
-                    cells[row, col].Name = "cell" + row + "" + col;
-                    cells[row, col].Text = "";
-                    cells[row, col].Size = new Size(50, 50);
-                    cells[row, col].Location = new Point(col * 50, row * 50);
-                    cells[row, col].Tag = new Point(col, row);
-                    cells[row, col].BackColor = Color.Aquamarine;
-                    cells[row, col].MouseDown += new MouseEventHandler(this.button_MouseDown);
-                    this.Controls.Add(cells[row, col]);
-                }
-            }
-
         }
 
         private void button_MouseDown(object sender, MouseEventArgs e)
@@ -72,15 +54,49 @@ namespace MineSweeper
             }
             else //if (MouseBtn == "Left")
             {
+                
                 LeftButtonClick(row, col);
             }
 
         }
 
+        private void CreateMineSweeperForm()
+        {
+            cells = null;
+            cells = new Button[rows, cols];
+
+            cellmodels = null;
+            cellmodels = new CellState[rows, cols];
+            this.Size = new Size(cols * 50 + 200, rows * 50 + 150);
+            for (int row = 0; row < rows; row++)
+            {
+                for (int col = 0; col < cols; col++)
+                {
+                    cellmodels[row, col] = new CellState();
+
+                    cells[row, col] = new Button();
+                    cells[row, col].Name = "cell" + row + "" + col;
+                    cells[row, col].Size = new Size(50, 50);
+                    cells[row, col].Location = new Point(col * 50, row * 50);
+                    cells[row, col].Tag = new Point(col, row);
+                    cells[row, col].MouseDown += new MouseEventHandler(this.button_MouseDown);
+                    this.Controls.Add(cells[row, col]);
+                }
+            }
+        }
+
+        private void DeleteControls()
+        {
+            foreach (var item in cells)
+            {
+                this.Controls.Remove(item);
+            }
+        }
+
         private void InitializeMineSweeperForm()
         {
             clickcount = 0;
-
+            
             //フィールドの状態を初期化
             for (int row = 0; row < rows; row++)
             {
@@ -89,34 +105,35 @@ namespace MineSweeper
                     cellmodels[row, col].IsMineLayered = false;
                     cellmodels[row, col].IsFlagged = false;
                     cellmodels[row, col].IsOpened = false;
+                    //cellmodels[row, col].SurroundingsMine = 0;
 
                     cells[row, col].Text = "";
-                    cells[row, col].BackColor = Color.Aquamarine;
-
-                    //cellmodels[row, col].SurroundingsMine = 0;
+                    cells[row, col].BackColor = Color.LimeGreen;
                 }
             }
-
-            ResetMine();
+            //ResetMine();
         }
 
-        private void ResetMine()
+        private void ResetMine(int row , int col)
         {
             var random = new Random();
-            int count = 16;
 
+            int bom = boms;
             //地雷を設定
-            while (count > 0)
+            while (bom > 0)
             {
                 int randomRow = random.Next(0, 100000) % rows;
                 int randomColumn = random.Next(0, 54548) % cols;
-
+                if(row == randomRow && col == randomColumn)
+                {
+                    continue;
+                }
                 if (cellmodels[randomRow, randomColumn].IsMineLayered)
                 {
                     continue;
                 }
                 cellmodels[randomRow, randomColumn].IsMineLayered = true;
-                count--;
+                bom--;
                 Console.WriteLine(randomRow + ":" + randomColumn);
             }
         }
@@ -139,6 +156,11 @@ namespace MineSweeper
 
         private void LeftButtonClick(int row, int col)
         {
+            if (clickcount == 0)
+            {
+                ResetMine(row, col);
+            }
+
             if (cellmodels[row, col].IsFlagged)
             {
                 return;
@@ -151,11 +173,12 @@ namespace MineSweeper
 
             if (cellmodels[row, col].IsMineLayered)
             {
-                cells[row, col].BackColor = Color.SteelBlue;
+                cells[row, col].BackColor = Color.DarkGreen;
                 cells[row, col].Text = "💣";
                 MessageBox.Show("GameOver");
                 //ResetMineSweeperForm();
                 //InitializeMineSweeperForm();
+                RevealCells();
                 return;
             }
 
@@ -171,6 +194,12 @@ namespace MineSweeper
                 cells[row, col].Text = count.ToString();
             }
 
+            //if (CheckGameClear())
+            if(clickcount == rows * cols - boms)
+            {
+                MessageBox.Show("GameClear!");
+                RevealCells();
+            }
         }
 
         private int CountMines(int row, int col)
@@ -194,7 +223,7 @@ namespace MineSweeper
 
         private void ChangeCell(int row, int col)
         {
-            cells[row, col].BackColor = Color.SteelBlue;
+            cells[row, col].BackColor = Color.DarkGreen;
             cellmodels[row, col].IsOpened = true;
         }
 
@@ -250,16 +279,26 @@ namespace MineSweeper
                     {
                         cells[i, j].Text = "💣";
                     }
-
-                    if(cellmodels[i, j].IsFlagged && !cellmodels[i, j].IsMineLayered)
-                    {
-
-                    }
                 }
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            rows = int.Parse(txtRow.Text);
+            cols = int.Parse(txtCol.Text);
+            boms = int.Parse(txtBom.Text);
+            DeleteControls();
+            CreateMineSweeperForm();
+            InitializeMineSweeperForm();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
-    
+
     public class RowCol
     {
         public RowCol(int r, int c)
