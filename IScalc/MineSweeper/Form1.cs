@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MineSweeper.CellModel;
+using System.IO;
 
 namespace MineSweeper
 {
@@ -16,13 +17,13 @@ namespace MineSweeper
         public MineSweeperForm()
         {
             InitializeComponent();
-            CreateMineSweeperForm();
-            InitializeMineSweeperForm();
+            this.WindowState = FormWindowState.Maximized;
         }
         #region 変数宣言
         int rows = 9;
         int cols = 9;
-        int boms = 16;
+        int boms = 12;
+        int flags = 12;
 
         //右→下→左→上→右上→右下→左上→左下
         static int[] dcol = new int[] { 1, 0, -1, 0, 1, 1, -1, -1 };
@@ -33,12 +34,22 @@ namespace MineSweeper
         CellState[,] cellmodels;
         TimeSpan starttime;
         TimeSpan endtime;
+        string difficulty;
         #endregion
 
         private void MineSweeperForm_Load(object sender, EventArgs e)
         {
+            comboBox1.SelectedIndex = 2;
+
+            CreateMineSweeperForm();
+            InitializeMineSweeperForm();
         }
 
+        /// <summary>
+        /// マウスのボタンを押した時の処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_MouseDown(object sender, MouseEventArgs e)
         {
             string MouseBtn = e.Button.ToString();
@@ -64,11 +75,23 @@ namespace MineSweeper
 
         }
 
+        /// <summary>
+        /// スタートボタンを押した時の処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            rows = int.Parse(txtRow.Text);
-            cols = int.Parse(txtCol.Text);
-            boms = int.Parse(txtBom.Text);
+            //rows = int.Parse(txtRow.Text);
+            //cols = int.Parse(txtCol.Text);
+            //boms = int.Parse(txtBom.Text);
+            //flags = boms;
+            //label4.Text = flags.ToString();
+            if ((rows * cols) - 1 <= boms)
+            {
+                MessageBox.Show("地雷の数はマス目の合計(縦×横)より小さい数で設定してください。");
+                return;
+            }
             DeleteControls();
             CreateMineSweeperForm();
             InitializeMineSweeperForm();
@@ -79,6 +102,9 @@ namespace MineSweeper
 
         }
 
+        /// <summary>
+        /// マインスイーパーのマス目（セル）の生成
+        /// </summary>
         private void CreateMineSweeperForm()
         {
             cells = null;
@@ -94,9 +120,9 @@ namespace MineSweeper
                     cellmodels[row, col] = new CellState();
 
                     cells[row, col] = new Button();
-                    cells[row, col].Name = "cell" + row + "" + col;
-                    cells[row, col].Size = new Size(50, 50);
-                    cells[row, col].Location = new Point(col * 50, row * 50);
+                    cells[row, col].Name = "cell" + row + "-" + col;
+                    cells[row, col].Size = new Size(33, 33);
+                    cells[row, col].Location = new Point(col * 33, row * 33);
                     cells[row, col].Tag = new Point(col, row);
                     cells[row, col].ForeColor = Color.White; 
                     cells[row, col].MouseDown += new MouseEventHandler(this.button_MouseDown);
@@ -105,6 +131,9 @@ namespace MineSweeper
             }
         }
 
+        /// <summary>
+        /// マス目の削除
+        /// </summary>
         private void DeleteControls()
         {
             foreach (var item in cells)
@@ -113,6 +142,9 @@ namespace MineSweeper
             }
         }
 
+        /// <summary>
+        /// マス目の状態の初期化
+        /// </summary>
         private void InitializeMineSweeperForm()
         {
             clickcount = 0;
@@ -131,14 +163,25 @@ namespace MineSweeper
                     cells[row, col].BackColor = Color.LimeGreen;
                 }
             }
+            flags = boms;
+            label4.Text = flags.ToString();
             //ResetMine();
         }
 
+        /// <summary>
+        /// 地雷の設置メソッド
+        /// </summary>
+        /// <param name="row">縦のマスの数</param>
+        /// <param name="col">横のマスの数</param>
         private void ResetMine(int row , int col)
         {
             var random = new Random();
 
             int bom = boms;
+            if((rows * cols) < bom)
+            {
+                return;
+            } 
             //地雷を設定
             while (bom > 0)
             {
@@ -158,23 +201,40 @@ namespace MineSweeper
             }
         }
 
+        /// <summary>
+        /// マウス右クリック時の処理(🏳の立て下げ)
+        /// </summary>
+        /// <param name="row">クリックされたときの縦軸の座標</param>
+        /// <param name="col">クリックされたときの横軸の座標</param>
         private void RightButtonClick(int row, int col)
         {
             if (!cellmodels[row, col].IsOpened)
             {
                 if (cellmodels[row, col].IsFlagged)
                 {
+                    flags++;
                     cells[row, col].Text = "";
                 }
                 else
                 {
+                    if(flags <= 0)
+                    {
+                        return;
+                    }
+                    flags--;
                     cells[row, col].ForeColor = Color.Red;
                     cells[row, col].Text = "🏁";
                 }
                 cellmodels[row, col].IsFlagged = !cellmodels[row, col].IsFlagged;
+                label4.Text = flags.ToString();
             }
         }
 
+        /// <summary>
+        /// マウス左クリック時の処理(マスを開く)
+        /// </summary>
+        /// <param name="row">クリックされたときの縦軸の座標</param>
+        /// <param name="col">クリックされたときの横軸の座標</param>
         private void LeftButtonClick(int row, int col)
         {
             if (clickcount == 0)
@@ -231,6 +291,9 @@ namespace MineSweeper
                 MessageBox.Show(string.Format("{0}分{1}秒かかりました。", minute, second));
 
                 RevealCells();
+                InputClearDataForm inputClearDataForm = new InputClearDataForm(resulttime, difficulty);
+                inputClearDataForm.ShowDialog();
+
             }
         }
 
@@ -316,7 +379,40 @@ namespace MineSweeper
             }
         }
 
-        
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedIndex == 0)
+            {
+                rows = 9;
+                cols = 9;
+                boms = 12;
+            }
+            else if (comboBox1.SelectedIndex == 1)
+            {
+                rows = 16;
+                cols = 16;
+                boms = 40;
+            }
+            else if(comboBox1.SelectedIndex == 2)
+            {
+                rows = 20;
+                cols = 30;
+                boms = 120;
+            }
+            else if(comboBox1.SelectedIndex == 3)
+            {
+                rows = 20;
+                cols = 30;
+                boms = 200;
+            }
+            flags = boms;
+            difficulty = comboBox1.Text;
+        }
     }
 
     public class RowCol

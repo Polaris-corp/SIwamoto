@@ -30,18 +30,16 @@ namespace MineSweeper
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
-            this.txtRow = new System.Windows.Forms.TextBox();
-            this.txtCol = new System.Windows.Forms.TextBox();
-            this.txtBom = new System.Windows.Forms.TextBox();
-            this.rowlabel = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(81, 15);
+            this.button1.Location = new System.Drawing.Point(202, 15);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(80, 45);
             this.button1.TabIndex = 0;
@@ -49,78 +47,63 @@ namespace MineSweeper
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // txtRow
+            // label3
             // 
-            this.txtRow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtRow.Location = new System.Drawing.Point(82, 69);
-            this.txtRow.Name = "txtRow";
-            this.txtRow.Size = new System.Drawing.Size(81, 19);
-            this.txtRow.TabIndex = 1;
-            this.txtRow.Text = "9";
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(168, 152);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 12);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "🏳×";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
-            // txtCol
+            // label4
             // 
-            this.txtCol.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCol.Location = new System.Drawing.Point(82, 94);
-            this.txtCol.Name = "txtCol";
-            this.txtCol.Size = new System.Drawing.Size(81, 19);
-            this.txtCol.TabIndex = 2;
-            this.txtCol.Text = "9";
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label4.Location = new System.Drawing.Point(224, 152);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(19, 14);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "12";
             // 
-            // txtBom
+            // comboBox1
             // 
-            this.txtBom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBom.Location = new System.Drawing.Point(82, 119);
-            this.txtBom.Name = "txtBom";
-            this.txtBom.Size = new System.Drawing.Size(81, 19);
-            this.txtBom.TabIndex = 3;
-            this.txtBom.Text = "16";
-            // 
-            // rowlabel
-            // 
-            this.rowlabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.rowlabel.AutoSize = true;
-            this.rowlabel.Location = new System.Drawing.Point(59, 69);
-            this.rowlabel.Name = "rowlabel";
-            this.rowlabel.Size = new System.Drawing.Size(17, 12);
-            this.rowlabel.TabIndex = 4;
-            this.rowlabel.Text = "縦";
-            this.rowlabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "初級",
+            "中級",
+            "上級",
+            "超上級"});
+            this.comboBox1.Location = new System.Drawing.Point(202, 106);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(78, 20);
+            this.comboBox1.TabIndex = 9;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(59, 94);
+            this.label1.Location = new System.Drawing.Point(209, 71);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(17, 12);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "横";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(47, 119);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 12);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "地雷";
+            this.label1.Size = new System.Drawing.Size(70, 24);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "難易度";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MineSweeperForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(176, 152);
-            this.Controls.Add(this.label2);
+            this.ClientSize = new System.Drawing.Size(297, 233);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.rowlabel);
-            this.Controls.Add(this.txtBom);
-            this.Controls.Add(this.txtCol);
-            this.Controls.Add(this.txtRow);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "MineSweeperForm";
@@ -134,12 +117,10 @@ namespace MineSweeper
         #endregion
 
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox txtRow;
-        private System.Windows.Forms.TextBox txtCol;
-        private System.Windows.Forms.TextBox txtBom;
-        private System.Windows.Forms.Label rowlabel;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
     }
 }
 
