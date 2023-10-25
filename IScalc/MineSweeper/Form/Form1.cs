@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MineSweeper.CellModel;
 using System.IO;
+using MineSweeper.Models;
 
 namespace MineSweeper
 {
@@ -39,7 +40,7 @@ namespace MineSweeper
 
         private void MineSweeperForm_Load(object sender, EventArgs e)
         {
-            comboBox1.SelectedIndex = 2;
+            comboBox1.SelectedIndex = 0;
 
             CreateMineSweeperForm();
             InitializeMineSweeperForm();
@@ -291,9 +292,9 @@ namespace MineSweeper
                 MessageBox.Show(string.Format("{0}分{1}秒かかりました。", minute, second));
 
                 RevealCells();
-                InputClearDataForm inputClearDataForm = new InputClearDataForm(resulttime, difficulty);
-                inputClearDataForm.ShowDialog();
 
+                InputClearDataForm inputClearDataForm = new InputClearDataForm(new Player("", resulttime, difficulty));
+                inputClearDataForm.ShowDialog();
             }
         }
 
@@ -412,6 +413,12 @@ namespace MineSweeper
             }
             flags = boms;
             difficulty = comboBox1.Text;
+        }
+
+        private void Rankingbutton_Click(object sender, EventArgs e)
+        {
+            RankingForm rankingForm = new RankingForm();
+            rankingForm.ShowDialog();
         }
     }
 

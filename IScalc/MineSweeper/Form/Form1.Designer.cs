@@ -34,6 +34,7 @@ namespace MineSweeper
             this.label4 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.Rankingbutton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -94,12 +95,24 @@ namespace MineSweeper
             this.label1.Text = "難易度";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // Rankingbutton
+            // 
+            this.Rankingbutton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Rankingbutton.Location = new System.Drawing.Point(202, 176);
+            this.Rankingbutton.Name = "Rankingbutton";
+            this.Rankingbutton.Size = new System.Drawing.Size(80, 45);
+            this.Rankingbutton.TabIndex = 11;
+            this.Rankingbutton.Text = "Ranking";
+            this.Rankingbutton.UseVisualStyleBackColor = true;
+            this.Rankingbutton.Click += new System.EventHandler(this.Rankingbutton_Click);
+            // 
             // MineSweeperForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(297, 233);
+            this.Controls.Add(this.Rankingbutton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label4);
@@ -121,6 +134,7 @@ namespace MineSweeper
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button Rankingbutton;
     }
 }
 
