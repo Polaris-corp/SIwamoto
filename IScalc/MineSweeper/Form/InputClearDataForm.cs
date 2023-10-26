@@ -37,6 +37,12 @@ namespace MineSweeper
                 return;
             }
 
+            if (PlayerNametextBox.Text.Contains(","))
+            {
+                MessageBox.Show("「,」は名前に使用しないでください。");
+                return;
+            }
+
             if (!File.Exists(CSVFilePath.FilePath))
             {
                 File.Create(CSVFilePath.FilePath);
