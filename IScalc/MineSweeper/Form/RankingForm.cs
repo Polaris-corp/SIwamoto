@@ -74,7 +74,7 @@ namespace MineSweeper
             List<DGVsource> source = new List<DGVsource>();
            for(int i = 0; i < orderdList.Count; i++)
             {
-                source.Add(new DGVsource(i + 1, orderdList[i].Name, orderdList[i].ClearTime));
+                source.Add(new DGVsource(i + 1, orderdList[i].Name, orderdList[i].ClearTime.ToString(@"hh\:mm\:ss")));
             }
             dataGridView1.DataSource = source;
             //for (int i = 0; i < orderdList.Count; i++)
