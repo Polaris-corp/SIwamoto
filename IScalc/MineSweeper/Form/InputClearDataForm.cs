@@ -28,7 +28,11 @@ namespace MineSweeper
 
         string time = "";
         string Difficulty = "";
-
+        /// <summary>
+        /// 登録ボタンメソッド
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(PlayerNametextBox.Text))
@@ -60,7 +64,10 @@ namespace MineSweeper
         {
 
         }
-
+        /// <summary>
+        /// CSVファイルをリストに取得するメソッド
+        /// </summary>
+        /// <returns></returns>
         public List<Player> GetCSV()
         {
             List<Player> list = new List<Player>();
@@ -75,7 +82,12 @@ namespace MineSweeper
             }
             return list;
         }
-
+        /// <summary>
+        /// クリアした人のクリアタイムを元に順位付けするメソッド
+        /// </summary>
+        /// <param name="difficulty"></param>
+        /// <param name="ClearTime"></param>
+        /// <returns></returns>
         public int Ranking(string difficulty, TimeSpan ClearTime)
         {
             var list = GetCSV();

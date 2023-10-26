@@ -297,7 +297,12 @@ namespace MineSweeper
                 inputClearDataForm.ShowDialog();
             }
         }
-
+        /// <summary>
+        /// 周囲の地雷の数を数えるメソッド
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="col"></param>
+        /// <returns></returns>
         private int CountMines(int row, int col)
         {
             int mine = 0;
@@ -316,13 +321,21 @@ namespace MineSweeper
             }
             return mine;
         }
-
+        /// <summary>
+        /// セルを開けるメソッド
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="col"></param>
         private void ChangeCell(int row, int col)
         {
             cells[row, col].BackColor = Color.DarkGreen;
             cellmodels[row, col].IsOpened = true;
         }
-
+        /// <summary>
+        /// セルを開けた際の周囲の地雷が存在しないセルを開くメソッド
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="col"></param>
         private void OpenNoMines(int row, int col)
         {
             Queue<RowCol> q = new Queue<RowCol>();
@@ -363,7 +376,9 @@ namespace MineSweeper
 
 
         }
-
+        /// <summary>
+        /// 全てのセルを開くメソッド
+        /// </summary>
         private void RevealCells()
         {
             for(int i = 0; i < rows; i++)
@@ -384,7 +399,11 @@ namespace MineSweeper
         {
 
         }
-
+        /// <summary>
+        /// 難易度を選択するコンボボックスメソッド
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBox1.SelectedIndex == 0)
@@ -414,14 +433,20 @@ namespace MineSweeper
             flags = boms;
             difficulty = comboBox1.Text;
         }
-
+        /// <summary>
+        /// ランキングを表示するボタンメソッド
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Rankingbutton_Click(object sender, EventArgs e)
         {
             RankingForm rankingForm = new RankingForm();
             rankingForm.ShowDialog();
         }
     }
-
+    /// <summary>
+    /// セルの座標を管理するクラス
+    /// </summary>
     public class RowCol
     {
         public RowCol(int r, int c)
@@ -432,7 +457,9 @@ namespace MineSweeper
         public int Row { get; set; }
         public int Col { get; set; }
     }
-
+    /// <summary>
+    /// セルの状態を管理するクラス
+    /// </summary>
     public class CellState
     {
         public CellState()
