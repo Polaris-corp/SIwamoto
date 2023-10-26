@@ -14,7 +14,7 @@ namespace MineSweeper.Models
 
         public TimeSpan ClearTime { get; set; }
 
-        public Player(string name, TimeSpan clearTime, string difficulty)
+        public Player(string name, string difficulty, TimeSpan clearTime)
         {
             Name = name;
 

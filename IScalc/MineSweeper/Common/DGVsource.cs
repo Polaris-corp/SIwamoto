@@ -15,6 +15,13 @@ namespace MineSweeper.Common
 
         public TimeSpan ClearTime { get; set; }
         
-        
+        public DGVsource(int rank, string name, TimeSpan cleartime)
+        {
+            Rank = rank;
+
+            Name = name;
+
+            ClearTime = cleartime;
+        }
     }
 }

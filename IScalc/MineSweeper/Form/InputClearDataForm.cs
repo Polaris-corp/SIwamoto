@@ -64,7 +64,7 @@ namespace MineSweeper
                 {
                     var line = data.ReadLine().Split(',');
 
-                    list.Add(new Player(line[0], TimeSpan.Parse(line[1]), line[2]));
+                    list.Add(new Player(line[0], line[2], TimeSpan.Parse(line[1])));
                 }
             }
             return list;

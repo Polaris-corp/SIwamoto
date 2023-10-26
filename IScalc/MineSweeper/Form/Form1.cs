@@ -293,7 +293,7 @@ namespace MineSweeper
 
                 RevealCells();
 
-                InputClearDataForm inputClearDataForm = new InputClearDataForm(new Player("", resulttime, difficulty));
+                InputClearDataForm inputClearDataForm = new InputClearDataForm(new Player("", difficulty, resulttime));
                 inputClearDataForm.ShowDialog();
             }
         }
