@@ -90,6 +90,11 @@ namespace MineSweeper
         /// <returns></returns>
         public int Ranking(string difficulty, TimeSpan ClearTime)
         {
+            if (!File.Exists(CSVFilePath.FilePath))
+            {
+                File.Create(CSVFilePath.FilePath).Close();
+            }
+
             var list = GetCSV();
             var orderdList = list.OrderBy(x => x.ClearTime).Where(x => x.Difficulty == difficulty).ToList();
 
