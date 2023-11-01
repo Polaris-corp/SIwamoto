@@ -19,7 +19,7 @@ namespace MineSweeper
         public MineSweeperForm()
         {
             InitializeComponent();
-            this.WindowState = FormWindowState.Maximized;
+            //this.WindowState = FormWindowState.Maximized;
         }
         #region 変数宣言
         int rows = 9;
@@ -88,7 +88,7 @@ namespace MineSweeper
         {
             lblT.Text = MaxT.ToString();
             cntTime = 0;
-
+            //MineSweeperForm.ActiveForm.Height = rows * 33 + 33;
             //rows = int.Parse(txtRow.Text);
             //cols = int.Parse(txtCol.Text);
             //boms = int.Parse(txtBom.Text);
@@ -119,7 +119,7 @@ namespace MineSweeper
 
             cellmodels = null;
             cellmodels = new CellState[rows, cols];
-            this.Size = new Size(cols * 50 + 200, rows * 50 + 150);
+            this.Size = new Size(cols * 33 + 150, rows * 33 + 50);
             for (int row = 0; row < rows; row++)
             {
                 for (int col = 0; col < cols; col++)
