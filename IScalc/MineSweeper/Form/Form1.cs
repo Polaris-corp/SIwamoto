@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MineSweeper.CellModel;
 using System.IO;
 using MineSweeper.Models;
+using System.Timers;
 
 namespace MineSweeper
 {
@@ -25,6 +26,7 @@ namespace MineSweeper
         int cols = 9;
         int boms = 12;
         int flags = 12;
+        int MaxT = 10;
 
         //右→下→左→上→右上→右下→左上→左下
         static int[] dcol = new int[] { 1, 0, -1, 0, 1, 1, -1, -1 };
@@ -35,6 +37,7 @@ namespace MineSweeper
         CellState[,] cellmodels;
         TimeSpan starttime;
         TimeSpan endtime;
+        //Timer limitime;
         string difficulty;
         #endregion
 
@@ -83,6 +86,9 @@ namespace MineSweeper
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
+            lblT.Text = MaxT.ToString();
+            cntTime = 0;
+
             //rows = int.Parse(txtRow.Text);
             //cols = int.Parse(txtCol.Text);
             //boms = int.Parse(txtBom.Text);
@@ -243,6 +249,7 @@ namespace MineSweeper
                 ResetMine(row, col);
                 DateTime startdateTime = DateTime.Now;
                 starttime = startdateTime.TimeOfDay;
+                timer1.Enabled = true;
             }
 
             if (cellmodels[row, col].IsFlagged)
@@ -260,12 +267,17 @@ namespace MineSweeper
                 cells[row, col].BackColor = Color.DarkGreen;
                 cells[row, col].ForeColor = Color.Black;
                 cells[row, col].Text = "💣";
+                timer1.Stop();
                 MessageBox.Show("GameOver");
                 //ResetMineSweeperForm();
                 //InitializeMineSweeperForm();
                 RevealCells();
                 return;
             }
+            timer1.Stop();
+            timer1.Start();
+            lblT.Text = "10";
+            cntTime = 0;
 
             clickcount++;
             ChangeCell(row, col);
@@ -288,6 +300,7 @@ namespace MineSweeper
                 TimeSpan resulttime = endtime - starttime;
                 string minute = resulttime.Minutes.ToString();
                 string second = resulttime.Seconds.ToString();
+                timer1.Stop();
                 MessageBox.Show("GameClear!");
                 MessageBox.Show(string.Format("{0}分{1}秒かかりました。", minute, second));
 
@@ -411,24 +424,28 @@ namespace MineSweeper
                 rows = 9;
                 cols = 9;
                 boms = 12;
+                MaxT = 10;
             }
             else if (comboBox1.SelectedIndex == 1)
             {
                 rows = 16;
                 cols = 16;
                 boms = 40;
+                MaxT = 15;
             }
             else if(comboBox1.SelectedIndex == 2)
             {
                 rows = 20;
                 cols = 30;
                 boms = 120;
+                MaxT = 20;
             }
             else if(comboBox1.SelectedIndex == 3)
             {
                 rows = 20;
                 cols = 30;
                 boms = 200;
+                MaxT = 25;
             }
             flags = boms;
             difficulty = comboBox1.Text;
@@ -442,6 +459,19 @@ namespace MineSweeper
         {
             RankingForm rankingForm = new RankingForm();
             rankingForm.ShowDialog();
+        }
+
+        int cntTime = 0;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            cntTime++;
+            lblT.Text = (MaxT - cntTime).ToString();
+            if(MaxT == cntTime)
+            {
+                timer1.Stop();
+                MessageBox.Show("GameOver");
+                RevealCells();
+            }
         }
     }
     /// <summary>
