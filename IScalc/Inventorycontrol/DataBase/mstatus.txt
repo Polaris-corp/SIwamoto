@@ -1,0 +1,5 @@
+﻿CREATE TABLE mstatus(
+id INT NOT NULL AUTO_INCREMENT
+,status INT NOT NULL
+,PRIMARY KEY (id)
+)

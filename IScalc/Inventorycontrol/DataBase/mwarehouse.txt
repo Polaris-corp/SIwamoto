@@ -1,0 +1,8 @@
+﻿ CREATE TABLE mwarehouse( 
+     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY
+     , name VARCHAR (255) NOT NULL UNIQUE KEY
+     , townshipid INT NOT NULL
+     , deleted BOOLEAN NOT NULL DEFAULT FALSE
+     , FOREIGN KEY (townshipid) REFERENCES mtownship(id)
+ )
+ALTER TABLE mwarehouse ADD capacity INT NOT NULL DEFAULT 0;
