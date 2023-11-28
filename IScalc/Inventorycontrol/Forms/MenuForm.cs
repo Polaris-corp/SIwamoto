@@ -35,7 +35,8 @@ namespace Inventorycontrol.Forms
 
         private void Merchandise_button_Click(object sender, EventArgs e)
         {
-
+            ItemsListForm itemsListForm = new ItemsListForm();
+            itemsListForm.ShowDialog();
         }
     }
 }

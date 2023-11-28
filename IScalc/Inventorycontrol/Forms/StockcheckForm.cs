@@ -22,14 +22,10 @@ namespace Inventorycontrol.Forms
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void Registrationbutton_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            ScheduleRegistrationForm scheduleRegistrationForm = new ScheduleRegistrationForm();
+            scheduleRegistrationForm.ShowDialog();
         }
     }
 }

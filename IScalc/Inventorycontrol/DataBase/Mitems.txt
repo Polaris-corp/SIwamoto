@@ -3,3 +3,8 @@
     , name VARCHAR (255) NOT NULL UNIQUE KEY
     , deleted BOOLEAN NOT NULL DEFAULT FALSE
 );
+INSERT INTO mitems(name,deleted) VALUES ('商品A',false)
+INSERT INTO mitems(name,deleted) VALUES ('商品B',false)
+INSERT INTO mitems(name,deleted) VALUES ('商品C',false)
+INSERT INTO mitems(name,deleted) VALUES ('商品D',false)
+INSERT INTO mitems(name,deleted) VALUES ('商品E',true)
