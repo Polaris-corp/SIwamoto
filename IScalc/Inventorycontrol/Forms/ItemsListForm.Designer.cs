@@ -43,6 +43,7 @@ namespace Inventorycontrol.Forms
             this.dgvItems.Location = new System.Drawing.Point(197, 36);
             this.dgvItems.Name = "dgvItems";
             this.dgvItems.RowTemplate.Height = 21;
+            this.dgvItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvItems.Size = new System.Drawing.Size(563, 444);
             this.dgvItems.TabIndex = 1;
             // 

@@ -8,3 +8,5 @@ INSERT INTO mitems(name,deleted) VALUES ('商品B',false)
 INSERT INTO mitems(name,deleted) VALUES ('商品C',false)
 INSERT INTO mitems(name,deleted) VALUES ('商品D',false)
 INSERT INTO mitems(name,deleted) VALUES ('商品E',true)
+
+ALTER TABLE mitems ADD COLUMN count INT NOT NULL DEFAULT 0
