@@ -10,28 +10,28 @@ using Inventorycontrol.Model;
 
 namespace Inventorycontrol.Service
 {
-    class ItemlistService
+    public class TownshipService
     {
-        public DataTable ResaultSearchItem(string item)
+        public DataTable ResultSearchTownship(string name)
         {
-            return Itemstable(CreateSelectSql(item));
+            return Townshiptable(CreateSelectSql(name));
         }
 
-        public void RegistrationItemInfo(string name)
+        public void RegistrationTownship(string name)
         {
-            ExecutionSql(CreateInsertItemInfoSql(name));
+            ExecutionSql(CreateInsertTownshipInfoSql(name));
         }
 
-        public void UpdateItemInfo(ItemInfoModel item)
+        public void UpdateTownship(TownshipInfoModel info)
         {
-            ExecutionSql(CreateUpdateInfoSql(item));
+            ExecutionSql(CreateUpdateTownshipInfoSql(info));
         }
 
-        public void DeleteItemInfo(ItemInfoModel item)
+        public void DeleteTownship(TownshipInfoModel info)
         {
-            ExecutionSql(CreateDeleteInfoSql(item));
+            ExecutionSql(CreateDeleteInfoSql(info));
         }
-        public DataTable Itemstable(MySqlCommand command)
+        public DataTable Townshiptable(MySqlCommand command)
         {
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
             {
@@ -62,36 +62,36 @@ namespace Inventorycontrol.Service
             }
         }
 
-        private MySqlCommand CreateSelectSql(string item)
+        private MySqlCommand CreateSelectSql(string name)
         {
-            string query = @"SELECT id,name FROM mitems WHERE deleted = 0 AND name LIKE @name";
+            string query = @"SELECT id,name FROM mtownship WHERE deleted = 0 AND name LIKE @name";
             MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@name", "%" + item + "%");
+            command.Parameters.AddWithValue("@name", "%" + name + "%");
             return command;
         }
 
-        private MySqlCommand CreateInsertItemInfoSql(string name)
+        private MySqlCommand CreateInsertTownshipInfoSql(string name)
         {
-            string query = @"INSERT INTO mitems (name)VALUES (@name)";
+            string query = @"INSERT INTO mtownship (name)VALUES (@name)";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", name);
             return command;
         }
 
-        private MySqlCommand CreateUpdateInfoSql(ItemInfoModel item)
+        private MySqlCommand CreateUpdateTownshipInfoSql(TownshipInfoModel info)
         {
-            string query = @"UPDATE mitems SET name = @name WHERE id = @id";
+            string query = @"UPDATE mtownship SET name = @name WHERE id = @id";
             MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@name", item.Name);
-            command.Parameters.AddWithValue("@id", item.Id);
+            command.Parameters.AddWithValue("@name", info.Name);
+            command.Parameters.AddWithValue("@id", info.Id);
             return command;
         }
 
-        private MySqlCommand CreateDeleteInfoSql(ItemInfoModel item)
+        private MySqlCommand CreateDeleteInfoSql(TownshipInfoModel info)
         {
-            string query = @"UPDATE mitems SET deleted = true WHERE id = @id";
+            string query = @"UPDATE mtownship SET deleted = true WHERE id = @id";
             MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@id", item.Id);
+            command.Parameters.AddWithValue("@id", info.Id);
             return command;
         }
     }

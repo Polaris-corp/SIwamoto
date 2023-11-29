@@ -25,7 +25,8 @@ namespace Inventorycontrol.Forms
 
         private void Erea_button_Click(object sender, EventArgs e)
         {
-
+            TownshipListForm townshipListForm = new TownshipListForm();
+            townshipListForm.ShowDialog();
         }
 
         private void Warehouse_button_Click(object sender, EventArgs e)

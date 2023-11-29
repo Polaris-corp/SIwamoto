@@ -21,8 +21,7 @@ namespace Inventorycontrol.Forms
         private void btnRegistration_Click(object sender, EventArgs e)
         {
             string itemName = txtItem.Text;
-            int itemCount = int.Parse(txtItemcount.Text);
-            itemlistController.InsertItemInfo(itemName, itemCount);
+            itemlistController.InsertItemInfo(itemName);
         }
 
         private void txtItem_TextChanged(object sender, EventArgs e)

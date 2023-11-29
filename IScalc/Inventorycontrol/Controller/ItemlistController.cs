@@ -18,9 +18,9 @@ namespace Inventorycontrol.Controller
             return itemlistService.ResaultSearchItem(item);
         }
 
-        public void InsertItemInfo(string name,int count)
+        public void InsertItemInfo(string name)
         {
-            itemlistService.RegistrationItemInfo(name, count);
+            itemlistService.RegistrationItemInfo(name);
         }
 
         public void UpdateItemInfo(ItemInfoModel items)

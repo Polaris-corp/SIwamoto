@@ -25,12 +25,12 @@ namespace Inventorycontrol.Forms
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtItemcount.Text))
+            if (string.IsNullOrEmpty(txtItem.Text))
             {
-                MessageBox.Show("在庫数を設定してください。");
+                MessageBox.Show("商品名を設定してください。");
                 return;
             }
-            items.Count = int.Parse(txtItemcount.Text);
+            items.Name = txtItem.Text;
             ItemlistController.UpdateItemInfo(items);
         }
 
@@ -52,7 +52,7 @@ namespace Inventorycontrol.Forms
 
         private void ItemInfoUpdateForm_Load(object sender, EventArgs e)
         {
-            txtItemcount.Text = items.Count.ToString();
+            txtItem.Text = items.Name;
         }
 
         private void txtItemcount_KeyPress(object sender, KeyPressEventArgs e)

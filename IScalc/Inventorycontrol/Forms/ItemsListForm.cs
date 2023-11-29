@@ -29,7 +29,6 @@ namespace Inventorycontrol.Forms
             ItemInfoModel items = new ItemInfoModel();
             items.Id = (int)selectedRow.Cells["id"].Value;
             items.Name = selectedRow.Cells["name"].Value.ToString();
-            items.Count = (int)selectedRow.Cells["count"].Value;
             return items;
         }
         private void btnRegistration_Click(object sender, EventArgs e)
@@ -49,9 +48,8 @@ namespace Inventorycontrol.Forms
             string item = txtItem.Text;
             dt = ItemlistController.SearchItems(item);
             dgvItems.DataSource = dt;
-            dgvItems.Columns["name"].HeaderText = "商品名";
-            dgvItems.Columns["count"].HeaderText = "在庫数";
             dgvItems.Columns["id"].HeaderText = "商品ID";
+            dgvItems.Columns["name"].HeaderText = "商品名";
         }
     }
 }

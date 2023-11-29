@@ -1,5 +1,5 @@
 ﻿CREATE TABLE mitems( 
-    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
     , name VARCHAR (255) NOT NULL UNIQUE KEY
     , deleted BOOLEAN NOT NULL DEFAULT FALSE
 );
@@ -9,4 +9,3 @@ INSERT INTO mitems(name,deleted) VALUES ('商品C',false)
 INSERT INTO mitems(name,deleted) VALUES ('商品D',false)
 INSERT INTO mitems(name,deleted) VALUES ('商品E',true)
 
-ALTER TABLE mitems ADD COLUMN count INT NOT NULL DEFAULT 0

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Inventorycontrol.Model
 {
-    public class ItemInfoModel
+    public class TownshipInfoModel
     {
-        public ItemInfoModel()
+        public TownshipInfoModel()
         {
             Id = 0;
             Name = "";
