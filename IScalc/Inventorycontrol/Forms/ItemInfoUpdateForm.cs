@@ -32,6 +32,7 @@ namespace Inventorycontrol.Forms
             }
             items.Name = txtItem.Text;
             ItemlistController.UpdateItemInfo(items);
+            this.Close();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -43,6 +44,7 @@ namespace Inventorycontrol.Forms
             if(result == DialogResult.Yes)
             {
                 ItemlistController.DeleteItemInfo(items);
+                this.Close();
             }
             else if(result == DialogResult.No)
             {

@@ -43,12 +43,12 @@ namespace Inventorycontrol.Forms
             if (result == DialogResult.Yes)
             {
                 townshipController.DeleteTownship(townshipInfo);
+                this.Close();
             }
             else if (result == DialogResult.No)
             {
                 return;
             }
-            this.Close();
         }
 
         private void TownshipUpdateForm_Load(object sender, EventArgs e)

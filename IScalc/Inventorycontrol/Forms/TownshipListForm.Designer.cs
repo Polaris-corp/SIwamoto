@@ -34,6 +34,7 @@ namespace Inventorycontrol.Forms
             this.btnRegistration = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.dgvTownship = new System.Windows.Forms.DataGridView();
+            this.btnSpecificTownship = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTownship)).BeginInit();
             this.SuspendLayout();
             // 
@@ -91,18 +92,29 @@ namespace Inventorycontrol.Forms
             this.dgvTownship.Size = new System.Drawing.Size(563, 444);
             this.dgvTownship.TabIndex = 31;
             // 
+            // btnSpecificTownship
+            // 
+            this.btnSpecificTownship.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.btnSpecificTownship.Location = new System.Drawing.Point(53, 399);
+            this.btnSpecificTownship.Name = "btnSpecificTownship";
+            this.btnSpecificTownship.Size = new System.Drawing.Size(117, 38);
+            this.btnSpecificTownship.TabIndex = 36;
+            this.btnSpecificTownship.Text = "エリア詳細";
+            this.btnSpecificTownship.UseVisualStyleBackColor = true;
+            // 
             // TownshipListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 514);
+            this.Controls.Add(this.btnSpecificTownship);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnRegistration);
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.dgvTownship);
             this.Name = "TownshipListForm";
-            this.Text = "TownShipListForm";
+            this.Text = "エリア一覧";
             ((System.ComponentModel.ISupportInitialize)(this.dgvTownship)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -116,5 +128,6 @@ namespace Inventorycontrol.Forms
         private System.Windows.Forms.Button btnRegistration;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.DataGridView dgvTownship;
+        private System.Windows.Forms.Button btnSpecificTownship;
     }
 }
