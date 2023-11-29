@@ -34,6 +34,7 @@ namespace Inventorycontrol.Forms
             this.btnRegistration = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.txtItem = new System.Windows.Forms.TextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,11 +91,23 @@ namespace Inventorycontrol.Forms
             this.txtItem.Size = new System.Drawing.Size(160, 30);
             this.txtItem.TabIndex = 25;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(33, 72);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(104, 16);
+            this.checkBox1.TabIndex = 26;
+            this.checkBox1.Text = "削除済みを表示";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // ItemsListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 514);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.txtItem);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnRegistration);
@@ -115,5 +128,6 @@ namespace Inventorycontrol.Forms
         private System.Windows.Forms.Button btnRegistration;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.TextBox txtItem;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

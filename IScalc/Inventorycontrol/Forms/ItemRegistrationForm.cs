@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Inventorycontrol.Controller;
+using Inventorycontrol.Model;
+using Inventorycontrol.Common;
+using MySqlConnector;
 
 namespace Inventorycontrol.Forms
 {
@@ -17,11 +20,29 @@ namespace Inventorycontrol.Forms
         {
             InitializeComponent();
         }
+
         ItemlistController itemlistController = new ItemlistController();
         private void btnRegistration_Click(object sender, EventArgs e)
         {
             string itemName = txtItem.Text;
-            itemlistController.InsertItemInfo(itemName);
+            CheckExists check = new CheckExists();
+            try
+            {
+                if (!check.CheckIfNameExists(itemName))
+                {
+                    itemlistController.InsertItemInfo(itemName);
+                }
+                else
+                {
+                    MessageBox.Show("すでに登録されている商品または、以前削除された商品です。");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Console.WriteLine(ex);
+            }
         }
 
         private void txtItem_TextChanged(object sender, EventArgs e)
@@ -37,5 +58,7 @@ namespace Inventorycontrol.Forms
                 e.Handled = true;
             }
         }
+
+        
     }
 }

@@ -17,6 +17,11 @@ namespace Inventorycontrol.Service
             return Itemstable(CreateSelectSql(item));
         }
 
+        public DataTable ResaultSearchDeletedItem(string item)
+        {
+            return Itemstable(CreateSelectdeletedSql(item));
+        }
+
         public void RegistrationItemInfo(string name)
         {
             ExecutionSql(CreateInsertItemInfoSql(name));
@@ -70,6 +75,13 @@ namespace Inventorycontrol.Service
             return command;
         }
 
+        private MySqlCommand CreateSelectdeletedSql(string item)
+        {
+            string query = @"SELECT id,name FROM mitems WHERE deleted = 1 AND name LIKE @name";
+            MySqlCommand command = new MySqlCommand(query);
+            command.Parameters.AddWithValue("@name", "%" + item + "%");
+            return command;
+        }
         private MySqlCommand CreateInsertItemInfoSql(string name)
         {
             string query = @"INSERT INTO mitems (name)VALUES (@name)";
@@ -80,7 +92,7 @@ namespace Inventorycontrol.Service
 
         private MySqlCommand CreateUpdateInfoSql(ItemInfoModel item)
         {
-            string query = @"UPDATE mitems SET name = @name WHERE id = @id";
+            string query = @"UPDATE mitems SET name = @name,deleted = false WHERE id = @id";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", item.Name);
             command.Parameters.AddWithValue("@id", item.Id);

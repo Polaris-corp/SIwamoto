@@ -18,6 +18,11 @@ namespace Inventorycontrol.Controller
             return itemlistService.ResaultSearchItem(item);
         }
 
+        public DataTable SearchDeletedItems(string item)
+        {
+            return itemlistService.ResaultSearchDeletedItem(item);
+        }
+
         public void InsertItemInfo(string name)
         {
             itemlistService.RegistrationItemInfo(name);

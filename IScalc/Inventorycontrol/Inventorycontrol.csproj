@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\CheckExists.cs" />
     <Compile Include="Common\DBConnection.cs" />
     <Compile Include="Controller\ItemlistController.cs" />
     <Compile Include="Controller\TownshipController.cs" />

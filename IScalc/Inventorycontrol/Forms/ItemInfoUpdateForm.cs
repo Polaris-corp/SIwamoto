@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Inventorycontrol.Model;
 using Inventorycontrol.Controller;
+using Inventorycontrol.Common;
 
 namespace Inventorycontrol.Forms
 {
@@ -25,14 +26,33 @@ namespace Inventorycontrol.Forms
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtItem.Text))
+            try
             {
-                MessageBox.Show("商品名を設定してください。");
-                return;
+                if (string.IsNullOrEmpty(txtItem.Text))
+                {
+                    MessageBox.Show("商品名を設定してください。");
+                    return;
+                }
+                
+                items.Name = txtItem.Text;
+                CheckExists check = new CheckExists();
+                if (!check.CheckIfNameExists(items.Name))
+                {
+                    ItemlistController.UpdateItemInfo(items);
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("すでに登録されている商品または、以前削除された商品です。");
+                    return;
+                }
+                
             }
-            items.Name = txtItem.Text;
-            ItemlistController.UpdateItemInfo(items);
-            this.Close();
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
