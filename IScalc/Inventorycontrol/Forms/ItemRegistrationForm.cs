@@ -22,19 +22,21 @@ namespace Inventorycontrol.Forms
         }
 
         ItemlistController itemlistController = new ItemlistController();
+        CheckItemExists check = new CheckItemExists();
+
         private void btnRegistration_Click(object sender, EventArgs e)
         {
             string itemName = txtItem.Text;
-            CheckExists check = new CheckExists();
             try
             {
-                if (!check.CheckIfNameExists(itemName))
+                if (!check.CheckIfItemNameExists(itemName))
                 {
                     itemlistController.InsertItemInfo(itemName);
                 }
                 else
                 {
-                    MessageBox.Show("すでに登録されている商品または、以前削除された商品です。");
+                    MessageBox.Show("登録済みまたは、以前削除された商品です。");
+                    MessageBox.Show("再度登録したい場合は「削除済みを表示」にチェックを入れ検索、更新してください。");
                     return;
                 }
             }

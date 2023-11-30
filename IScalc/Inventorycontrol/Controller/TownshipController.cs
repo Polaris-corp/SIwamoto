@@ -18,6 +18,11 @@ namespace Inventorycontrol.Controller
             return service.ResultSearchTownship(name);
         }
 
+        public DataTable SearchDeletedTownship(string name)
+        {
+            return service.ResultSearchDeletedTownship(name);
+        }
+
         public void RegistrationTownship(string name)
         {
             service.RegistrationTownship(name);

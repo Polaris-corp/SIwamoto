@@ -31,7 +31,8 @@ namespace Inventorycontrol.Forms
 
         private void Warehouse_button_Click(object sender, EventArgs e)
         {
-
+            WarehouseListForm warehouseListForm = new WarehouseListForm();
+            warehouseListForm.ShowDialog();
         }
 
         private void Merchandise_button_Click(object sender, EventArgs e)

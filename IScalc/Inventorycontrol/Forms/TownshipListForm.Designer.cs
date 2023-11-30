@@ -35,6 +35,7 @@ namespace Inventorycontrol.Forms
             this.btnUpdate = new System.Windows.Forms.Button();
             this.dgvTownship = new System.Windows.Forms.DataGridView();
             this.btnSpecificTownship = new System.Windows.Forms.Button();
+            this.chkDelete = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTownship)).BeginInit();
             this.SuspendLayout();
             // 
@@ -102,11 +103,22 @@ namespace Inventorycontrol.Forms
             this.btnSpecificTownship.Text = "エリア詳細";
             this.btnSpecificTownship.UseVisualStyleBackColor = true;
             // 
+            // chkDelete
+            // 
+            this.chkDelete.AutoSize = true;
+            this.chkDelete.Location = new System.Drawing.Point(31, 41);
+            this.chkDelete.Name = "chkDelete";
+            this.chkDelete.Size = new System.Drawing.Size(104, 16);
+            this.chkDelete.TabIndex = 37;
+            this.chkDelete.Text = "削除済みを表示";
+            this.chkDelete.UseVisualStyleBackColor = true;
+            // 
             // TownshipListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 514);
+            this.Controls.Add(this.chkDelete);
             this.Controls.Add(this.btnSpecificTownship);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.btnSearch);
@@ -129,5 +141,6 @@ namespace Inventorycontrol.Forms
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.DataGridView dgvTownship;
         private System.Windows.Forms.Button btnSpecificTownship;
+        private System.Windows.Forms.CheckBox chkDelete;
     }
 }

@@ -17,6 +17,11 @@ namespace Inventorycontrol.Service
             return Townshiptable(CreateSelectSql(name));
         }
 
+        public DataTable ResultSearchDeletedTownship(string name)
+        {
+            return Townshiptable(CreateSelectDeletedSql(name));
+        }
+
         public void RegistrationTownship(string name)
         {
             ExecutionSql(CreateInsertTownshipInfoSql(name));
@@ -80,7 +85,7 @@ namespace Inventorycontrol.Service
 
         private MySqlCommand CreateUpdateTownshipInfoSql(TownshipInfoModel info)
         {
-            string query = @"UPDATE mtownship SET name = @name WHERE id = @id";
+            string query = @"UPDATE mtownship SET name = @name,deleted = false WHERE id = @id";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", info.Name);
             command.Parameters.AddWithValue("@id", info.Id);
@@ -92,6 +97,14 @@ namespace Inventorycontrol.Service
             string query = @"UPDATE mtownship SET deleted = true WHERE id = @id";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@id", info.Id);
+            return command;
+        }
+
+        private MySqlCommand CreateSelectDeletedSql(string name)
+        {
+            string query = @"SELECT id,name FROM mtownship WHERE deleted = 1 AND name LIKE @name";
+            MySqlCommand command = new MySqlCommand(query);
+            command.Parameters.AddWithValue("@name", "%" + name + "%");
             return command;
         }
     }

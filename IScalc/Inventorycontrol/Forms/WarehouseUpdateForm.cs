@@ -13,42 +13,44 @@ using Inventorycontrol.Common;
 
 namespace Inventorycontrol.Forms
 {
-    public partial class TownshipUpdateForm : Form
+    public partial class WarehouseUpdateForm : Form
     {
-        public TownshipUpdateForm(TownshipInfoModel townshipInfomodel)
+        public WarehouseUpdateForm(WarehouseModel warehouseinfo)
         {
             InitializeComponent();
-            townshipInfo = townshipInfomodel;
+            warehouse = warehouseinfo;
         }
 
-        TownshipInfoModel townshipInfo;
-        TownshipController townshipController = new TownshipController();
-        CheckTownshipExists check = new CheckTownshipExists();
+        WarehouseModel warehouse;
+        WarehouseController controller = new WarehouseController();
+        CheckWarehouseExists check = new CheckWarehouseExists();
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtTownship.Text))
+            if (string.IsNullOrEmpty(txtWarehouse.Text) || string.IsNullOrEmpty(txtTownshipID.Text))
             {
-                MessageBox.Show("エリア名を設定してください。");
+                MessageBox.Show("倉庫名、エリアIDを設定してください。");
                 return;
             }
+            warehouse.Name = txtWarehouse.Text;
+            warehouse.Townshipid = int.Parse(txtTownshipID.Text);
+            warehouse.Capacity = int.Parse(txtCapacity.Text);
             try
             {
-                if (!check.CheckIfTownshipNameExists(txtTownship.Text))
+                if (!check.CheckIfWarehouseNameExists(warehouse.Name) && check.CheckIfTownshipIdExists(warehouse.Townshipid))
                 {
-                    townshipController.UpdateTownship(townshipInfo);
-                    this.Close();
+                    controller.UpdateWarehouse(warehouse);
                 }
                 else
                 {
-                    MessageBox.Show("登録済みまたは、以前削除されたエリアです。");
+                    MessageBox.Show("登録済みまたは、以前削除された倉庫です。");
                     DialogResult result = MessageBox.Show("復旧しますか？",
                 "復旧", MessageBoxButtons.YesNo
                       , MessageBoxIcon.Exclamation
                       , MessageBoxDefaultButton.Button2);
-                    if(result == DialogResult.Yes)
+                    if (result == DialogResult.Yes)
                     {
-                        townshipController.UpdateTownship(townshipInfo);
+                        controller.UpdateWarehouse(warehouse);
                         this.Close();
                     }
                     else if (result == DialogResult.No)
@@ -72,7 +74,7 @@ namespace Inventorycontrol.Forms
                       , MessageBoxDefaultButton.Button2);
             if (result == DialogResult.Yes)
             {
-                townshipController.DeleteTownship(townshipInfo);
+                controller.DeleteWarehouse(warehouse);
                 this.Close();
             }
             else if (result == DialogResult.No)
@@ -81,9 +83,11 @@ namespace Inventorycontrol.Forms
             }
         }
 
-        private void TownshipUpdateForm_Load(object sender, EventArgs e)
+        private void WarehouseUpdateForm_Load(object sender, EventArgs e)
         {
-            txtTownship.Text = townshipInfo.Name;
+            txtWarehouse.Text = warehouse.Name;
+            txtTownshipID.Text = warehouse.Townshipid.ToString();
+            txtCapacity.Text = warehouse.Capacity.ToString();
         }
     }
 }

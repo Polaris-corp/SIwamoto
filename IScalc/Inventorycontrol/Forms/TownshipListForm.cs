@@ -34,8 +34,17 @@ namespace Inventorycontrol.Forms
         private void btnSearch_Click(object sender, EventArgs e)
         {
             string name = txtName.Text;
-            dt = controller.SearchTownship(name);
+            if (chkDelete.Checked)
+            {
+                dt = controller.SearchDeletedTownship(name);
+            }
+            else
+            {
+                dt = controller.SearchTownship(name);
+            }
             dgvTownship.DataSource = dt;
+            dgvTownship.Columns["id"].HeaderText = "エリアID";
+            dgvTownship.Columns["name"].HeaderText = "エリア名";
         }
 
         private void btnRegistration_Click(object sender, EventArgs e)

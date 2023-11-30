@@ -23,6 +23,8 @@ namespace Inventorycontrol.Forms
 
         ItemInfoModel items;
         ItemlistController ItemlistController = new ItemlistController();
+        CheckItemExists check = new CheckItemExists();
+
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
@@ -35,24 +37,33 @@ namespace Inventorycontrol.Forms
                 }
                 
                 items.Name = txtItem.Text;
-                CheckExists check = new CheckExists();
-                if (!check.CheckIfNameExists(items.Name))
+                if (!check.CheckIfItemNameExists(items.Name))
                 {
                     ItemlistController.UpdateItemInfo(items);
                     this.Close();
                 }
                 else
                 {
-                    MessageBox.Show("すでに登録されている商品または、以前削除された商品です。");
-                    return;
+                    MessageBox.Show("登録済みまたは、以前削除された商品です。");
+                    DialogResult result = MessageBox.Show("復旧しますか？",
+                "復旧", MessageBoxButtons.YesNo
+                      , MessageBoxIcon.Exclamation
+                      , MessageBoxDefaultButton.Button2);
+                    if (result == DialogResult.Yes)
+                    {
+                        ItemlistController.UpdateItemInfo(items);
+                        this.Close();
+                    }
+                    else if (result == DialogResult.No)
+                    {
+                        return;
+                    }
                 }
-                
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex);
             }
-            
         }
 
         private void btnDelete_Click(object sender, EventArgs e)

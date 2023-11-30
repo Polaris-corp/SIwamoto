@@ -7,11 +7,11 @@ using MySqlConnector;
 
 namespace Inventorycontrol.Common
 {
-    public class CheckExists
+    public class CheckTownshipExists
     {
-        public bool CheckIfNameExists(string inputName)
+        public bool CheckIfTownshipNameExists(string inputName)
         {
-            string query = "SELECT COUNT(*) FROM mitems WHERE name = @name";
+            string query = "SELECT COUNT(*) FROM mtownship WHERE name = @name";
 
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
             {
