@@ -36,6 +36,12 @@ namespace Inventorycontrol.Service
         {
             ExecutionSql(CreateDeleteWarehouseSql(warehouse));
         }
+
+        public List<string> GetWarehouseName(int id)
+        {
+            return DataReaderSql(CreateSelectWarehouseNameSql(id));
+        }
+
         public DataTable Warehousetable(MySqlCommand command)
         {
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
@@ -65,6 +71,25 @@ namespace Inventorycontrol.Service
                     Console.WriteLine(ex);
                 }
             }
+        }
+
+        public List<string> DataReaderSql(MySqlCommand command)
+        {
+            List<string> items = new List<string>();
+            using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
+            {
+                command.Connection = connection;
+
+                connection.Open();
+                using (MySqlDataReader dr = command.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        items.Add(dr["name"].ToString());
+                    }
+                }
+            }
+            return items;
         }
 
         private MySqlCommand CreateSelectSql(string item)
@@ -109,6 +134,14 @@ namespace Inventorycontrol.Service
             string query = @"UPDATE mwarehouse SET deleted = true WHERE id = @id";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@id", warehouse.Id);
+            return command;
+        }
+
+        private MySqlCommand CreateSelectWarehouseNameSql(int id)
+        {
+            string query = @"SELECT name FROM mwarehouse WHERE townshipid = @townshipid";
+            MySqlCommand command = new MySqlCommand(query);
+            command.Parameters.AddWithValue("@townshipid", id);
             return command;
         }
     }

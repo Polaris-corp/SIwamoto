@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Inventorycontrol.Controller;
 
 
 namespace Inventorycontrol.Forms
@@ -17,42 +18,66 @@ namespace Inventorycontrol.Forms
         {
             InitializeComponent();
         }
-        private System.Windows.Forms.ComboBox Status;
-        private System.Windows.Forms.ComboBox Items;
+        private List<ComboBox> StatusControls = new List<ComboBox>();
+        private List<ComboBox> ItemsControls = new List<ComboBox>();
+        private ComboBox[] Status;
+        private ComboBox[] Items;
+
+
+        public int count = 0;
+
         private void CreatecmbStatus(int number)
         {
+            this.Status = new ComboBox[number];
+            this.Items = new ComboBox[number];
+            ResetControls();
+            List<string> names = GetItemNames();
             
             for (int i = 0; i < number; i++)
             {
-                this.Status = new ComboBox();
-                this.Status.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-                this.Status.FormattingEnabled = true;
-                this.Status.Location = new System.Drawing.Point(323,188 + i * 32 + i * 10);
-                this.Status.Name = "cmbStatus" + i;
-                this.Status.Size = new System.Drawing.Size(180, 32);
-                this.Status.TabIndex = 25;
-                //this.Status.Items.Add("入荷");
-                //this.Status.Items.Add("出荷");
-                //this.Status.Items.Add("返品(+)");
-                //this.Status.Items.Add("返品(-)");
-                //this.Status.Items.Add("破損(-)");
-                this.Status.DropDownStyle = ComboBoxStyle.DropDownList;
+                this.Status[i] = new ComboBox();
+                this.Status[i].Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+                this.Status[i].FormattingEnabled = true;
+                this.Status[i].Location = new System.Drawing.Point(323,188 + i * 32 + i * 10);
+                this.Status[i].Name = "cmbStatus" + i;
+                this.Status[i].Size = new System.Drawing.Size(180, 32);
+                this.Status[i].TabIndex = 25;
+                this.Status[i].DropDownStyle = ComboBoxStyle.DropDownList;
 
-                this.Items = new ComboBox();
-                this.Items.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-                this.Items.FormattingEnabled = true;
-                this.Items.Location = new System.Drawing.Point(79, 188 + i * 32 + i * 10);
-                this.Items.Name = "cmbItem" + i;
-                this.Items.Size = new System.Drawing.Size(180, 32);
-                this.Items.TabIndex = 31;
-                this.Items.DropDownStyle = ComboBoxStyle.DropDownList;
+                this.Items[i] = new ComboBox();
+                this.Items[i].Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+                this.Items[i].FormattingEnabled = true;
+                this.Items[i].Location = new System.Drawing.Point(79, 188 + i * 32 + i * 10);
+                this.Items[i].Name = "cmbItem" + i;
+                this.Items[i].Size = new System.Drawing.Size(180, 32);
+                this.Items[i].TabIndex = 31;
+                this.Items[i].DropDownStyle = ComboBoxStyle.DropDownList;
+                this.Items[i].Items.AddRange(names.ToArray());
 
-                this.Controls.Add(this.Status);
-                this.Controls.Add(this.Items);
+                StatusControls.Add(this.Status[i]);
+                ItemsControls.Add(this.Items[i]);
+
+                this.Controls.Add(this.Status[i]);
+                this.Controls.Add(this.Items[i]);
             }
-           
+            
         }
 
+        private void ResetControls()
+        {
+            foreach (var item in this.StatusControls)
+            {
+                this.Controls.Remove(item);
+                item.Dispose();
+            }
+            foreach(var item in this.ItemsControls)
+            {
+                this.Controls.Remove(item);
+                item.Dispose();
+            }
+            StatusControls.Clear();
+            ItemsControls.Clear();
+        }
         //TextBox1のKeyPressイベントハンドラ
         private void TextBox1_KeyPress(object sender,
            System.Windows.Forms.KeyPressEventArgs e)
@@ -65,28 +90,75 @@ namespace Inventorycontrol.Forms
         }
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            int i = int.Parse(textBox1.Text);
-            CreatecmbStatus(i);
+            count = int.Parse(textBox1.Text);
+            CreatecmbStatus(count);
             ResizeForm();
         }
 
         private void ResizeForm()
         {
-            int newWidth = 0;
-            int newHeight = 0;
+            int newWidth = 545;
+            int newHeight = 509;
+            btnRegistration.Location = new Point(231, 470);
             foreach(Control control in this.Controls)
             {
                 newWidth = Math.Max(newWidth, control.Right);
                 newHeight = Math.Max(newHeight, control.Bottom);
             }
-            newWidth += 50;
+            newWidth += 35;
             newHeight += 100;
             this.Size = new Size(newWidth, newHeight);
+        }
+
+        private List<string> GetItemNames()
+        {
+            ItemlistController itemlistController = new ItemlistController();
+            return itemlistController.GetItemName(); 
+        }
+
+        private List<string> GetTownshipNames()
+        {
+            TownshipController townshipController = new TownshipController();
+            return townshipController.GetTownshipName();
+        }
+
+        private List<string> GetWarehouseNames(int id)
+        {
+            WarehouseController warehouseController = new WarehouseController();
+            return warehouseController.GetWarehouseName(id);
+        }
+
+        private int GetTownshipId(string tName)
+        {
+            TownshipController townshipController = new TownshipController();
+            return townshipController.GetTownshipId(tName);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void ScheduleRegistrationForm_Load(object sender, EventArgs e)
+        {
+            cmbTownship.Items.AddRange(GetTownshipNames().ToArray());
+        }
+
+        private void cmbWarehouse_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void cmbTownship_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cmbWarehouse.Items.Clear();
+            string tName = cmbTownship.Text;
+            int id = GetTownshipId(tName);
+            cmbWarehouse.Items.AddRange(GetWarehouseNames(id).ToArray());
+        }
+
+        private void btnRegistration_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

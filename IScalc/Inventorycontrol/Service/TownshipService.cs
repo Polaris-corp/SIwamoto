@@ -36,6 +36,16 @@ namespace Inventorycontrol.Service
         {
             ExecutionSql(CreateDeleteInfoSql(info));
         }
+
+        public List<string> GetTownshipName()
+        {
+            return GetNameDataReaderSql(CreateSelectTownshipNameSql());
+        }
+
+        public int GetTownshipId(string tName)
+        {
+            return GetIdDataReaderSql(CreateSelectTownshipIdSql(tName));
+        }
         public DataTable Townshiptable(MySqlCommand command)
         {
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
@@ -65,6 +75,44 @@ namespace Inventorycontrol.Service
                     Console.WriteLine(ex);
                 }
             }
+        }
+
+        public List<string> GetNameDataReaderSql(MySqlCommand command)
+        {
+            List<string> items = new List<string>();
+            using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
+            {
+                command.Connection = connection;
+
+                connection.Open();
+                using (MySqlDataReader dr = command.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        items.Add(dr["name"].ToString());
+                    }
+                }
+            }
+            return items;
+        }
+        
+        public int GetIdDataReaderSql(MySqlCommand command)
+        {
+            int id = 0;
+            using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
+            {
+                command.Connection = connection;
+
+                connection.Open();
+                using (MySqlDataReader dr = command.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        id = (int)dr["id"];
+                    }
+                }
+            }
+            return id;
         }
 
         private MySqlCommand CreateSelectSql(string name)
@@ -105,6 +153,21 @@ namespace Inventorycontrol.Service
             string query = @"SELECT id,name FROM mtownship WHERE deleted = 1 AND name LIKE @name";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", "%" + name + "%");
+            return command;
+        }
+
+        private MySqlCommand CreateSelectTownshipNameSql()
+        {
+            string query = @"SELECT name FROM mtownship";
+            MySqlCommand command = new MySqlCommand(query);
+            return command;
+        }
+
+        private MySqlCommand CreateSelectTownshipIdSql(string tName)
+        {
+            string query = @"SELECT id FROM mtownship WHERE name = @name";
+            MySqlCommand command = new MySqlCommand(query);
+            command.Parameters.AddWithValue("@name", tName);
             return command;
         }
     }

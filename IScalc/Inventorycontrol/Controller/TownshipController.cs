@@ -37,5 +37,15 @@ namespace Inventorycontrol.Controller
         {
             service.DeleteTownship(info);
         }
+
+        public List<string> GetTownshipName()
+        {
+            return service.GetTownshipName();
+        }
+
+        public int GetTownshipId(string tName)
+        {
+            return service.GetTownshipId(tName);
+        }
     }
 }

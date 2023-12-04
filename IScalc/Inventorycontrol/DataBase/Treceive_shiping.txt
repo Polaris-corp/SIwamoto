@@ -9,3 +9,5 @@
     , FOREIGN KEY (statusid) REFERENCES mstatus(id)
     , FOREIGN KEY (itemid) REFERENCES mitems(id)
 )
+
+ALTER TABLE treceive_shiping ADD COLUMN itemname VARCHAR(255) NOT NULL

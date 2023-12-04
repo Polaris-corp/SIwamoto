@@ -36,6 +36,11 @@ namespace Inventorycontrol.Service
         {
             ExecutionSql(CreateDeleteInfoSql(item));
         }
+
+        public List<string> GetItemName()
+        {
+            return DataReaderSql(CreateSelectItemNameSql());
+        }
         public DataTable Itemstable(MySqlCommand command)
         {
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
@@ -65,6 +70,25 @@ namespace Inventorycontrol.Service
                     Console.WriteLine(ex);
                 }
             }
+        }
+
+        public List<string> DataReaderSql(MySqlCommand command)
+        {
+            List<string> items = new List<string>();
+            using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
+            {
+                command.Connection = connection;
+
+                connection.Open();
+                using (MySqlDataReader dr = command.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        items.Add(dr["name"].ToString());
+                    }
+                }
+            }
+            return items;
         }
 
         private MySqlCommand CreateSelectSql(string item)
@@ -104,6 +128,13 @@ namespace Inventorycontrol.Service
             string query = @"UPDATE mitems SET deleted = true WHERE id = @id";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@id", item.Id);
+            return command;
+        }
+
+        private MySqlCommand CreateSelectItemNameSql()
+        {
+            string query = @"SELECT name FROM mitems";
+            MySqlCommand command = new MySqlCommand(query);
             return command;
         }
     }

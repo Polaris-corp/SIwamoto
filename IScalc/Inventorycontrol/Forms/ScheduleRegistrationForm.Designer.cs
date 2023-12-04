@@ -109,6 +109,7 @@ namespace Inventorycontrol.Forms
             this.cmbWarehouse.Name = "cmbWarehouse";
             this.cmbWarehouse.Size = new System.Drawing.Size(180, 32);
             this.cmbWarehouse.TabIndex = 26;
+            this.cmbWarehouse.SelectedIndexChanged += new System.EventHandler(this.cmbWarehouse_SelectedIndexChanged);
             // 
             // cmbTownship
             // 
@@ -118,6 +119,7 @@ namespace Inventorycontrol.Forms
             this.cmbTownship.Name = "cmbTownship";
             this.cmbTownship.Size = new System.Drawing.Size(180, 32);
             this.cmbTownship.TabIndex = 24;
+            this.cmbTownship.SelectedIndexChanged += new System.EventHandler(this.cmbTownship_SelectedIndexChanged);
             // 
             // btnRegistration
             // 
@@ -129,6 +131,7 @@ namespace Inventorycontrol.Forms
             this.btnRegistration.TabIndex = 30;
             this.btnRegistration.Text = "登録";
             this.btnRegistration.UseVisualStyleBackColor = true;
+            this.btnRegistration.Click += new System.EventHandler(this.btnRegistration_Click);
             // 
             // label1
             // 
@@ -167,6 +170,7 @@ namespace Inventorycontrol.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(579, 520);
             this.Controls.Add(this.btnCreate);
             this.Controls.Add(this.textBox1);
@@ -182,6 +186,7 @@ namespace Inventorycontrol.Forms
             this.Controls.Add(this.dtpSchedule);
             this.Name = "ScheduleRegistrationForm";
             this.Text = "入出荷予定登録";
+            this.Load += new System.EventHandler(this.ScheduleRegistrationForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

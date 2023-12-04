@@ -37,5 +37,10 @@ namespace Inventorycontrol.Controller
         {
             itemlistService.DeleteItemInfo(items);
         }
+
+        public List<string> GetItemName()
+        {
+            return itemlistService.GetItemName();
+        }
     }
 }

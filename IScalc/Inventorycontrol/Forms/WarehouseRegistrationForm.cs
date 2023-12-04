@@ -22,7 +22,7 @@ namespace Inventorycontrol.Forms
 
         CheckWarehouseExists check = new CheckWarehouseExists();
         WarehouseController controller = new WarehouseController();
-        WarehouseModel warehouse;
+        //WarehouseModel warehouse;
 
         private void btnRegistration_Click(object sender, EventArgs e)
         {

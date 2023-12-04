@@ -36,5 +36,10 @@ namespace Inventorycontrol.Controller
         {
             service.DeleteWarehouse(warehouse);
         }
+
+        public List<string> GetWarehouseName(int id)
+        {
+            return service.GetWarehouseName(id);
+        }
     }
 }
