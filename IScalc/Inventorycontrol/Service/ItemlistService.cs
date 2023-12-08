@@ -41,6 +41,11 @@ namespace Inventorycontrol.Service
         {
             return DataReaderSql(CreateSelectItemNameSql());
         }
+
+        public int GetItemId(string name)
+        {
+            return GetIdDataReaderSql(CreateSelectItemIdSql(name));
+        }
         public DataTable Itemstable(MySqlCommand command)
         {
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
@@ -90,7 +95,24 @@ namespace Inventorycontrol.Service
             }
             return items;
         }
+        public int GetIdDataReaderSql(MySqlCommand command)
+        {
+            int id = 0;
+            using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
+            {
+                command.Connection = connection;
 
+                connection.Open();
+                using (MySqlDataReader dr = command.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        id = dr.GetInt32(0);
+                    }
+                }
+            }
+            return id;
+        }
         private MySqlCommand CreateSelectSql(string item)
         {
             string query = @"SELECT id,name FROM mitems WHERE deleted = 0 AND name LIKE @name";
@@ -133,8 +155,16 @@ namespace Inventorycontrol.Service
 
         private MySqlCommand CreateSelectItemNameSql()
         {
-            string query = @"SELECT name FROM mitems";
+            string query = @"SELECT name FROM mitems WHERE deleted = false";
             MySqlCommand command = new MySqlCommand(query);
+            return command;
+        }
+
+        private MySqlCommand CreateSelectItemIdSql(string name)
+        {
+            string query = @"SELECT id FROM mitems WHERE name = @name";
+            MySqlCommand command = new MySqlCommand(query);
+            command.Parameters.AddWithValue("@name", name);
             return command;
         }
     }

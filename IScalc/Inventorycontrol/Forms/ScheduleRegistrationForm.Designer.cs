@@ -39,15 +39,13 @@ namespace Inventorycontrol.Forms
             this.cmbTownship = new System.Windows.Forms.ComboBox();
             this.btnRegistration = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.btnCreate = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label6.Location = new System.Drawing.Point(22, 17);
+            this.label6.Location = new System.Drawing.Point(413, 15);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(40, 16);
             this.label6.TabIndex = 23;
@@ -57,7 +55,7 @@ namespace Inventorycontrol.Forms
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label2.Location = new System.Drawing.Point(76, 154);
+            this.label2.Location = new System.Drawing.Point(16, 154);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(56, 16);
             this.label2.TabIndex = 22;
@@ -65,17 +63,21 @@ namespace Inventorycontrol.Forms
             // 
             // dtpSchedule
             // 
-            this.dtpSchedule.Font = new System.Drawing.Font("ＭＳ 明朝", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.dtpSchedule.Location = new System.Drawing.Point(25, 36);
+            this.dtpSchedule.CalendarFont = new System.Drawing.Font("HGP明朝B", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.dtpSchedule.Font = new System.Drawing.Font("HGP明朝B", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.dtpSchedule.Location = new System.Drawing.Point(415, 34);
+            this.dtpSchedule.MinDate = new System.DateTime(2023, 12, 8, 0, 0, 0, 0);
             this.dtpSchedule.Name = "dtpSchedule";
-            this.dtpSchedule.Size = new System.Drawing.Size(184, 23);
+            this.dtpSchedule.Size = new System.Drawing.Size(184, 28);
             this.dtpSchedule.TabIndex = 20;
+            this.dtpSchedule.Value = new System.DateTime(2023, 12, 8, 0, 0, 0, 0);
+            this.dtpSchedule.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dtpSchedule_KeyPress);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label5.Location = new System.Drawing.Point(323, 154);
+            this.label5.Location = new System.Drawing.Point(243, 154);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(110, 16);
             this.label5.TabIndex = 29;
@@ -85,7 +87,7 @@ namespace Inventorycontrol.Forms
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label4.Location = new System.Drawing.Point(22, 75);
+            this.label4.Location = new System.Drawing.Point(23, 10);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(48, 16);
             this.label4.TabIndex = 28;
@@ -95,7 +97,7 @@ namespace Inventorycontrol.Forms
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label3.Location = new System.Drawing.Point(226, 75);
+            this.label3.Location = new System.Drawing.Point(227, 10);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 16);
             this.label3.TabIndex = 27;
@@ -105,7 +107,7 @@ namespace Inventorycontrol.Forms
             // 
             this.cmbWarehouse.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.cmbWarehouse.FormattingEnabled = true;
-            this.cmbWarehouse.Location = new System.Drawing.Point(229, 99);
+            this.cmbWarehouse.Location = new System.Drawing.Point(219, 34);
             this.cmbWarehouse.Name = "cmbWarehouse";
             this.cmbWarehouse.Size = new System.Drawing.Size(180, 32);
             this.cmbWarehouse.TabIndex = 26;
@@ -115,7 +117,7 @@ namespace Inventorycontrol.Forms
             // 
             this.cmbTownship.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.cmbTownship.FormattingEnabled = true;
-            this.cmbTownship.Location = new System.Drawing.Point(22, 99);
+            this.cmbTownship.Location = new System.Drawing.Point(23, 34);
             this.cmbTownship.Name = "cmbTownship";
             this.cmbTownship.Size = new System.Drawing.Size(180, 32);
             this.cmbTownship.TabIndex = 24;
@@ -123,9 +125,9 @@ namespace Inventorycontrol.Forms
             // 
             // btnRegistration
             // 
-            this.btnRegistration.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnRegistration.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnRegistration.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnRegistration.Location = new System.Drawing.Point(231, 470);
+            this.btnRegistration.Location = new System.Drawing.Point(253, 470);
             this.btnRegistration.Name = "btnRegistration";
             this.btnRegistration.Size = new System.Drawing.Size(117, 38);
             this.btnRegistration.TabIndex = 30;
@@ -137,43 +139,18 @@ namespace Inventorycontrol.Forms
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label1.Location = new System.Drawing.Point(439, 75);
+            this.label1.Location = new System.Drawing.Point(464, 154);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(116, 16);
-            this.label1.TabIndex = 32;
-            this.label1.Text = "件数※10件まで";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.textBox1.ImeMode = System.Windows.Forms.ImeMode.Disable;
-            this.textBox1.Location = new System.Drawing.Point(442, 101);
-            this.textBox1.MaxLength = 2;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(60, 31);
-            this.textBox1.TabIndex = 33;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox1_KeyPress);
-            // 
-            // btnCreate
-            // 
-            this.btnCreate.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnCreate.Location = new System.Drawing.Point(508, 101);
-            this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(59, 30);
-            this.btnCreate.TabIndex = 34;
-            this.btnCreate.Text = "入力";
-            this.btnCreate.UseVisualStyleBackColor = true;
-            this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
+            this.label1.Size = new System.Drawing.Size(40, 16);
+            this.label1.TabIndex = 31;
+            this.label1.Text = "個数";
             // 
             // ScheduleRegistrationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(579, 520);
-            this.Controls.Add(this.btnCreate);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(622, 520);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnRegistration);
             this.Controls.Add(this.label5);
@@ -204,7 +181,5 @@ namespace Inventorycontrol.Forms
         private System.Windows.Forms.ComboBox cmbTownship;
         private System.Windows.Forms.Button btnRegistration;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button btnCreate;
     }
 }

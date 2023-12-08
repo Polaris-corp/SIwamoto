@@ -1,7 +1,7 @@
 ﻿
 namespace Inventorycontrol.Forms
 {
-    partial class StockcheckForm
+    partial class SchedulecheckForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace Inventorycontrol.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvSchedule = new System.Windows.Forms.DataGridView();
             this.cmbTownship = new System.Windows.Forms.ComboBox();
             this.dtpEnd = new System.Windows.Forms.DateTimePicker();
             this.dtpStart = new System.Windows.Forms.DateTimePicker();
@@ -44,17 +44,17 @@ namespace Inventorycontrol.Forms
             this.label7 = new System.Windows.Forms.Label();
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnRegistration = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSchedule)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // dgvSchedule
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(225, 45);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 21;
-            this.dataGridView1.Size = new System.Drawing.Size(563, 444);
-            this.dataGridView1.TabIndex = 0;
+            this.dgvSchedule.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSchedule.Location = new System.Drawing.Point(225, 45);
+            this.dgvSchedule.Name = "dgvSchedule";
+            this.dgvSchedule.RowTemplate.Height = 21;
+            this.dgvSchedule.Size = new System.Drawing.Size(563, 444);
+            this.dgvSchedule.TabIndex = 0;
             // 
             // cmbTownship
             // 
@@ -72,6 +72,7 @@ namespace Inventorycontrol.Forms
             this.dtpEnd.Name = "dtpEnd";
             this.dtpEnd.Size = new System.Drawing.Size(184, 23);
             this.dtpEnd.TabIndex = 10;
+            this.dtpEnd.Value = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
             // 
             // dtpStart
             // 
@@ -177,6 +178,7 @@ namespace Inventorycontrol.Forms
             this.btnSearch.TabIndex = 21;
             this.btnSearch.Text = "検索";
             this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // btnRegistration
             // 
@@ -189,7 +191,7 @@ namespace Inventorycontrol.Forms
             this.btnRegistration.UseVisualStyleBackColor = true;
             this.btnRegistration.Click += new System.EventHandler(this.Registrationbutton_Click);
             // 
-            // StockcheckForm
+            // SchedulecheckForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -208,11 +210,11 @@ namespace Inventorycontrol.Forms
             this.Controls.Add(this.dtpStart);
             this.Controls.Add(this.dtpEnd);
             this.Controls.Add(this.cmbTownship);
-            this.Controls.Add(this.dataGridView1);
-            this.Name = "StockcheckForm";
-            this.Text = "在庫一覧";
+            this.Controls.Add(this.dgvSchedule);
+            this.Name = "SchedulecheckForm";
+            this.Text = "取引一覧";
             this.Load += new System.EventHandler(this.StockcheckForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSchedule)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -220,7 +222,7 @@ namespace Inventorycontrol.Forms
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvSchedule;
         private System.Windows.Forms.ComboBox cmbTownship;
         private System.Windows.Forms.DateTimePicker dtpEnd;
         private System.Windows.Forms.DateTimePicker dtpStart;

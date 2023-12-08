@@ -41,5 +41,9 @@ namespace Inventorycontrol.Controller
         {
             return service.GetWarehouseName(id);
         }
+        public int GetWarehouseId(string name)
+        {
+            return service.GetWarehouseId(name);
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace Inventorycontrol.Forms
 
         private void Stockcheck_button_Click(object sender, EventArgs e)
         {
-            StockcheckForm stockcheckForm = new StockcheckForm();
+            SchedulecheckForm stockcheckForm = new SchedulecheckForm();
             stockcheckForm.ShowDialog();
         }
 

@@ -41,7 +41,7 @@ namespace Inventorycontrol.Forms
             this.Stockcheck_button.Name = "Stockcheck_button";
             this.Stockcheck_button.Size = new System.Drawing.Size(141, 48);
             this.Stockcheck_button.TabIndex = 0;
-            this.Stockcheck_button.Text = "在庫一覧";
+            this.Stockcheck_button.Text = "取引一覧";
             this.Stockcheck_button.UseVisualStyleBackColor = true;
             this.Stockcheck_button.Click += new System.EventHandler(this.Stockcheck_button_Click);
             // 

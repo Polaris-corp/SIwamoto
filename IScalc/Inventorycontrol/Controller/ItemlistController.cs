@@ -42,5 +42,10 @@ namespace Inventorycontrol.Controller
         {
             return itemlistService.GetItemName();
         }
+
+        public int GetItemId(string name)
+        {
+            return itemlistService.GetItemId(name);
+        }
     }
 }

@@ -42,6 +42,11 @@ namespace Inventorycontrol.Service
             return DataReaderSql(CreateSelectWarehouseNameSql(id));
         }
 
+        public int GetWarehouseId(string name)
+        {
+            return GetIdDataReaderSql(CreateSelectIdSql(name));
+        }
+
         public DataTable Warehousetable(MySqlCommand command)
         {
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
@@ -91,7 +96,24 @@ namespace Inventorycontrol.Service
             }
             return items;
         }
+        public int GetIdDataReaderSql(MySqlCommand command)
+        {
+            int id = 0;
+            using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
+            {
+                command.Connection = connection;
 
+                connection.Open();
+                using (MySqlDataReader dr = command.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        id = dr.GetInt32(0);
+                    }
+                }
+            }
+            return id;
+        }
         private MySqlCommand CreateSelectSql(string item)
         {
             string query = @"SELECT id,name,townshipid,capacity FROM mwarehouse WHERE deleted = 0 AND name LIKE @name";
@@ -142,6 +164,14 @@ namespace Inventorycontrol.Service
             string query = @"SELECT name FROM mwarehouse WHERE townshipid = @townshipid";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@townshipid", id);
+            return command;
+        }
+
+        private MySqlCommand CreateSelectIdSql(string name)
+        {
+            string query = @"SELECT id FROM mwarehouse WHERE name = @name";
+            MySqlCommand command = new MySqlCommand(query);
+            command.Parameters.AddWithValue("@name", name);
             return command;
         }
     }

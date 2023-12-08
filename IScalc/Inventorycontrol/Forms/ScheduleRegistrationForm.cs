@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Inventorycontrol.Controller;
+using Inventorycontrol.Common;
+using Inventorycontrol.Model;
 
 
 namespace Inventorycontrol.Forms
@@ -20,47 +22,62 @@ namespace Inventorycontrol.Forms
         }
         private List<ComboBox> StatusControls = new List<ComboBox>();
         private List<ComboBox> ItemsControls = new List<ComboBox>();
-        private ComboBox[] Status;
-        private ComboBox[] Items;
+        private List<TextBox> QuantityControls = new List<TextBox>();
+        private ComboBox Status;
+        private ComboBox Items;
+        private TextBox Quantity;
+
+        StatusController statusController = new StatusController();
+        ItemlistController itemlistController = new ItemlistController();
+        TownshipController townshipController = new TownshipController();
+        WarehouseController warehouseController = new WarehouseController();
+        Receive_ShipingController shipingController = new Receive_ShipingController();
 
 
-        public int count = 0;
-
-        private void CreatecmbStatus(int number)
+        private void CreatecmbStatus()
         {
-            this.Status = new ComboBox[number];
-            this.Items = new ComboBox[number];
-            ResetControls();
             List<string> names = GetItemNames();
+            TransactionStatus transactionStatus = new TransactionStatus();
+            string[] array = transactionStatus.StatusArray;
             
-            for (int i = 0; i < number; i++)
+            for (int i = 0; i < 10; i++)
             {
-                this.Status[i] = new ComboBox();
-                this.Status[i].Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-                this.Status[i].FormattingEnabled = true;
-                this.Status[i].Location = new System.Drawing.Point(323,188 + i * 32 + i * 10);
-                this.Status[i].Name = "cmbStatus" + i;
-                this.Status[i].Size = new System.Drawing.Size(180, 32);
-                this.Status[i].TabIndex = 25;
-                this.Status[i].DropDownStyle = ComboBoxStyle.DropDownList;
+                this.Status = new ComboBox();
+                this.Status.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+                this.Status.FormattingEnabled = true;
+                this.Status.Name = "cmbStatus" + i;
+                this.Status.Location = new System.Drawing.Point(243,188 + i * 32 + i * 10);
+                this.Status.Size = new System.Drawing.Size(180, 32);
+                this.Status.TabIndex = 25;
+                this.Status.DropDownStyle = ComboBoxStyle.DropDownList;
+                this.Status.Items.AddRange(array);
 
-                this.Items[i] = new ComboBox();
-                this.Items[i].Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-                this.Items[i].FormattingEnabled = true;
-                this.Items[i].Location = new System.Drawing.Point(79, 188 + i * 32 + i * 10);
-                this.Items[i].Name = "cmbItem" + i;
-                this.Items[i].Size = new System.Drawing.Size(180, 32);
-                this.Items[i].TabIndex = 31;
-                this.Items[i].DropDownStyle = ComboBoxStyle.DropDownList;
-                this.Items[i].Items.AddRange(names.ToArray());
+                this.Items = new ComboBox();
+                this.Items.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+                this.Items.FormattingEnabled = true;
+                this.Items.Location = new System.Drawing.Point(19, 188 + i * 32 + i * 10);
+                this.Items.Name = "cmbItem" + i;
+                this.Items.Size = new System.Drawing.Size(180, 32);
+                this.Items.TabIndex = 31;
+                this.Items.DropDownStyle = ComboBoxStyle.DropDownList;
+                this.Items.Items.AddRange(names.ToArray());
+                this.Items.Items.Add("");
 
-                StatusControls.Add(this.Status[i]);
-                ItemsControls.Add(this.Items[i]);
+                this.Quantity = new TextBox();
+                this.Quantity.Font = new System.Drawing.Font("HGP明朝E", 18F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+                this.Quantity.Location = new System.Drawing.Point(465, 188 + i * 32 + i * 10);
+                this.Quantity.Name = "txtQuantity" + i;
+                this.Quantity.Size = new System.Drawing.Size(76, 31);
+                this.Quantity.TabIndex = 32;
+                this.Quantity.ImeMode = ImeMode.Alpha;
 
-                this.Controls.Add(this.Status[i]);
-                this.Controls.Add(this.Items[i]);
+                StatusControls.Add(this.Status);
+                ItemsControls.Add(this.Items);
+                QuantityControls.Add(this.Quantity);
             }
-            
+            this.Controls.AddRange(this.StatusControls.ToArray());
+            this.Controls.AddRange(this.ItemsControls.ToArray());
+            this.Controls.AddRange(this.QuantityControls.ToArray());
         }
 
         private void ResetControls()
@@ -88,12 +105,7 @@ namespace Inventorycontrol.Forms
                 e.Handled = true;
             }
         }
-        private void btnCreate_Click(object sender, EventArgs e)
-        {
-            count = int.Parse(textBox1.Text);
-            CreatecmbStatus(count);
-            ResizeForm();
-        }
+        
 
         private void ResizeForm()
         {
@@ -112,26 +124,77 @@ namespace Inventorycontrol.Forms
 
         private List<string> GetItemNames()
         {
-            ItemlistController itemlistController = new ItemlistController();
             return itemlistController.GetItemName(); 
         }
 
         private List<string> GetTownshipNames()
         {
-            TownshipController townshipController = new TownshipController();
             return townshipController.GetTownshipName();
         }
 
         private List<string> GetWarehouseNames(int id)
         {
-            WarehouseController warehouseController = new WarehouseController();
             return warehouseController.GetWarehouseName(id);
         }
 
         private int GetTownshipId(string tName)
         {
-            TownshipController townshipController = new TownshipController();
             return townshipController.GetTownshipId(tName);
+        }
+
+        private List<string> GetItemNameList()
+        {
+            List<string> list = new List<string>();
+            foreach (var name in ItemsControls)
+            {
+                if (name.SelectedIndex == -1)
+                {
+                    continue;
+                }
+                list.Add(name.Text);
+            }
+            return list;
+        }
+
+        private List<int> GetItemIdList()
+        {
+            List<int> list = new List<int>();
+            foreach(var name in ItemsControls)
+            {
+                list.Add(itemlistController.GetItemId(name.Text));
+            }
+            return list;
+        }
+
+        private List<int> GetItemQuantityList()
+        {
+            List<int> list = new List<int>();
+            foreach (var quantitiy in QuantityControls)
+            {
+                if (String.IsNullOrEmpty(quantitiy.Text))
+                {
+                    continue;
+                }
+                list.Add(int.Parse(quantitiy.Text));
+            }
+            return list;
+        }
+
+        private List<int> GetStatusIdList(int count)
+        {
+            return statusController.GetStatusId(count);
+        }
+
+        private void RegistrationStatus()
+        {
+            foreach (var cmbStatus in StatusControls)
+            {
+                if (cmbStatus.SelectedIndex == -1)
+                {
+                    continue;
+                }
+                statusController.RegistrationStatus(cmbStatus.SelectedIndex + 1);
+            }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -141,7 +204,11 @@ namespace Inventorycontrol.Forms
 
         private void ScheduleRegistrationForm_Load(object sender, EventArgs e)
         {
+            dtpSchedule.Value = DateTime.Now;
+            dtpSchedule.MinDate = DateTime.Now;
             cmbTownship.Items.AddRange(GetTownshipNames().ToArray());
+            CreatecmbStatus();
+            ResizeForm();
         }
 
         private void cmbWarehouse_SelectedIndexChanged(object sender, EventArgs e)
@@ -158,7 +225,32 @@ namespace Inventorycontrol.Forms
 
         private void btnRegistration_Click(object sender, EventArgs e)
         {
+            RegistrationStatus();
+            List<string> itemName = GetItemNameList();
+            List<int> itemId = GetItemIdList();
+            List<int> itemQuantity = GetItemQuantityList();
+            List<int> stId = GetStatusIdList(itemQuantity.Count);
+            stId.Sort();
+            //List<int> itemId = new List<int>();
+            DateTime TransactionDate = dtpSchedule.Value;
+            int warehouseId = warehouseController.GetWarehouseId(cmbWarehouse.Text);
+            shipingController.RegistrationSchedule(TransactionDate, itemQuantity, warehouseId, stId, itemId, itemName);
+            MessageBox.Show("登録が完了しました。");
             
+            //int number;
+            //if(!int.TryParse(QuantityControls[i].Text,out number))
+            //{
+            //    MessageBox.Show("個数を設定してください。");
+            //    return;
+            //}
+            //stNumber.Add(StatusControls[i].SelectedIndex + 1);
+            //itemName.Add(ItemsControls[i].SelectedItem.ToString());
+            //itemQuantity.Add(int.Parse(QuantityControls[i].Text));
+        }
+
+        private void dtpSchedule_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }
