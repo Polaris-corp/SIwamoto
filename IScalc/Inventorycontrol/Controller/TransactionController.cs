@@ -7,10 +7,10 @@ using Inventorycontrol.Service;
 
 namespace Inventorycontrol.Controller
 {
-    public class Receive_ShipingController
+    public class TransactionController
     {
 
-        Receive_ShipingService service = new Receive_ShipingService();
+        TransactionService service = new TransactionService();
         public void RegistrationSchedule(DateTime date,List<int> quantity,int warehouseId,List<int> statusId,List<int> itemId,List<string> itemName)
         {
             for(int i = 0; i < quantity.Count; i++)

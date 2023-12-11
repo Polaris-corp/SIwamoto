@@ -9,7 +9,7 @@ using System.Data;
 
 namespace Inventorycontrol.Service
 {
-    public class Receive_ShipingService
+    public class TransactionService
     {
         public void RegistrationInfo(DateTime schedule,int quantity,int warehouseId,int stId,int itemId,string itemName)
         {
@@ -37,7 +37,7 @@ namespace Inventorycontrol.Service
         public MySqlCommand CreateInsertInfoSql(DateTime schedule, int quantity, int warehouseId, int stId, int itemId, string itemName)
         {
             string query = @"INSERT INTO 
-                                         treceive_shiping (
+                                         ttransaction (
                                                            schedule
                                                           ,itemquantity
                                                           ,warehouseid

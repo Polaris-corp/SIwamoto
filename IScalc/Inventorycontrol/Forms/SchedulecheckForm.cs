@@ -21,7 +21,7 @@ namespace Inventorycontrol.Forms
         }
 
         DataTable dt = new DataTable();
-        Receive_ShipingController shipingController = new Receive_ShipingController();
+        TransactionController shipingController = new TransactionController();
 
         private void StockcheckForm_Load(object sender, EventArgs e)
         {

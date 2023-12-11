@@ -1,0 +1,1 @@
+﻿CREATE TABLE mstatus_alternative(id INT NOT NULL PRIMARY KEY, status VARCHAR(255) NOT NULL)

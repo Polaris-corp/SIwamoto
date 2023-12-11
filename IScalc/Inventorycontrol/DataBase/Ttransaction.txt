@@ -1,13 +1,12 @@
-﻿CREATE TABLE treceive_shiping( 
+﻿CREATE TABLE ttransaction( 
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
     , schedule DATETIME NOT NULL
     , itemquantity INT NOT NULL
     , warehouseid INT NOT NULL
     , statusid INT NOT NULL
     , itemid INT NOT NULL
+    , itemname VARCHAR (255) NOT NULL
     , FOREIGN KEY (warehouseid) REFERENCES mwarehouse(id)
-    , FOREIGN KEY (statusid) REFERENCES mstatus(id)
+    , FOREIGN KEY (statusid) REFERENCES mstatus_alternative(id)
     , FOREIGN KEY (itemid) REFERENCES mitems(id)
 )
-
-ALTER TABLE treceive_shiping ADD COLUMN itemname VARCHAR(255) NOT NULL

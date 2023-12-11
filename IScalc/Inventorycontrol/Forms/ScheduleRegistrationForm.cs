@@ -31,7 +31,7 @@ namespace Inventorycontrol.Forms
         ItemlistController itemlistController = new ItemlistController();
         TownshipController townshipController = new TownshipController();
         WarehouseController warehouseController = new WarehouseController();
-        Receive_ShipingController shipingController = new Receive_ShipingController();
+        TransactionController shipingController = new TransactionController();
 
 
         private void CreatecmbStatus()
@@ -182,20 +182,25 @@ namespace Inventorycontrol.Forms
 
         private List<int> GetStatusIdList(int count)
         {
-            return statusController.GetStatusId(count);
+            List<int> list = new List<int>();
+            for (int i = 0; i < count; i++)
+            {
+                list.Add(StatusControls[i].SelectedIndex + 1);
+            }
+            return list;
         }
 
-        private void RegistrationStatus()
-        {
-            foreach (var cmbStatus in StatusControls)
-            {
-                if (cmbStatus.SelectedIndex == -1)
-                {
-                    continue;
-                }
-                statusController.RegistrationStatus(cmbStatus.SelectedIndex + 1);
-            }
-        }
+        //private void RegistrationStatus()
+        //{
+        //    foreach (var cmbStatus in StatusControls)
+        //    {
+        //        if (cmbStatus.SelectedIndex == -1)
+        //        {
+        //            continue;
+        //        }
+        //        statusController.RegistrationStatus(cmbStatus.SelectedIndex + 1);
+        //    }
+        //}
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -225,12 +230,10 @@ namespace Inventorycontrol.Forms
 
         private void btnRegistration_Click(object sender, EventArgs e)
         {
-            RegistrationStatus();
             List<string> itemName = GetItemNameList();
             List<int> itemId = GetItemIdList();
             List<int> itemQuantity = GetItemQuantityList();
             List<int> stId = GetStatusIdList(itemQuantity.Count);
-            stId.Sort();
             //List<int> itemId = new List<int>();
             DateTime TransactionDate = dtpSchedule.Value;
             int warehouseId = warehouseController.GetWarehouseId(cmbWarehouse.Text);
