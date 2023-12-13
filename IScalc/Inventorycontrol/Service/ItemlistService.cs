@@ -111,7 +111,18 @@ namespace Inventorycontrol.Service
         }
         private MySqlCommand CreateSelectSql(string item ,bool deleted)
         {
-            string query = @"SELECT id,name,deleted FROM mitems WHERE deleted = @deleted AND name LIKE @name";
+            string query = @"SELECT
+                                     id
+                                     ,name
+                                     ,deleted
+                             FROM
+                                     mitems
+                             WHERE
+                                     deleted = @deleted
+                             AND
+                                     name
+                             LIKE
+                                     @name";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", "%" + item + "%");
             command.Parameters.AddWithValue("@deleted", deleted);
@@ -121,7 +132,11 @@ namespace Inventorycontrol.Service
         
         private MySqlCommand CreateInsertItemInfoSql(string name)
         {
-            string query = @"INSERT INTO mitems (name)VALUES (@name)";
+            string query = @"INSERT INTO 
+                                          mitems 
+                                          (name)
+                                    VALUES
+                                          (@name)";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", name);
             return command;
@@ -158,14 +173,24 @@ namespace Inventorycontrol.Service
 
         private MySqlCommand CreateSelectItemNameSql()
         {
-            string query = @"SELECT name FROM mitems WHERE deleted = false";
+            string query = @"SELECT
+                                     name
+                             FROM
+                                     mitems
+                             WHERE
+                                     deleted = false";
             MySqlCommand command = new MySqlCommand(query);
             return command;
         }
 
         private MySqlCommand CreateSelectItemIdSql(string name)
         {
-            string query = @"SELECT id FROM mitems WHERE name = @name";
+            string query = @"SELECT
+                                     id
+                             FROM
+                                     mitems
+                             WHERE
+                                     name = @name";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", name);
             return command;
