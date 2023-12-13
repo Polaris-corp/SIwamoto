@@ -12,15 +12,11 @@ namespace Inventorycontrol.Service
 {
     class ItemlistService
     {
-        public DataTable ResaultSearchItem(string item)
+        public DataTable ResaultSearchItem(string item, bool deleted)
         {
-            return Itemstable(CreateSelectSql(item));
+            return Itemstable(CreateSelectSql(item, deleted));
         }
 
-        public DataTable ResaultSearchDeletedItem(string item)
-        {
-            return Itemstable(CreateSelectdeletedSql(item));
-        }
 
         public void RegistrationItemInfo(string name)
         {
@@ -113,21 +109,16 @@ namespace Inventorycontrol.Service
             }
             return id;
         }
-        private MySqlCommand CreateSelectSql(string item)
+        private MySqlCommand CreateSelectSql(string item ,bool deleted)
         {
-            string query = @"SELECT id,name FROM mitems WHERE deleted = 0 AND name LIKE @name";
+            string query = @"SELECT id,name,deleted FROM mitems WHERE deleted = @deleted AND name LIKE @name";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", "%" + item + "%");
+            command.Parameters.AddWithValue("@deleted", deleted);
             return command;
         }
 
-        private MySqlCommand CreateSelectdeletedSql(string item)
-        {
-            string query = @"SELECT id,name FROM mitems WHERE deleted = 1 AND name LIKE @name";
-            MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@name", "%" + item + "%");
-            return command;
-        }
+        
         private MySqlCommand CreateInsertItemInfoSql(string name)
         {
             string query = @"INSERT INTO mitems (name)VALUES (@name)";
@@ -138,16 +129,28 @@ namespace Inventorycontrol.Service
 
         private MySqlCommand CreateUpdateInfoSql(ItemInfoModel item)
         {
-            string query = @"UPDATE mitems SET name = @name,deleted = false WHERE id = @id";
+            string query = @"UPDATE
+                                     mitems
+                             SET
+                                     name = @name
+                                     ,deleted = @deleted
+                             WHERE
+                                     id = @id";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", item.Name);
+            command.Parameters.AddWithValue("@deleted", item.Deleted);
             command.Parameters.AddWithValue("@id", item.Id);
             return command;
         }
 
         private MySqlCommand CreateDeleteInfoSql(ItemInfoModel item)
         {
-            string query = @"UPDATE mitems SET deleted = true WHERE id = @id";
+            string query = @"UPDATE 
+                                     mitems
+                             SET
+                                     deleted = true
+                             WHERE
+                                     id = @id";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@id", item.Id);
             return command;
@@ -166,6 +169,6 @@ namespace Inventorycontrol.Service
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", name);
             return command;
-        }
+        } 
     }
 }

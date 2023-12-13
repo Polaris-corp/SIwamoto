@@ -42,9 +42,18 @@ namespace Inventorycontrol.Service
             return DataReaderSql(CreateSelectWarehouseNameSql(id));
         }
 
+        public List<string> GetAllWarehouseName()
+        {
+            return DataReaderSql(CreateSelectAllWarehouseNameSql());
+        }
         public int GetWarehouseId(string name)
         {
             return GetIdDataReaderSql(CreateSelectIdSql(name));
+        }
+
+        public int GetWarehouseCapacity(int id)
+        {
+            return GetCapacityDataReaderSql(CreateSelectCapacitySql(id));
         }
 
         public DataTable Warehousetable(MySqlCommand command)
@@ -114,9 +123,38 @@ namespace Inventorycontrol.Service
             }
             return id;
         }
+
+        public int GetCapacityDataReaderSql(MySqlCommand command)
+        {
+            int capacity = 0;
+            using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
+            {
+                command.Connection = connection;
+
+                connection.Open();
+                using (MySqlDataReader dr = command.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        capacity = dr.GetInt32(0);
+                    }
+                }
+            }
+            return capacity;
+        }
         private MySqlCommand CreateSelectSql(string item)
         {
-            string query = @"SELECT id,name,townshipid,capacity FROM mwarehouse WHERE deleted = 0 AND name LIKE @name";
+            string query = @"SELECT
+                                     id
+                                     ,name
+                                     ,townshipid
+                                     ,capacity 
+                             FROM 
+                                     mwarehouse 
+                             WHERE 
+                                     deleted = 0 
+                             AND 
+                                     name LIKE @name";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", "%" + item + "%");
             return command;
@@ -124,7 +162,17 @@ namespace Inventorycontrol.Service
 
         private MySqlCommand CreateSelectdeletedSql(string item)
         {
-            string query = @"SELECT id,name,townshipid,capacity FROM mwarehouse WHERE deleted = 1 AND name LIKE @name";
+            string query = @"SELECT
+                                     id
+                                     ,name
+                                     ,townshipid
+                                     ,capacity
+                             FROM 
+                                     mwarehouse 
+                             WHERE 
+                                     deleted = 1 
+                             AND 
+                                     name LIKE @name";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", "%" + item + "%");
             return command;
@@ -132,7 +180,15 @@ namespace Inventorycontrol.Service
 
         private MySqlCommand CreateInsertWarehouseInfoSql(string name,int townshipId,int capacity)
         {
-            string query = @"INSERT INTO mwarehouse (name,townshipid,capacity)VALUES (@name,@townshipid,@capacity)";
+            string query = @"INSERT INTO 
+                                     mwarehouse (
+                                     name
+                                     ,townshipid
+                                     ,capacity
+                             )VALUES (
+                                     @name
+                                     ,@townshipid
+                                     ,@capacity)";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", name);
             command.Parameters.AddWithValue("@townshipid", townshipId);
@@ -142,7 +198,15 @@ namespace Inventorycontrol.Service
 
         private MySqlCommand CreateUpdateWarehouseInfoSql(WarehouseModel warehouse)
         {
-            string query = @"UPDATE mwarehouse SET name = @name,deleted = false,townshipid = @townshipid,capacity = @capacity WHERE id = @id";
+            string query = @"UPDATE
+                                     mwarehouse 
+                             SET 
+                                     name = @name
+                                     ,deleted = false
+                                     ,townshipid = @townshipid
+                                     ,capacity = @capacity 
+                             WHERE 
+                                     id = @id";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", warehouse.Name);
             command.Parameters.AddWithValue("@townshipid", warehouse.Townshipid);
@@ -153,7 +217,12 @@ namespace Inventorycontrol.Service
 
         private MySqlCommand CreateDeleteWarehouseSql(WarehouseModel warehouse)
         {
-            string query = @"UPDATE mwarehouse SET deleted = true WHERE id = @id";
+            string query = @"UPDATE
+                                     mwarehouse 
+                             SET 
+                                     deleted = true 
+                             WHERE 
+                                     id = @id";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@id", warehouse.Id);
             return command;
@@ -161,17 +230,42 @@ namespace Inventorycontrol.Service
 
         private MySqlCommand CreateSelectWarehouseNameSql(int id)
         {
-            string query = @"SELECT name FROM mwarehouse WHERE townshipid = @townshipid";
+            string query = @"SELECT 
+                                     name 
+                             FROM 
+                                     mwarehouse 
+                             WHERE 
+                                     townshipid = @townshipid";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@townshipid", id);
             return command;
         }
 
+        private MySqlCommand CreateSelectAllWarehouseNameSql()
+        {
+            string query = @"SELECT
+                                     name 
+                             FROM 
+                                     mwarehouse 
+                             WHERE 
+                                     deleted = false";
+            MySqlCommand command = new MySqlCommand(query);
+            return command;
+        }
+
         private MySqlCommand CreateSelectIdSql(string name)
         {
-            string query = @"SELECT id FROM mwarehouse WHERE name = @name";
+            string query = @"SELECT
+id FROM mwarehouse WHERE name = @name";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", name);
+            return command;
+        }
+        private MySqlCommand CreateSelectCapacitySql(int id)
+        {
+            string query = @"SELECT capacity FROM mwarehouse WHERE id = @id";
+            MySqlCommand command = new MySqlCommand(query);
+            command.Parameters.AddWithValue("@id", id);
             return command;
         }
     }

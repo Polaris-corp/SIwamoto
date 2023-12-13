@@ -27,17 +27,17 @@ namespace Inventorycontrol.Forms
         private ComboBox Items;
         private TextBox Quantity;
 
-        StatusController statusController = new StatusController();
         ItemlistController itemlistController = new ItemlistController();
         TownshipController townshipController = new TownshipController();
         WarehouseController warehouseController = new WarehouseController();
         TransactionController shipingController = new TransactionController();
+        TransactionStatus transactionStatus = new TransactionStatus();
+
 
 
         private void CreatecmbStatus()
         {
             List<string> names = GetItemNames();
-            TransactionStatus transactionStatus = new TransactionStatus();
             string[] array = transactionStatus.StatusArray;
             
             for (int i = 0; i < 10; i++)
@@ -161,6 +161,10 @@ namespace Inventorycontrol.Forms
             List<int> list = new List<int>();
             foreach(var name in ItemsControls)
             {
+                if (name.SelectedIndex == -1)
+                {
+                    continue;
+                }
                 list.Add(itemlistController.GetItemId(name.Text));
             }
             return list;
@@ -180,14 +184,45 @@ namespace Inventorycontrol.Forms
             return list;
         }
 
-        private List<int> GetStatusIdList(int count)
+        private List<int> GetStatusIdList()
         {
             List<int> list = new List<int>();
-            for (int i = 0; i < count; i++)
+            foreach (var status in StatusControls)
             {
-                list.Add(StatusControls[i].SelectedIndex + 1);
+                if(status.SelectedIndex == -1)
+                {
+                    continue;
+                }
+                list.Add(status.SelectedIndex + 1);
             }
             return list;
+        }
+
+        private bool CheckWarehouseCapacity(List<int> quantity, List<int>stid, int warehouseid)
+        {
+            bool check = true;
+            int capacity = warehouseController.GetWarehouseCapacity(warehouseid);
+            int total = 0;
+            for (int i = 0; i < quantity.Count; i++)
+            {
+                if(capacity < quantity[i])
+                {
+                    return false;
+                }
+                if (stid[i] == 2 || stid[i] == 4 || stid[i] == 5)
+                {
+                    total -= quantity[i];
+                }
+                else
+                {
+                    total += quantity[i];
+                }
+            }
+            if(capacity < total)
+            {
+                check = false;
+            }
+            return check;
         }
 
         //private void RegistrationStatus()
@@ -213,7 +248,7 @@ namespace Inventorycontrol.Forms
             dtpSchedule.MinDate = DateTime.Now;
             cmbTownship.Items.AddRange(GetTownshipNames().ToArray());
             CreatecmbStatus();
-            ResizeForm();
+            //ResizeForm();
         }
 
         private void cmbWarehouse_SelectedIndexChanged(object sender, EventArgs e)
@@ -231,13 +266,25 @@ namespace Inventorycontrol.Forms
         private void btnRegistration_Click(object sender, EventArgs e)
         {
             List<string> itemName = GetItemNameList();
+            int checkcount = itemName.Count;
             List<int> itemId = GetItemIdList();
             List<int> itemQuantity = GetItemQuantityList();
-            List<int> stId = GetStatusIdList(itemQuantity.Count);
+            List<int> stId = GetStatusIdList();
             //List<int> itemId = new List<int>();
             DateTime TransactionDate = dtpSchedule.Value;
+            int townshipId = townshipController.GetTownshipId(cmbTownship.Text);
             int warehouseId = warehouseController.GetWarehouseId(cmbWarehouse.Text);
-            shipingController.RegistrationSchedule(TransactionDate, itemQuantity, warehouseId, stId, itemId, itemName);
+            if(checkcount != itemId.Count || checkcount != itemQuantity.Count || checkcount != stId.Count)
+            {
+                MessageBox.Show("いずれかの取引に入力漏れがあります。");
+                return;
+            }
+            if (!CheckWarehouseCapacity(itemQuantity, stId, warehouseId))
+            {
+                MessageBox.Show("倉庫の容積を超えています。");
+                return;
+            }
+            shipingController.RegistrationSchedule(TransactionDate, itemQuantity,townshipId, warehouseId, stId, itemId, itemName);
             MessageBox.Show("登録が完了しました。");
             
             //int number;

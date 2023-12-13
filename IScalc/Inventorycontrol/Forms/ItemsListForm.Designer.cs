@@ -31,7 +31,6 @@ namespace Inventorycontrol.Forms
         {
             this.dgvItems = new System.Windows.Forms.DataGridView();
             this.btnUpdate = new System.Windows.Forms.Button();
-            this.btnRegistration = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.txtItem = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -40,6 +39,7 @@ namespace Inventorycontrol.Forms
             // 
             // dgvItems
             // 
+            this.dgvItems.AllowUserToDeleteRows = false;
             this.dgvItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvItems.Location = new System.Drawing.Point(197, 36);
@@ -48,11 +48,13 @@ namespace Inventorycontrol.Forms
             this.dgvItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvItems.Size = new System.Drawing.Size(563, 444);
             this.dgvItems.TabIndex = 1;
+            this.dgvItems.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvItems_CellValidating);
+            this.dgvItems.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvItems_CellValueChanged);
             // 
             // btnUpdate
             // 
             this.btnUpdate.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnUpdate.Location = new System.Drawing.Point(44, 344);
+            this.btnUpdate.Location = new System.Drawing.Point(44, 282);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(117, 38);
             this.btnUpdate.TabIndex = 22;
@@ -60,21 +62,10 @@ namespace Inventorycontrol.Forms
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
-            // btnRegistration
-            // 
-            this.btnRegistration.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnRegistration.Location = new System.Drawing.Point(44, 238);
-            this.btnRegistration.Name = "btnRegistration";
-            this.btnRegistration.Size = new System.Drawing.Size(117, 38);
-            this.btnRegistration.TabIndex = 23;
-            this.btnRegistration.Text = "登録";
-            this.btnRegistration.UseVisualStyleBackColor = true;
-            this.btnRegistration.Click += new System.EventHandler(this.btnRegistration_Click);
-            // 
             // btnSearch
             // 
             this.btnSearch.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnSearch.Location = new System.Drawing.Point(44, 132);
+            this.btnSearch.Location = new System.Drawing.Point(44, 186);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(117, 38);
             this.btnSearch.TabIndex = 24;
@@ -85,7 +76,7 @@ namespace Inventorycontrol.Forms
             // txtItem
             // 
             this.txtItem.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.txtItem.Location = new System.Drawing.Point(22, 96);
+            this.txtItem.Location = new System.Drawing.Point(22, 150);
             this.txtItem.Multiline = true;
             this.txtItem.Name = "txtItem";
             this.txtItem.Size = new System.Drawing.Size(160, 30);
@@ -94,13 +85,12 @@ namespace Inventorycontrol.Forms
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(33, 72);
+            this.checkBox1.Location = new System.Drawing.Point(22, 128);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(104, 16);
             this.checkBox1.TabIndex = 26;
             this.checkBox1.Text = "削除済みを表示";
             this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // ItemsListForm
             // 
@@ -110,7 +100,6 @@ namespace Inventorycontrol.Forms
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.txtItem);
             this.Controls.Add(this.btnSearch);
-            this.Controls.Add(this.btnRegistration);
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.dgvItems);
             this.Name = "ItemsListForm";
@@ -125,7 +114,6 @@ namespace Inventorycontrol.Forms
 
         private System.Windows.Forms.DataGridView dgvItems;
         private System.Windows.Forms.Button btnUpdate;
-        private System.Windows.Forms.Button btnRegistration;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.TextBox txtItem;
         private System.Windows.Forms.CheckBox checkBox1;

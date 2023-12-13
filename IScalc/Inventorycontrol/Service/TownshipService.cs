@@ -117,7 +117,15 @@ namespace Inventorycontrol.Service
 
         private MySqlCommand CreateSelectSql(string name)
         {
-            string query = @"SELECT id,name FROM mtownship WHERE deleted = 0 AND name LIKE @name";
+            string query = @"SELECT
+                                       id
+                                       ,name 
+                             FROM 
+                                       mtownship 
+                             WHERE 
+                                       deleted = 0 
+                             AND 
+                                       name LIKE @name";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", "%" + name + "%");
             return command;
@@ -125,7 +133,11 @@ namespace Inventorycontrol.Service
 
         private MySqlCommand CreateInsertTownshipInfoSql(string name)
         {
-            string query = @"INSERT INTO mtownship (name)VALUES (@name)";
+            string query = @"INSERT INTO
+                                         mtownship
+                                         (name)
+                             VALUES
+                                         (@name)";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", name);
             return command;
@@ -133,7 +145,13 @@ namespace Inventorycontrol.Service
 
         private MySqlCommand CreateUpdateTownshipInfoSql(TownshipInfoModel info)
         {
-            string query = @"UPDATE mtownship SET name = @name,deleted = false WHERE id = @id";
+            string query = @"UPDATE
+                                     mtownship
+                             SET
+                                     name = @name
+                                     ,deleted = false
+                             WHERE
+                                     id = @id";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", info.Name);
             command.Parameters.AddWithValue("@id", info.Id);
@@ -142,7 +160,12 @@ namespace Inventorycontrol.Service
 
         private MySqlCommand CreateDeleteInfoSql(TownshipInfoModel info)
         {
-            string query = @"UPDATE mtownship SET deleted = true WHERE id = @id";
+            string query = @"UPDATE
+                                      mtownship
+                             SET
+                                      deleted = true
+                             WHERE
+                                      id = @id";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@id", info.Id);
             return command;
@@ -150,7 +173,15 @@ namespace Inventorycontrol.Service
 
         private MySqlCommand CreateSelectDeletedSql(string name)
         {
-            string query = @"SELECT id,name FROM mtownship WHERE deleted = 1 AND name LIKE @name";
+            string query = @"SELECT 
+                                     id
+                                     ,name 
+                             FROM 
+                                     mtownship 
+                             WHERE 
+                                     deleted = 1 
+                             AND
+                                     name LIKE @name";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", "%" + name + "%");
             return command;
@@ -158,14 +189,24 @@ namespace Inventorycontrol.Service
 
         private MySqlCommand CreateSelectTownshipNameSql()
         {
-            string query = @"SELECT name FROM mtownship";
+            string query = @"SELECT 
+                                      name 
+                             FROM 
+                                      mtownship 
+                             WHERE 
+                                      deleted = 0";
             MySqlCommand command = new MySqlCommand(query);
             return command;
         }
 
         private MySqlCommand CreateSelectTownshipIdSql(string tName)
         {
-            string query = @"SELECT id FROM mtownship WHERE name = @name";
+            string query = @"SELECT
+                                     id 
+                             FROM 
+                                     mtownship 
+                             WHERE 
+                                     name = @name";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", tName);
             return command;

@@ -34,7 +34,7 @@ namespace Inventorycontrol.Forms
             this.btnRegistration = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.dgvTownship = new System.Windows.Forms.DataGridView();
-            this.btnSpecificTownship = new System.Windows.Forms.Button();
+            this.btnTownshipDetail = new System.Windows.Forms.Button();
             this.chkDelete = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTownship)).BeginInit();
             this.SuspendLayout();
@@ -62,7 +62,7 @@ namespace Inventorycontrol.Forms
             // btnRegistration
             // 
             this.btnRegistration.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnRegistration.Location = new System.Drawing.Point(53, 205);
+            this.btnRegistration.Location = new System.Drawing.Point(53, 199);
             this.btnRegistration.Name = "btnRegistration";
             this.btnRegistration.Size = new System.Drawing.Size(117, 38);
             this.btnRegistration.TabIndex = 33;
@@ -73,7 +73,7 @@ namespace Inventorycontrol.Forms
             // btnUpdate
             // 
             this.btnUpdate.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnUpdate.Location = new System.Drawing.Point(53, 311);
+            this.btnUpdate.Location = new System.Drawing.Point(53, 299);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(117, 38);
             this.btnUpdate.TabIndex = 32;
@@ -93,15 +93,16 @@ namespace Inventorycontrol.Forms
             this.dgvTownship.Size = new System.Drawing.Size(563, 444);
             this.dgvTownship.TabIndex = 31;
             // 
-            // btnSpecificTownship
+            // btnTownshipDetail
             // 
-            this.btnSpecificTownship.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnSpecificTownship.Location = new System.Drawing.Point(53, 399);
-            this.btnSpecificTownship.Name = "btnSpecificTownship";
-            this.btnSpecificTownship.Size = new System.Drawing.Size(117, 38);
-            this.btnSpecificTownship.TabIndex = 36;
-            this.btnSpecificTownship.Text = "エリア詳細";
-            this.btnSpecificTownship.UseVisualStyleBackColor = true;
+            this.btnTownshipDetail.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.btnTownshipDetail.Location = new System.Drawing.Point(53, 399);
+            this.btnTownshipDetail.Name = "btnTownshipDetail";
+            this.btnTownshipDetail.Size = new System.Drawing.Size(117, 38);
+            this.btnTownshipDetail.TabIndex = 36;
+            this.btnTownshipDetail.Text = "エリア詳細";
+            this.btnTownshipDetail.UseVisualStyleBackColor = true;
+            this.btnTownshipDetail.Click += new System.EventHandler(this.btnTownshipDetail_Click);
             // 
             // chkDelete
             // 
@@ -119,7 +120,7 @@ namespace Inventorycontrol.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 514);
             this.Controls.Add(this.chkDelete);
-            this.Controls.Add(this.btnSpecificTownship);
+            this.Controls.Add(this.btnTownshipDetail);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnRegistration);
@@ -140,7 +141,7 @@ namespace Inventorycontrol.Forms
         private System.Windows.Forms.Button btnRegistration;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.DataGridView dgvTownship;
-        private System.Windows.Forms.Button btnSpecificTownship;
+        private System.Windows.Forms.Button btnTownshipDetail;
         private System.Windows.Forms.CheckBox chkDelete;
     }
 }

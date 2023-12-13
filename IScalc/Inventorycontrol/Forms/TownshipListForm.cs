@@ -58,5 +58,10 @@ namespace Inventorycontrol.Forms
             TownshipUpdateForm townshipUpdateForm = new TownshipUpdateForm(GetTownshipInfo());
             townshipUpdateForm.ShowDialog();
         }
+
+        private void btnTownshipDetail_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

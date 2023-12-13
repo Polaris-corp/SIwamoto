@@ -13,14 +13,9 @@ namespace Inventorycontrol.Controller
     {
         ItemlistService itemlistService = new ItemlistService();
         
-        public DataTable SearchItems(string item)
+        public DataTable SearchItems(string item , bool deleted)
         {
-            return itemlistService.ResaultSearchItem(item);
-        }
-
-        public DataTable SearchDeletedItems(string item)
-        {
-            return itemlistService.ResaultSearchDeletedItem(item);
+            return itemlistService.ResaultSearchItem(item, deleted);
         }
 
         public void InsertItemInfo(string name)

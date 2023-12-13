@@ -45,18 +45,15 @@ namespace Inventorycontrol.Forms
                 else
                 {
                     MessageBox.Show("登録済みまたは、以前削除された商品です。");
-                    DialogResult result = MessageBox.Show("復旧しますか？",
-                "復旧", MessageBoxButtons.YesNo
-                      , MessageBoxIcon.Exclamation
-                      , MessageBoxDefaultButton.Button2);
+                    DialogResult result = MessageBox.Show("復旧しますか？"
+                    , "復旧"
+                    , MessageBoxButtons.YesNo
+                    , MessageBoxIcon.Exclamation
+                    , MessageBoxDefaultButton.Button2);
                     if (result == DialogResult.Yes)
                     {
                         ItemlistController.UpdateItemInfo(items);
                         this.Close();
-                    }
-                    else if (result == DialogResult.No)
-                    {
-                        return;
                     }
                 }
             }

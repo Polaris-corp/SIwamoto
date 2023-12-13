@@ -72,7 +72,7 @@ namespace Inventorycontrol.Forms
             this.dtpEnd.Name = "dtpEnd";
             this.dtpEnd.Size = new System.Drawing.Size(184, 23);
             this.dtpEnd.TabIndex = 10;
-            this.dtpEnd.Value = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
+            this.dtpEnd.Value = new System.DateTime(2023, 12, 11, 0, 0, 0, 0);
             // 
             // dtpStart
             // 

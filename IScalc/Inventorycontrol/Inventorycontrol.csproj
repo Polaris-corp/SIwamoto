@@ -118,6 +118,12 @@
     <Compile Include="Forms\SchedulecheckForm.Designer.cs">
       <DependentUpon>SchedulecheckForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\TownshipDetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TownshipDetailForm.Designer.cs">
+      <DependentUpon>TownshipDetailForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TownshipListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -182,6 +188,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SchedulecheckForm.resx">
       <DependentUpon>SchedulecheckForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TownshipDetailForm.resx">
+      <DependentUpon>TownshipDetailForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TownshipListForm.resx">
       <DependentUpon>TownshipListForm.cs</DependentUpon>
