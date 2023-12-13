@@ -29,6 +29,11 @@ namespace Inventorycontrol.Forms
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            if(itemUpdateList.Count == 0 && itemSignUpList.Count == 0)
+            {
+                MessageBox.Show("登録、更新する商品がありません。");
+                return;
+            }
             foreach(var item in itemUpdateList)
             {
                 ItemlistController.UpdateItemInfo(item);
@@ -38,11 +43,9 @@ namespace Inventorycontrol.Forms
             {
                 ItemlistController.InsertItemInfo(item.Name);
             }
-            MessageBox.Show("登録が完了しました。");
+            MessageBox.Show("登録、更新が完了しました。");
             itemUpdateList.Clear();
             itemSignUpList.Clear();
-            //ItemInfoUpdateForm itemInfoUpdateForm = new ItemInfoUpdateForm(GetItemInfo());
-            //itemInfoUpdateForm.ShowDialog();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -59,30 +62,22 @@ namespace Inventorycontrol.Forms
 
         private void dgvItems_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if(0 <= e.RowIndex && 0 <= e.ColumnIndex)
+            if (0 <= e.RowIndex && 0 <= e.ColumnIndex)
             {
                 DataGridView dataGridView = (DataGridView)sender;
+                ItemInfoModel newItem = new ItemInfoModel();
 
-                object newValue = dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-                if (!checkItem.CheckIfItemNameExists((string)dataGridView.Rows[e.RowIndex].Cells["name"].Value))
+                if (dataGridView.Rows[e.RowIndex].Cells["id"].Value != null && !string.IsNullOrEmpty(dataGridView.Rows[e.RowIndex].Cells["id"].Value.ToString()))
                 {
-                    if (dataGridView.Rows[e.RowIndex].Cells["id"].Value != null && !string.IsNullOrEmpty(dataGridView.Rows[e.RowIndex].Cells["id"].Value.ToString()))
-                    {
-                        items.Id = (int)dataGridView.Rows[e.RowIndex].Cells["id"].Value;
-                        items.Name = (string)dataGridView.Rows[e.RowIndex].Cells["name"].Value;
-                        items.Deleted = (bool)dataGridView.Rows[e.RowIndex].Cells["deleted"].Value;
-                        itemUpdateList.Add(items);
-                    }
-                    else
-                    {
-                        items.Name = (string)dataGridView.Rows[e.RowIndex].Cells["name"].Value;
-                        itemSignUpList.Add(items);
-                    }
+                    newItem.Id = (int)dataGridView.Rows[e.RowIndex].Cells["id"].Value;
+                    newItem.Name = (string)dataGridView.Rows[e.RowIndex].Cells["name"].Value;
+                    newItem.Deleted = (bool)dataGridView.Rows[e.RowIndex].Cells["deleted"].Value;
+                    itemUpdateList.Add(newItem);
                 }
                 else
                 {
-                    MessageBox.Show("登録済みまたは、以前削除された商品です。");
-                    return;
+                    newItem.Name = (string)dataGridView.Rows[e.RowIndex].Cells["name"].Value;
+                    itemSignUpList.Add(newItem);
                 }
             }
         }
