@@ -12,14 +12,9 @@ namespace Inventorycontrol.Service
 {
     public class TownshipService
     {
-        public DataTable ResultSearchTownship(string name)
+        public DataTable ResultSearchTownship(string name,bool deleted)
         {
-            return Townshiptable(CreateSelectSql(name));
-        }
-
-        public DataTable ResultSearchDeletedTownship(string name)
-        {
-            return Townshiptable(CreateSelectDeletedSql(name));
+            return Townshiptable(CreateSelectSql(name,deleted));
         }
 
         public void RegistrationTownship(string name)
@@ -115,18 +110,20 @@ namespace Inventorycontrol.Service
             return id;
         }
 
-        private MySqlCommand CreateSelectSql(string name)
+        private MySqlCommand CreateSelectSql(string name,bool deleted)
         {
             string query = @"SELECT
                                        id
-                                       ,name 
+                                       ,name
+                                       ,deleted
                              FROM 
                                        mtownship 
                              WHERE 
-                                       deleted = 0 
+                                       deleted = @deleted 
                              AND 
                                        name LIKE @name";
             MySqlCommand command = new MySqlCommand(query);
+            command.Parameters.AddWithValue("@deleted", deleted);
             command.Parameters.AddWithValue("@name", "%" + name + "%");
             return command;
         }
@@ -149,11 +146,12 @@ namespace Inventorycontrol.Service
                                      mtownship
                              SET
                                      name = @name
-                                     ,deleted = false
+                                     ,deleted = @deleted
                              WHERE
                                      id = @id";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", info.Name);
+            command.Parameters.AddWithValue("@deleted", info.Deleted);
             command.Parameters.AddWithValue("@id", info.Id);
             return command;
         }
@@ -168,22 +166,6 @@ namespace Inventorycontrol.Service
                                       id = @id";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@id", info.Id);
-            return command;
-        }
-
-        private MySqlCommand CreateSelectDeletedSql(string name)
-        {
-            string query = @"SELECT 
-                                     id
-                                     ,name 
-                             FROM 
-                                     mtownship 
-                             WHERE 
-                                     deleted = 1 
-                             AND
-                                     name LIKE @name";
-            MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@name", "%" + name + "%");
             return command;
         }
 

@@ -31,10 +31,8 @@ namespace Inventorycontrol.Forms
         {
             this.txtName = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.btnRegistration = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.dgvTownship = new System.Windows.Forms.DataGridView();
-            this.btnTownshipDetail = new System.Windows.Forms.Button();
             this.chkDelete = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTownship)).BeginInit();
             this.SuspendLayout();
@@ -42,7 +40,7 @@ namespace Inventorycontrol.Forms
             // txtName
             // 
             this.txtName.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.txtName.Location = new System.Drawing.Point(31, 63);
+            this.txtName.Location = new System.Drawing.Point(31, 158);
             this.txtName.Multiline = true;
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(160, 30);
@@ -51,24 +49,13 @@ namespace Inventorycontrol.Forms
             // btnSearch
             // 
             this.btnSearch.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnSearch.Location = new System.Drawing.Point(53, 99);
+            this.btnSearch.Location = new System.Drawing.Point(53, 194);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(117, 38);
             this.btnSearch.TabIndex = 34;
             this.btnSearch.Text = "検索";
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // btnRegistration
-            // 
-            this.btnRegistration.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnRegistration.Location = new System.Drawing.Point(53, 199);
-            this.btnRegistration.Name = "btnRegistration";
-            this.btnRegistration.Size = new System.Drawing.Size(117, 38);
-            this.btnRegistration.TabIndex = 33;
-            this.btnRegistration.Text = "登録";
-            this.btnRegistration.UseVisualStyleBackColor = true;
-            this.btnRegistration.Click += new System.EventHandler(this.btnRegistration_Click);
             // 
             // btnUpdate
             // 
@@ -92,22 +79,13 @@ namespace Inventorycontrol.Forms
             this.dgvTownship.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvTownship.Size = new System.Drawing.Size(563, 444);
             this.dgvTownship.TabIndex = 31;
-            // 
-            // btnTownshipDetail
-            // 
-            this.btnTownshipDetail.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnTownshipDetail.Location = new System.Drawing.Point(53, 399);
-            this.btnTownshipDetail.Name = "btnTownshipDetail";
-            this.btnTownshipDetail.Size = new System.Drawing.Size(117, 38);
-            this.btnTownshipDetail.TabIndex = 36;
-            this.btnTownshipDetail.Text = "エリア詳細";
-            this.btnTownshipDetail.UseVisualStyleBackColor = true;
-            this.btnTownshipDetail.Click += new System.EventHandler(this.btnTownshipDetail_Click);
+            this.dgvTownship.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvTownship_CellValidating);
+            this.dgvTownship.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTownship_CellValueChanged);
             // 
             // chkDelete
             // 
             this.chkDelete.AutoSize = true;
-            this.chkDelete.Location = new System.Drawing.Point(31, 41);
+            this.chkDelete.Location = new System.Drawing.Point(31, 136);
             this.chkDelete.Name = "chkDelete";
             this.chkDelete.Size = new System.Drawing.Size(104, 16);
             this.chkDelete.TabIndex = 37;
@@ -120,10 +98,8 @@ namespace Inventorycontrol.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 514);
             this.Controls.Add(this.chkDelete);
-            this.Controls.Add(this.btnTownshipDetail);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.btnSearch);
-            this.Controls.Add(this.btnRegistration);
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.dgvTownship);
             this.Name = "TownshipListForm";
@@ -138,10 +114,8 @@ namespace Inventorycontrol.Forms
 
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.Button btnRegistration;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.DataGridView dgvTownship;
-        private System.Windows.Forms.Button btnTownshipDetail;
         private System.Windows.Forms.CheckBox chkDelete;
     }
 }

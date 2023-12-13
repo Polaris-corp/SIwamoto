@@ -22,8 +22,6 @@ namespace Inventorycontrol.Forms
         }
         ItemlistController ItemlistController = new ItemlistController();
         DataTable dt = new DataTable();
-        ItemInfoModel items = new ItemInfoModel();
-        CheckItemExists checkItem = new CheckItemExists();
         List<ItemInfoModel> itemUpdateList = new List<ItemInfoModel>();
         List<ItemInfoModel> itemSignUpList = new List<ItemInfoModel>();
 

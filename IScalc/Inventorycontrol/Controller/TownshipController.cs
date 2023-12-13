@@ -13,14 +13,9 @@ namespace Inventorycontrol.Controller
     {
 
         TownshipService service = new TownshipService();
-        public DataTable SearchTownship(string name)
+        public DataTable SearchTownship(string name,bool deleted)
         {
-            return service.ResultSearchTownship(name);
-        }
-
-        public DataTable SearchDeletedTownship(string name)
-        {
-            return service.ResultSearchDeletedTownship(name);
+            return service.ResultSearchTownship(name,deleted);
         }
 
         public void RegistrationTownship(string name)
