@@ -42,6 +42,13 @@ namespace Inventorycontrol.Forms
                 {
                     controller.RegistrationWarehouse(name,townshipid,capacity);
                     MessageBox.Show("登録が完了しました。");
+                    DialogResult result = MessageBox.Show("続けて登録しますか？", "登録", MessageBoxButtons.YesNo
+                                                                                       , MessageBoxIcon.Question
+                                                                                       , MessageBoxDefaultButton.Button2);
+                    if(result == DialogResult.No)
+                    {
+                        this.Close();
+                    }
                 }
                 else
                 {

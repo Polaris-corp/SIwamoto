@@ -61,7 +61,7 @@ namespace Inventorycontrol.Forms
             dgvItems.Columns["id"].HeaderText = "商品ID";
             dgvItems.Columns["name"].HeaderText = "商品名";
 
-            dgvItems.AutoResizeColumns();
+            //dgvItems.AutoResizeColumns();
             dgvItems.Columns[0].ReadOnly = true;
         }
 

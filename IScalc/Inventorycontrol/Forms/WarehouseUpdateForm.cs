@@ -51,6 +51,8 @@ namespace Inventorycontrol.Forms
                 if (!check.CheckIfWarehouseNameExists(warehouse.Name) && check.CheckIfTownshipIdExists(warehouse.Townshipid))
                 {
                     controller.UpdateWarehouse(warehouse);
+                    MessageBox.Show("登録が完了しました。");
+                    this.Close();
                 }
                 else
                 {

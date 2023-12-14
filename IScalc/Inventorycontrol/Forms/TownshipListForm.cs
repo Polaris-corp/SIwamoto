@@ -32,8 +32,6 @@ namespace Inventorycontrol.Forms
 
             dgvTownship.Columns["id"].HeaderText = "エリアID";
             dgvTownship.Columns["name"].HeaderText = "エリア名";
-
-            dgvTownship.AutoResizeColumns();
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
