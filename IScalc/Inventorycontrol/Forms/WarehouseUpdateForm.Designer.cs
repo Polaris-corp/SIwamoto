@@ -31,12 +31,12 @@ namespace Inventorycontrol.Forms
         {
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
-            this.txtTownshipID = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtWarehouse = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtCapacity = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.cmbTownship = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btnDelete
@@ -60,15 +60,6 @@ namespace Inventorycontrol.Forms
             this.btnUpdate.Text = "更新";
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
-            // 
-            // txtTownshipID
-            // 
-            this.txtTownshipID.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.txtTownshipID.Location = new System.Drawing.Point(118, 121);
-            this.txtTownshipID.Multiline = true;
-            this.txtTownshipID.Name = "txtTownshipID";
-            this.txtTownshipID.Size = new System.Drawing.Size(91, 30);
-            this.txtTownshipID.TabIndex = 43;
             // 
             // label2
             // 
@@ -118,22 +109,30 @@ namespace Inventorycontrol.Forms
             this.label3.TabIndex = 46;
             this.label3.Text = "キャパシティ";
             // 
+            // cmbTownship
+            // 
+            this.cmbTownship.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.cmbTownship.FormattingEnabled = true;
+            this.cmbTownship.Location = new System.Drawing.Point(77, 121);
+            this.cmbTownship.Name = "cmbTownship";
+            this.cmbTownship.Size = new System.Drawing.Size(180, 32);
+            this.cmbTownship.TabIndex = 51;
+            // 
             // WarehouseUpdateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(332, 372);
+            this.Controls.Add(this.cmbTownship);
             this.Controls.Add(this.txtCapacity);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtWarehouse);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtTownshipID);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnUpdate);
             this.Name = "WarehouseUpdateForm";
             this.Text = "倉庫更新";
-            this.Load += new System.EventHandler(this.WarehouseUpdateForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,11 +141,11 @@ namespace Inventorycontrol.Forms
         #endregion
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnUpdate;
-        private System.Windows.Forms.TextBox txtTownshipID;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtWarehouse;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtCapacity;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cmbTownship;
     }
 }

@@ -19,21 +19,32 @@ namespace Inventorycontrol.Forms
         {
             InitializeComponent();
             warehouse = warehouseinfo;
+
+            township = townshipController.GetTownshipInfotoCMB();
+            cmbTownship.DataSource = new BindingSource(township, null);
+            cmbTownship.DisplayMember = "Key";
+            cmbTownship.ValueMember = "Value";
+
+            txtWarehouse.Text = warehouse.Name;
+            txtCapacity.Text = warehouse.Capacity.ToString();
+            cmbTownship.SelectedItem = warehouseinfo.Townshipid;
         }
 
+        Dictionary<string, int> township = new Dictionary<string, int>();
         WarehouseModel warehouse;
         WarehouseController controller = new WarehouseController();
+        TownshipController townshipController = new TownshipController();
         CheckWarehouseExists check = new CheckWarehouseExists();
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtWarehouse.Text) || string.IsNullOrEmpty(txtTownshipID.Text))
+            if (string.IsNullOrEmpty(txtWarehouse.Text))
             {
-                MessageBox.Show("倉庫名、エリアIDを設定してください。");
+                MessageBox.Show("倉庫名を記入してください。");
                 return;
             }
             warehouse.Name = txtWarehouse.Text;
-            warehouse.Townshipid = int.Parse(txtTownshipID.Text);
+            warehouse.Townshipid = (int)cmbTownship.SelectedValue;
             warehouse.Capacity = int.Parse(txtCapacity.Text);
             try
             {
@@ -81,13 +92,6 @@ namespace Inventorycontrol.Forms
             {
                 return;
             }
-        }
-
-        private void WarehouseUpdateForm_Load(object sender, EventArgs e)
-        {
-            txtWarehouse.Text = warehouse.Name;
-            txtTownshipID.Text = warehouse.Townshipid.ToString();
-            txtCapacity.Text = warehouse.Capacity.ToString();
         }
     }
 }

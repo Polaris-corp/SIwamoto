@@ -279,14 +279,23 @@ namespace Inventorycontrol.Service
         private MySqlCommand CreateSelectIdSql(string name)
         {
             string query = @"SELECT
-                                       id FROM mwarehouse WHERE name = @name";
+                                     id
+                             FROM
+                                     mwarehouse
+                             WHERE
+                                     name = @name";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", name);
             return command;
         }
         private MySqlCommand CreateSelectCapacitySql(int id)
         {
-            string query = @"SELECT capacity FROM mwarehouse WHERE id = @id";
+            string query = @"SELECT
+                                     capacity
+                             FROM
+                                     mwarehouse
+                             WHERE
+                                     id = @id";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@id", id);
             return command;

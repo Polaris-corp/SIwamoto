@@ -45,8 +45,8 @@ namespace Inventorycontrol.Forms
                 }
                 else
                 {
-                    MessageBox.Show("登録済み又は削除済み倉庫、もしくは存在しないエリアが指定されています。");
-                    MessageBox.Show("削除済み倉庫を再度登録したい場合は「削除済みを表示」にチェックを入れ検索、更新してください。");
+                    MessageBox.Show(@"登録済み又は削除済み倉庫、もしくは存在しないエリアが指定されています。
+                                      削除済み倉庫を再度登録したい場合は「削除済みを表示」にチェックを入れ検索、更新してください。");
                     return;
                 }
             }
@@ -55,7 +55,6 @@ namespace Inventorycontrol.Forms
                 MessageBox.Show(ex.Message);
                 Console.WriteLine(ex);
             }
-            
         }
     }
 }

@@ -62,7 +62,7 @@ namespace Inventorycontrol.Forms
             WarehouseModel warehouse = new WarehouseModel();
             warehouse.Id = (int)dataGridViewRow.Cells["id"].Value;
             warehouse.Name = dataGridViewRow.Cells["name"].Value.ToString();
-            warehouse.Townshipid = (int)dataGridViewRow.Cells["townshipid"].Value;
+            warehouse.Townshipid = townshipController.GetTownshipId(dataGridViewRow.Cells["areaname"].Value.ToString());
             warehouse.Capacity = (int)dataGridViewRow.Cells["capacity"].Value;
             return warehouse;
         }
