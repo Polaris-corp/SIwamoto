@@ -38,9 +38,17 @@ namespace Inventorycontrol.Controller
             return service.GetTownshipName();
         }
 
+        public List<int> GetAllTownshipId()
+        {
+            return service.GetAllTownshipId();
+        }
         public int GetTownshipId(string tName)
         {
             return service.GetTownshipId(tName);
+        }
+        public Dictionary<string, int> GetTownshipInfotoCMB()
+        {
+            return service.GetTownshipInfoToCMB();
         }
     }
 }

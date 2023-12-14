@@ -34,6 +34,8 @@ namespace Inventorycontrol.Forms
             this.btnUpdate = new System.Windows.Forms.Button();
             this.dgvTownship = new System.Windows.Forms.DataGridView();
             this.chkDelete = new System.Windows.Forms.CheckBox();
+            this.btnTownshipdetail = new System.Windows.Forms.Button();
+            this.btnRegistration = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTownship)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,7 +62,7 @@ namespace Inventorycontrol.Forms
             // btnUpdate
             // 
             this.btnUpdate.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnUpdate.Location = new System.Drawing.Point(53, 299);
+            this.btnUpdate.Location = new System.Drawing.Point(53, 334);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(117, 38);
             this.btnUpdate.TabIndex = 32;
@@ -70,11 +72,15 @@ namespace Inventorycontrol.Forms
             // 
             // dgvTownship
             // 
+            this.dgvTownship.AllowUserToAddRows = false;
+            this.dgvTownship.AllowUserToDeleteRows = false;
             this.dgvTownship.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvTownship.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvTownship.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTownship.Location = new System.Drawing.Point(208, 39);
             this.dgvTownship.Name = "dgvTownship";
+            this.dgvTownship.ReadOnly = true;
+            this.dgvTownship.RowHeadersVisible = false;
             this.dgvTownship.RowTemplate.Height = 21;
             this.dgvTownship.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvTownship.Size = new System.Drawing.Size(563, 444);
@@ -92,11 +98,35 @@ namespace Inventorycontrol.Forms
             this.chkDelete.Text = "削除済みを表示";
             this.chkDelete.UseVisualStyleBackColor = true;
             // 
+            // btnTownshipdetail
+            // 
+            this.btnTownshipdetail.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.btnTownshipdetail.Location = new System.Drawing.Point(53, 402);
+            this.btnTownshipdetail.Name = "btnTownshipdetail";
+            this.btnTownshipdetail.Size = new System.Drawing.Size(117, 38);
+            this.btnTownshipdetail.TabIndex = 38;
+            this.btnTownshipdetail.Text = "エリア詳細";
+            this.btnTownshipdetail.UseVisualStyleBackColor = true;
+            this.btnTownshipdetail.Click += new System.EventHandler(this.btnTownshipdetail_Click_1);
+            // 
+            // btnRegistration
+            // 
+            this.btnRegistration.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.btnRegistration.Location = new System.Drawing.Point(53, 266);
+            this.btnRegistration.Name = "btnRegistration";
+            this.btnRegistration.Size = new System.Drawing.Size(117, 38);
+            this.btnRegistration.TabIndex = 39;
+            this.btnRegistration.Text = "新規登録";
+            this.btnRegistration.UseVisualStyleBackColor = true;
+            this.btnRegistration.Click += new System.EventHandler(this.btnRegistration_Click);
+            // 
             // TownshipListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 514);
+            this.Controls.Add(this.btnRegistration);
+            this.Controls.Add(this.btnTownshipdetail);
             this.Controls.Add(this.chkDelete);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.btnSearch);
@@ -117,5 +147,7 @@ namespace Inventorycontrol.Forms
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.DataGridView dgvTownship;
         private System.Windows.Forms.CheckBox chkDelete;
+        private System.Windows.Forms.Button btnTownshipdetail;
+        private System.Windows.Forms.Button btnRegistration;
     }
 }

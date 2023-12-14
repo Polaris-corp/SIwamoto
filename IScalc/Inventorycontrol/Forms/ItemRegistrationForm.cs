@@ -36,7 +36,7 @@ namespace Inventorycontrol.Forms
                 else
                 {
                     MessageBox.Show("登録済みまたは、以前削除された商品です。");
-                    MessageBox.Show("再度登録したい場合は「削除済みを表示」にチェックを入れ検索、更新してください。");
+                    MessageBox.Show("復旧したい場合は「削除済みを表示」にチェックを入れ検索、更新ボタンを押して更新してください。");
                     return;
                 }
             }

@@ -6,3 +6,4 @@
      , FOREIGN KEY (townshipid) REFERENCES mtownship(id)
  )
 ALTER TABLE mwarehouse ADD capacity INT NOT NULL DEFAULT 0;
+ALTER TABLE mwarehouse ADD actualcapacity INT;

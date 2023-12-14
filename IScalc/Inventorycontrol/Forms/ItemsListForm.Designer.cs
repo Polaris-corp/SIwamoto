@@ -34,16 +34,20 @@ namespace Inventorycontrol.Forms
             this.btnSearch = new System.Windows.Forms.Button();
             this.txtItem = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.btnRegistration = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvItems
             // 
+            this.dgvItems.AllowUserToAddRows = false;
             this.dgvItems.AllowUserToDeleteRows = false;
             this.dgvItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvItems.Location = new System.Drawing.Point(197, 36);
             this.dgvItems.Name = "dgvItems";
+            this.dgvItems.ReadOnly = true;
+            this.dgvItems.RowHeadersVisible = false;
             this.dgvItems.RowTemplate.Height = 21;
             this.dgvItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvItems.Size = new System.Drawing.Size(563, 444);
@@ -54,7 +58,7 @@ namespace Inventorycontrol.Forms
             // btnUpdate
             // 
             this.btnUpdate.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnUpdate.Location = new System.Drawing.Point(44, 282);
+            this.btnUpdate.Location = new System.Drawing.Point(44, 392);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(117, 38);
             this.btnUpdate.TabIndex = 22;
@@ -92,11 +96,23 @@ namespace Inventorycontrol.Forms
             this.checkBox1.Text = "削除済みを表示";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
+            // btnRegistration
+            // 
+            this.btnRegistration.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.btnRegistration.Location = new System.Drawing.Point(44, 285);
+            this.btnRegistration.Name = "btnRegistration";
+            this.btnRegistration.Size = new System.Drawing.Size(117, 38);
+            this.btnRegistration.TabIndex = 27;
+            this.btnRegistration.Text = "新規登録";
+            this.btnRegistration.UseVisualStyleBackColor = true;
+            this.btnRegistration.Click += new System.EventHandler(this.btnRegistration_Click);
+            // 
             // ItemsListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 514);
+            this.Controls.Add(this.btnRegistration);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.txtItem);
             this.Controls.Add(this.btnSearch);
@@ -117,5 +133,6 @@ namespace Inventorycontrol.Forms
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.TextBox txtItem;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button btnRegistration;
     }
 }

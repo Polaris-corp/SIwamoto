@@ -12,14 +12,14 @@ namespace Inventorycontrol.Controller
     public class WarehouseController
     {
         WarehouseService service = new WarehouseService();
-        public DataTable SearchWarehouse(string name)
+        public DataTable SearchWarehouse(string name,string townshipName,bool deleted)
         {
-            return service.ResaultSearchWarehouse(name);
+            return service.ResaultSearchWarehouse(name,townshipName,deleted);
         }
 
-        public DataTable SearchDeletedWarehouse(string name)
+        public DataTable GetWarehouse(int townshipId)
         {
-            return service.ResaultSearchDeletedWarehouse(name);
+            return service.SearchWarehouse(townshipId);
         }
 
         public void RegistrationWarehouse(string name,int townshipId,int capacity)

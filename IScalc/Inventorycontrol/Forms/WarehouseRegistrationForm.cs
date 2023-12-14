@@ -18,22 +18,30 @@ namespace Inventorycontrol.Forms
         public WarehouseRegistrationForm()
         {
             InitializeComponent();
+            
+            township = townshipController.GetTownshipInfotoCMB();
+            cmbTownship.DataSource = new BindingSource(township, null);
+            cmbTownship.DisplayMember = "Key";
+            cmbTownship.ValueMember = "Value";
         }
 
+        Dictionary<string, int> township = new Dictionary<string, int>();
         CheckWarehouseExists check = new CheckWarehouseExists();
         WarehouseController controller = new WarehouseController();
+        TownshipController townshipController = new TownshipController();
         //WarehouseModel warehouse;
 
         private void btnRegistration_Click(object sender, EventArgs e)
         {
             string name = txtWarehouse.Text;
-            int townshipid = int.Parse(txtTownshipID.Text);
+            int townshipid = (int)cmbTownship.SelectedValue;
             int capacity = int.Parse(txtCapacity.Text);
             try
             {
                 if (!check.CheckIfWarehouseNameExists(name) && check.CheckIfTownshipIdExists(townshipid))
                 {
                     controller.RegistrationWarehouse(name,townshipid,capacity);
+                    MessageBox.Show("登録が完了しました。");
                 }
                 else
                 {

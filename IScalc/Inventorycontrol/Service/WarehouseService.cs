@@ -12,14 +12,14 @@ namespace Inventorycontrol.Service
 {
     public class WarehouseService
     {
-        public DataTable ResaultSearchWarehouse(string name)
+        public DataTable ResaultSearchWarehouse(string name,string townshipName,bool deleted)
         {
-            return Warehousetable(CreateSelectSql(name));
+            return Warehousetable(CreateSelectSql(name,townshipName,deleted));
         }
 
-        public DataTable ResaultSearchDeletedWarehouse(string name)
+        public DataTable SearchWarehouse(int townshipId)
         {
-            return Warehousetable(CreateSelectdeletedSql(name));
+            return Warehousetable(CreateSelectAreaWarehouseSql(townshipId));
         }
 
         public void InsertWarehouseInfo(string name,int townshipId,int capacity)
@@ -142,39 +142,57 @@ namespace Inventorycontrol.Service
             }
             return capacity;
         }
-        private MySqlCommand CreateSelectSql(string item)
+        private MySqlCommand CreateSelectSql(string item,string townshipName,bool deleted)
         {
             string query = @"SELECT
-                                     id
-                                     ,name
-                                     ,townshipid
-                                     ,capacity 
-                             FROM 
-                                     mwarehouse 
+                                      ware.id
+                                      , ware.name
+                                      , town.name AS areaname
+                                      , ware.capacity
+                                      , ware.actualcapacity 
+                             FROM
+                                      mwarehouse AS ware 
+                             LEFT JOIN
+                                      mtownship AS town 
+                             ON 
+                                      ware.townshipid = town.id
                              WHERE 
-                                     deleted = 0 
+                                      ware.deleted = @deleted
+                             AND
+                                      ware.name
+                             LIKE
+                                      @name
                              AND 
-                                     name LIKE @name";
+                                      town.name
+                             LIKE
+                                      @areaname";
             MySqlCommand command = new MySqlCommand(query);
+            command.Parameters.AddWithValue("@deleted", deleted);
             command.Parameters.AddWithValue("@name", "%" + item + "%");
+            command.Parameters.AddWithValue("@areaname", "%" + townshipName + "%");
             return command;
         }
 
-        private MySqlCommand CreateSelectdeletedSql(string item)
+        private MySqlCommand CreateSelectAreaWarehouseSql(int townshipId)
         {
             string query = @"SELECT
-                                     id
-                                     ,name
-                                     ,townshipid
-                                     ,capacity
-                             FROM 
-                                     mwarehouse 
+                                      ware.id
+                                      , ware.name
+                                      , town.name AS areaname
+                                      , ware.capacity
+                                      , ware.actualcapacity 
+                             FROM
+                                      mwarehouse AS ware 
+                             LEFT JOIN
+                                      mtownship AS town 
+                             ON 
+                                      ware.townshipid = town.id 
                              WHERE 
-                                     deleted = 1 
+                                     ware.townshipid = @townshipid 
                              AND 
-                                     name LIKE @name";
+                                     ware.deleted = false";
             MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@name", "%" + item + "%");
+            command.Parameters.AddWithValue("@townshipid", townshipId);
             return command;
         }
 
@@ -185,14 +203,19 @@ namespace Inventorycontrol.Service
                                      name
                                      ,townshipid
                                      ,capacity
+                                     ,actualcapacity
+                                     ,deleted
                              )VALUES (
                                      @name
                                      ,@townshipid
-                                     ,@capacity)";
+                                     ,@capacity
+                                     ,@actualcapacity
+                                     ,false)";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", name);
             command.Parameters.AddWithValue("@townshipid", townshipId);
             command.Parameters.AddWithValue("@capacity", capacity);
+            command.Parameters.AddWithValue("@actualcapacity", capacity);
             return command;
         }
 
@@ -256,7 +279,7 @@ namespace Inventorycontrol.Service
         private MySqlCommand CreateSelectIdSql(string name)
         {
             string query = @"SELECT
-id FROM mwarehouse WHERE name = @name";
+                                       id FROM mwarehouse WHERE name = @name";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", name);
             return command;

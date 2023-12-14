@@ -37,9 +37,19 @@ namespace Inventorycontrol.Service
             return GetNameDataReaderSql(CreateSelectTownshipNameSql());
         }
 
+        public List<int> GetAllTownshipId()
+        {
+            return GetAllIdDataReaderSql(CreateSelectAllTownshipIdSql());
+        }
+
         public int GetTownshipId(string tName)
         {
             return GetIdDataReaderSql(CreateSelectTownshipIdSql(tName));
+        }
+
+        public Dictionary<string, int> GetTownshipInfoToCMB()
+        {
+            return GetTownshipToComboBox(CreateSelectTownshipInfo());
         }
         public DataTable Townshiptable(MySqlCommand command)
         {
@@ -90,7 +100,25 @@ namespace Inventorycontrol.Service
             }
             return items;
         }
-        
+
+        public List<int> GetAllIdDataReaderSql(MySqlCommand command)
+        {
+            List<int> items = new List<int>();
+            using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
+            {
+                command.Connection = connection;
+
+                connection.Open();
+                using (MySqlDataReader dr = command.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        items.Add((int)dr["id"]);
+                    }
+                }
+            }
+            return items;
+        }
         public int GetIdDataReaderSql(MySqlCommand command)
         {
             int id = 0;
@@ -110,12 +138,29 @@ namespace Inventorycontrol.Service
             return id;
         }
 
+        public Dictionary<string, int> GetTownshipToComboBox(MySqlCommand command)
+        {
+            Dictionary<string, int> dictionary = new Dictionary<string, int>();
+            using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
+            {
+                command.Connection = connection;
+
+                connection.Open();
+                using (MySqlDataReader dr = command.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        dictionary.Add((string)dr["name"],(int)dr["id"]);
+                    }
+                }
+            }
+            return dictionary;
+        }
         private MySqlCommand CreateSelectSql(string name,bool deleted)
         {
             string query = @"SELECT
                                        id
                                        ,name
-                                       ,deleted
                              FROM 
                                        mtownship 
                              WHERE 
@@ -181,6 +226,18 @@ namespace Inventorycontrol.Service
             return command;
         }
 
+        private MySqlCommand CreateSelectAllTownshipIdSql()
+        {
+            string query = @"SELECT
+                                     id
+                             FROM
+                                     mtownship
+                             WHERE
+                                     deleted = 0";
+            MySqlCommand command = new MySqlCommand(query);
+            return command;
+        }
+
         private MySqlCommand CreateSelectTownshipIdSql(string tName)
         {
             string query = @"SELECT
@@ -191,6 +248,19 @@ namespace Inventorycontrol.Service
                                      name = @name";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", tName);
+            return command;
+        }
+
+        private MySqlCommand CreateSelectTownshipInfo()
+        {
+            string query = @"SELECT 
+                                     id
+                                     ,name
+                             FROM
+                                     mtownship
+                             WHERE
+                                     deleted = false";
+            MySqlCommand command = new MySqlCommand(query);
             return command;
         }
     }

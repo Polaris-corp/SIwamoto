@@ -114,7 +114,6 @@ namespace Inventorycontrol.Service
             string query = @"SELECT
                                      id
                                      ,name
-                                     ,deleted
                              FROM
                                      mitems
                              WHERE
