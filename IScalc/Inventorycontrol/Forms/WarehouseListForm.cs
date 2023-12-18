@@ -17,13 +17,19 @@ namespace Inventorycontrol.Forms
         public WarehouseListForm()
         {
             InitializeComponent();
-            cmbTownship.Items.AddRange(townshipController.GetTownshipName().ToArray());
+            township_keyValue = townshipController.GetTownshipInfotoCMB();
+            cmbTownship.DataSource = township_keyValue;
+            cmbTownship.DisplayMember = "Name";
+            cmbTownship.ValueMember = "Id";
         }
 
         public WarehouseListForm(int townshipId)
         {
             InitializeComponent();
-            cmbTownship.Items.AddRange(townshipController.GetTownshipName().ToArray());
+            township_keyValue = townshipController.GetTownshipInfotoCMB();
+            cmbTownship.DataSource = township_keyValue;
+            cmbTownship.DisplayMember = "Name";
+            cmbTownship.ValueMember = "Id";
 
             dt = warehousecontroller.GetWarehouse(townshipId);
             
@@ -51,6 +57,8 @@ namespace Inventorycontrol.Forms
             //dgvWarehouse.Columns.Remove("townshipid");
             //column.Name = "エリア";
         }
+
+        List<TownshipInfoModel> township_keyValue = new List<TownshipInfoModel>();
         DataTable dt = new DataTable();
         TownshipController townshipController = new TownshipController();
         WarehouseController warehousecontroller = new WarehouseController();
@@ -68,10 +76,11 @@ namespace Inventorycontrol.Forms
         }
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            string name = txtName.Text;
+            WarehouseModel warehouse = new WarehouseModel();
+            warehouse.Name = txtName.Text;
             string townshipName = cmbTownship.Text;
 
-            dt = warehousecontroller.SearchWarehouse(name,townshipName,chkDelete.Checked);
+            dt = warehousecontroller.SearchWarehouse(warehouse,townshipName);
 
             dgvWarehouse.DataSource = dt;
             dgvWarehouse.Columns["id"].HeaderText = "倉庫ID";

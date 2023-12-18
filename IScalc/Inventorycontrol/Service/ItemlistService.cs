@@ -12,15 +12,15 @@ namespace Inventorycontrol.Service
 {
     class ItemlistService
     {
-        public DataTable ResaultSearchItem(string item, bool deleted)
+        public DataTable ResaultSearchItem(ItemInfoModel item)
         {
-            return Itemstable(CreateSelectSql(item, deleted));
+            return Itemstable(CreateSelectSql(item));
         }
 
 
-        public void RegistrationItemInfo(string name)
+        public void RegistrationItemInfo(ItemInfoModel item)
         {
-            ExecutionSql(CreateInsertItemInfoSql(name));
+            ExecutionSql(CreateInsertItemInfoSql(item));
         }
 
         public void UpdateItemInfo(ItemInfoModel item)
@@ -38,9 +38,14 @@ namespace Inventorycontrol.Service
             return DataReaderSql(CreateSelectItemNameSql());
         }
 
-        public int GetItemId(string name)
+        public int GetItemId(ItemInfoModel item)
         {
-            return GetIdDataReaderSql(CreateSelectItemIdSql(name));
+            return GetIdDataReaderSql(CreateSelectItemIdSql(item));
+        }
+
+        public List<ItemInfoModel> GetItemInfos()
+        {
+            return DataReaderItemInfoSql(CreateSelectItemInfoSql());
         }
         public DataTable Itemstable(MySqlCommand command)
         {
@@ -72,7 +77,6 @@ namespace Inventorycontrol.Service
                 }
             }
         }
-
         public List<string> DataReaderSql(MySqlCommand command)
         {
             List<string> items = new List<string>();
@@ -109,7 +113,29 @@ namespace Inventorycontrol.Service
             }
             return id;
         }
-        private MySqlCommand CreateSelectSql(string item ,bool deleted)
+        public List<ItemInfoModel> DataReaderItemInfoSql(MySqlCommand command)
+        {
+            List<ItemInfoModel> list = new List<ItemInfoModel>();
+            using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
+            {
+                command.Connection = connection;
+
+                connection.Open();
+                using (MySqlDataReader dr = command.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        ItemInfoModel item = new ItemInfoModel();
+                        item.Id = ((int)dr["id"]);
+                        item.Name = ((string)dr["name"]);
+
+                        list.Add(item);
+                    }
+                }
+            }
+            return list;
+        }
+        private MySqlCommand CreateSelectSql(ItemInfoModel item)
         {
             string query = @"SELECT
                                      id
@@ -123,13 +149,25 @@ namespace Inventorycontrol.Service
                              LIKE
                                      @name";
             MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@name", "%" + item + "%");
-            command.Parameters.AddWithValue("@deleted", deleted);
+            command.Parameters.AddWithValue("@name", "%" + item.Name + "%");
+            command.Parameters.AddWithValue("@deleted", item.Deleted);
             return command;
         }
 
-        
-        private MySqlCommand CreateInsertItemInfoSql(string name)
+        private MySqlCommand CreateSelectItemInfoSql()
+        {
+            string query = @"SELECT
+                                     id
+                                     ,name
+                             FROM
+                                     mitems
+                             WHERE
+                                     deleted = false";
+                             
+            MySqlCommand command = new MySqlCommand(query);
+            return command;
+        }
+        private MySqlCommand CreateInsertItemInfoSql(ItemInfoModel item)
         {
             string query = @"INSERT INTO 
                                           mitems 
@@ -137,7 +175,7 @@ namespace Inventorycontrol.Service
                                     VALUES
                                           (@name)";
             MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@name", name);
+            command.Parameters.AddWithValue("@name", item.Name);
             return command;
         }
 
@@ -182,7 +220,7 @@ namespace Inventorycontrol.Service
             return command;
         }
 
-        private MySqlCommand CreateSelectItemIdSql(string name)
+        private MySqlCommand CreateSelectItemIdSql(ItemInfoModel item)
         {
             string query = @"SELECT
                                      id
@@ -191,7 +229,7 @@ namespace Inventorycontrol.Service
                              WHERE
                                      name = @name";
             MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@name", name);
+            command.Parameters.AddWithValue("@name", item.Name);
             return command;
         } 
     }

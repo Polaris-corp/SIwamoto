@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 using MySqlConnector;
 using Inventorycontrol.Common;
 using System.Data;
+using Inventorycontrol.Model;
 
 namespace Inventorycontrol.Service
 {
     public class TransactionService
     {
-        public void RegistrationInfo(DateTime schedule,int quantity,int townshipId ,int warehouseId,int stId,int itemId,string itemName)
+        public void RegistrationInfo(ScheduleModel schedules)
         {
-            ExecutionSql(CreateInsertInfoSql(schedule, quantity,townshipId, warehouseId, stId, itemId, itemName));
+            ExecutionSql(CreateInsertInfoSql(schedules));
         }
 
         public DataTable SearchTranasctionInfo(string name, DateTime start, DateTime end, int townshipId, int warehouseId, int statusId)
@@ -52,7 +53,7 @@ namespace Inventorycontrol.Service
             }
         }
 
-        public MySqlCommand CreateInsertInfoSql(DateTime schedule, int quantity,int townshipId, int warehouseId, int stId, int itemId, string itemName)
+        public MySqlCommand CreateInsertInfoSql(ScheduleModel schedules)
         {
             string query = @"INSERT INTO 
                                          ttransaction (
@@ -62,52 +63,70 @@ namespace Inventorycontrol.Service
                                                           ,warehouseid
                                                           ,statusid
                                                           ,itemid
-                                                          ,itemname
                                   ) VALUES (
                                                           @schedule
                                                          ,@itemquantity
                                                          ,@townshipid
                                                          ,@warehouseid
                                                          ,@statusid
-                                                         ,@itemid
-                                                         ,@itemname)";
+                                                         ,@itemid)";
             MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@schedule", schedule);
-            command.Parameters.AddWithValue("@itemquantity", quantity);
-            command.Parameters.AddWithValue("@townshipid", townshipId);
-            command.Parameters.AddWithValue("@warehouseid", warehouseId);
-            command.Parameters.AddWithValue("@statusid", stId);
-            command.Parameters.AddWithValue("@itemid", itemId);
-            command.Parameters.AddWithValue("@itemname", itemName);
+            command.Parameters.AddWithValue("@schedule", schedules.Schedule);
+            command.Parameters.AddWithValue("@itemquantity", schedules.Itemquantity);
+            command.Parameters.AddWithValue("@townshipid", schedules.Townshipid);
+            command.Parameters.AddWithValue("@warehouseid", schedules.Warehouseid);
+            command.Parameters.AddWithValue("@statusid", schedules.Statusid);
+            command.Parameters.AddWithValue("@itemid", schedules.Itemid);
             return command;
         }
 
         public MySqlCommand CreateSelectInfoSql(string name, DateTime start, DateTime end, int townshipId, int warehouseId, int statusId)
         {
-            string query = @"SELECT id
-                                    ,schedule
-                                    ,itemquantity
-                                    ,townshipid
-                                    ,warehouseid
-                                    ,statusid
-                                    ,itemname
-                             FROM ttransaction 
+            string query = @"SELECT tran.id
+                                    ,tran.schedule
+                                    ,tran.itemquantity
+                                    ,town.name AS areaname
+                                    ,ware.name AS warehousename
+                                    ,status.status AS status
+                                    ,item.name AS itemname
+                             FROM 
+                                    ttransaction AS tran 
+                             LEFT JOIN 
+                                    mtownship AS town 
+                             ON 
+                                    tran.townshipid = town.id 
+                             LEFT JOIN 
+                                    mwarehouse AS ware 
+                             ON 
+                                    tran.warehouseid = ware.id 
+                             LEFT JOIN 
+                                    mstatus_alternative AS status
+                             ON 
+                                    tran.statusid = status.id
+                             LEFT JOIN 
+                                    mitems AS item
+                             ON
+                                    tran.itemid = item.id
                              WHERE 
-                                    schedule BETWEEN @start AND @end";
+                                    schedule
+                             BETWEEN 
+                                    @start AND @end 
+                             AND
+                                    tran.deleted = false";
             
             if(0 < townshipId)
             {
-                query += " AND townshipid = @townshipid ";
+                query += " AND town.id = @townshipid ";
             }
             if (0 < warehouseId)
             {
-                query += " AND warehouseid = @warehouseid ";
+                query += " AND ware.id = @warehouseid ";
             }
             if (0 < statusId)
             {
-                query += " AND statusid = @statusid ";
+                query += " AND status.id = @statusid ";
             }
-            query += " AND itemname LIKE @name";
+            query += " AND item.name LIKE @name";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@start", start);
             command.Parameters.AddWithValue("@end", end);

@@ -13,14 +13,14 @@ namespace Inventorycontrol.Controller
     {
         ItemlistService itemlistService = new ItemlistService();
         
-        public DataTable SearchItems(string item , bool deleted)
+        public DataTable SearchItems(ItemInfoModel item)
         {
-            return itemlistService.ResaultSearchItem(item, deleted);
+            return itemlistService.ResaultSearchItem(item);
         }
 
-        public void InsertItemInfo(string name)
+        public void InsertItemInfo(ItemInfoModel item)
         {
-            itemlistService.RegistrationItemInfo(name);
+            itemlistService.RegistrationItemInfo(item);
         }
 
         public void UpdateItemInfo(ItemInfoModel items)
@@ -38,9 +38,14 @@ namespace Inventorycontrol.Controller
             return itemlistService.GetItemName();
         }
 
-        public int GetItemId(string name)
+        public int GetItemId(ItemInfoModel item)
         {
-            return itemlistService.GetItemId(name);
+            return itemlistService.GetItemId(item);
+        }
+
+        public List<ItemInfoModel> GetItemList()
+        {
+            return itemlistService.GetItemInfos();
         }
     }
 }

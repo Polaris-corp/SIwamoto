@@ -20,27 +20,27 @@ namespace Inventorycontrol.Forms
             InitializeComponent();
             
             township = townshipController.GetTownshipInfotoCMB();
-            cmbTownship.DataSource = new BindingSource(township, null);
-            cmbTownship.DisplayMember = "Key";
-            cmbTownship.ValueMember = "Value";
+            cmbTownship.DataSource = township;
+            cmbTownship.DisplayMember = "Name";
+            cmbTownship.ValueMember = "Id";
         }
 
-        Dictionary<string, int> township = new Dictionary<string, int>();
+        List<TownshipInfoModel> township = new List<TownshipInfoModel>();
         CheckWarehouseExists check = new CheckWarehouseExists();
         WarehouseController controller = new WarehouseController();
         TownshipController townshipController = new TownshipController();
-        //WarehouseModel warehouse;
 
         private void btnRegistration_Click(object sender, EventArgs e)
         {
-            string name = txtWarehouse.Text;
-            int townshipid = (int)cmbTownship.SelectedValue;
-            int capacity = int.Parse(txtCapacity.Text);
+            WarehouseModel warehouse = new WarehouseModel();
+            warehouse.Name = txtWarehouse.Text;
+            warehouse.Townshipid = (int)cmbTownship.SelectedValue;
+            warehouse.Capacity = int.Parse(txtCapacity.Text);
             try
             {
-                if (!check.CheckIfWarehouseNameExists(name) && check.CheckIfTownshipIdExists(townshipid))
+                if (!check.CheckIfWarehouseNameExists(warehouse.Name) && check.CheckIfTownshipIdExists(warehouse.Townshipid))
                 {
-                    controller.RegistrationWarehouse(name,townshipid,capacity);
+                    controller.RegistrationWarehouse(warehouse);
                     MessageBox.Show("登録が完了しました。");
                     DialogResult result = MessageBox.Show("続けて登録しますか？", "登録", MessageBoxButtons.YesNo
                                                                                        , MessageBoxIcon.Question

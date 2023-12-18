@@ -26,12 +26,13 @@ namespace Inventorycontrol.Forms
 
         private void btnRegistration_Click(object sender, EventArgs e)
         {
-            string itemName = txtItem.Text;
+            ItemInfoModel item = new ItemInfoModel();
+            item.Name = txtItem.Text;
             try
             {
-                if (!check.CheckIfItemNameExists(itemName))
+                if (!check.CheckIfItemNameExists(item.Name))
                 {
-                    itemlistController.InsertItemInfo(itemName);
+                    itemlistController.InsertItemInfo(item);
                 }
                 else
                 {

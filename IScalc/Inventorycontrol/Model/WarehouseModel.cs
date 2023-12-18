@@ -15,11 +15,14 @@ namespace Inventorycontrol.Model
             Townshipid = 0;
             Deleted = false;
             Capacity = 0;
+            ActualCapacity = 0;
         }
         public int Id { get; set; }
         public string Name { get; set; }
         public int Townshipid { get; set; }
         public bool Deleted { get; set; }
         public int Capacity { get; set; }
+
+        public int ActualCapacity { get; set; }
     }
 }

@@ -12,14 +12,14 @@ namespace Inventorycontrol.Service
 {
     public class TownshipService
     {
-        public DataTable ResultSearchTownship(string name,bool deleted)
+        public DataTable ResultSearchTownship(TownshipInfoModel township)
         {
-            return Townshiptable(CreateSelectSql(name,deleted));
+            return Townshiptable(CreateSelectSql(township));
         }
 
-        public void RegistrationTownship(string name)
+        public void RegistrationTownship(TownshipInfoModel township)
         {
-            ExecutionSql(CreateInsertTownshipInfoSql(name));
+            ExecutionSql(CreateInsertTownshipInfoSql(township));
         }
 
         public void UpdateTownship(TownshipInfoModel info)
@@ -47,7 +47,7 @@ namespace Inventorycontrol.Service
             return GetIdDataReaderSql(CreateSelectTownshipIdSql(tName));
         }
 
-        public Dictionary<string, int> GetTownshipInfoToCMB()
+        public List<TownshipInfoModel> GetTownshipInfoToCMB()
         {
             return GetTownshipToComboBox(CreateSelectTownshipInfo());
         }
@@ -138,9 +138,9 @@ namespace Inventorycontrol.Service
             return id;
         }
 
-        public Dictionary<string, int> GetTownshipToComboBox(MySqlCommand command)
+        public List<TownshipInfoModel> GetTownshipToComboBox(MySqlCommand command)
         {
-            Dictionary<string, int> dictionary = new Dictionary<string, int>();
+            List<TownshipInfoModel> list = new List<TownshipInfoModel>();
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
             {
                 command.Connection = connection;
@@ -150,13 +150,17 @@ namespace Inventorycontrol.Service
                 {
                     while (dr.Read())
                     {
-                        dictionary.Add((string)dr["name"],(int)dr["id"]);
+                        TownshipInfoModel townshipInfo = new TownshipInfoModel();
+                        townshipInfo.Id = (int)dr["id"];
+                        townshipInfo.Name = (string)dr["name"];
+
+                        list.Add(townshipInfo);
                     }
                 }
             }
-            return dictionary;
+            return list;
         }
-        private MySqlCommand CreateSelectSql(string name,bool deleted)
+        private MySqlCommand CreateSelectSql(TownshipInfoModel township)
         {
             string query = @"SELECT
                                        id
@@ -168,12 +172,12 @@ namespace Inventorycontrol.Service
                              AND 
                                        name LIKE @name";
             MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@deleted", deleted);
-            command.Parameters.AddWithValue("@name", "%" + name + "%");
+            command.Parameters.AddWithValue("@deleted", township.Deleted);
+            command.Parameters.AddWithValue("@name", "%" + township.Name + "%");
             return command;
         }
 
-        private MySqlCommand CreateInsertTownshipInfoSql(string name)
+        private MySqlCommand CreateInsertTownshipInfoSql(TownshipInfoModel township)
         {
             string query = @"INSERT INTO
                                          mtownship
@@ -181,7 +185,7 @@ namespace Inventorycontrol.Service
                              VALUES
                                          (@name)";
             MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@name", name);
+            command.Parameters.AddWithValue("@name", township.Name);
             return command;
         }
 

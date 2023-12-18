@@ -19,82 +19,64 @@ namespace Inventorycontrol.Forms
         public ScheduleRegistrationForm()
         {
             InitializeComponent();
+
+            townshiplist = townshipController.GetTownshipInfotoCMB();
+            cmbTownship.DataSource = townshiplist;
+            cmbTownship.ValueMember = "Id";
+            cmbTownship.DisplayMember = "Name";
+            cmbTownship.SelectedValue = 1;
+            
+
+            warehouseslist = transactionController.GetWarehouseList();
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("itemname",typeof(int));
+            dt.Columns.Add("itemquantity",typeof(int));
+            dt.Columns.Add("status",typeof(int));
+            dgvSchedule.DataSource = dt;
+
+
+            statuslist = statusController.GetStatusList();
+            statuscolumn.DataPropertyName = dgvSchedule.Columns["status"].DataPropertyName;
+            dgvSchedule.Columns.Insert(dgvSchedule.Columns["status"].Index, statuscolumn);
+            statuscolumn.DataSource = statuslist;
+            statuscolumn.ValueMember = "Id";
+            statuscolumn.DisplayMember = "Status";
+            dgvSchedule.Columns.Remove("status");
+            statuscolumn.Name = "status";
+            
+
+            itemlist = itemlistController.GetItemList();
+            itemcolumn.DataPropertyName = dgvSchedule.Columns["itemname"].DataPropertyName;
+            dgvSchedule.Columns.Insert(dgvSchedule.Columns["itemname"].Index, itemcolumn);
+            itemcolumn.DataSource = itemlist;
+            itemcolumn.ValueMember = "Id";
+            itemcolumn.DisplayMember = "Name";
+            dgvSchedule.Columns.Remove("itemname");
+            itemcolumn.Name = "itemname";
+
+            dgvSchedule.Columns["itemname"].HeaderText = "商品名";
+            dgvSchedule.Columns["itemquantity"].HeaderText = "取引数量";
+            dgvSchedule.Columns["status"].HeaderText = "取引内容";
         }
-        private List<ComboBox> StatusControls = new List<ComboBox>();
-        private List<ComboBox> ItemsControls = new List<ComboBox>();
-        private List<TextBox> QuantityControls = new List<TextBox>();
-        private ComboBox Status;
-        private ComboBox Items;
-        private TextBox Quantity;
+
+        List<StatusModel> statuslist = new List<StatusModel>();
+        List<ItemInfoModel> itemlist = new List<ItemInfoModel>();
+        List<TownshipInfoModel> townshiplist = new List<TownshipInfoModel>();
+        List<WarehouseModel> warehouseslist = new List<WarehouseModel>();
+        List<WarehouseModel> sortedwarehouselist = new List<WarehouseModel>();
+
+
+        
+        DataGridViewComboBoxColumn statuscolumn = new DataGridViewComboBoxColumn();
+        DataGridViewComboBoxColumn itemcolumn = new DataGridViewComboBoxColumn();
 
         ItemlistController itemlistController = new ItemlistController();
         TownshipController townshipController = new TownshipController();
         WarehouseController warehouseController = new WarehouseController();
-        TransactionController shipingController = new TransactionController();
-        TransactionStatus transactionStatus = new TransactionStatus();
+        TransactionController transactionController = new TransactionController();
+        StatusController statusController = new StatusController();
 
-
-
-        private void CreatecmbStatus()
-        {
-            List<string> names = GetItemNames();
-            string[] array = transactionStatus.StatusArray;
-            
-            for (int i = 0; i < 10; i++)
-            {
-                this.Status = new ComboBox();
-                this.Status.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-                this.Status.FormattingEnabled = true;
-                this.Status.Name = "cmbStatus" + i;
-                this.Status.Location = new System.Drawing.Point(243,188 + i * 32 + i * 10);
-                this.Status.Size = new System.Drawing.Size(180, 32);
-                this.Status.TabIndex = 25;
-                this.Status.DropDownStyle = ComboBoxStyle.DropDownList;
-                this.Status.Items.AddRange(array);
-
-                this.Items = new ComboBox();
-                this.Items.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-                this.Items.FormattingEnabled = true;
-                this.Items.Location = new System.Drawing.Point(19, 188 + i * 32 + i * 10);
-                this.Items.Name = "cmbItem" + i;
-                this.Items.Size = new System.Drawing.Size(180, 32);
-                this.Items.TabIndex = 31;
-                this.Items.DropDownStyle = ComboBoxStyle.DropDownList;
-                this.Items.Items.AddRange(names.ToArray());
-                this.Items.Items.Add("");
-
-                this.Quantity = new TextBox();
-                this.Quantity.Font = new System.Drawing.Font("HGP明朝E", 18F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-                this.Quantity.Location = new System.Drawing.Point(465, 188 + i * 32 + i * 10);
-                this.Quantity.Name = "txtQuantity" + i;
-                this.Quantity.Size = new System.Drawing.Size(76, 31);
-                this.Quantity.TabIndex = 32;
-                this.Quantity.ImeMode = ImeMode.Alpha;
-
-                StatusControls.Add(this.Status);
-                ItemsControls.Add(this.Items);
-                QuantityControls.Add(this.Quantity);
-            }
-            this.Controls.AddRange(this.StatusControls.ToArray());
-            this.Controls.AddRange(this.ItemsControls.ToArray());
-            this.Controls.AddRange(this.QuantityControls.ToArray());
-        }
-
-        private void ResetControls()
-        {
-            foreach (var item in this.StatusControls)
-            {
-                this.Controls.Remove(item);
-                item.Dispose();
-            }
-            foreach(var item in this.ItemsControls)
-            {
-                this.Controls.Remove(item);
-                item.Dispose();
-            }
-            StatusControls.Clear();
-            ItemsControls.Clear();
-        }
         //TextBox1のKeyPressイベントハンドラ
         private void TextBox1_KeyPress(object sender,
            System.Windows.Forms.KeyPressEventArgs e)
@@ -105,202 +87,151 @@ namespace Inventorycontrol.Forms
                 e.Handled = true;
             }
         }
-        
-
-        private void ResizeForm()
-        {
-            int newWidth = 545;
-            int newHeight = 509;
-            btnRegistration.Location = new Point(231, 470);
-            foreach(Control control in this.Controls)
-            {
-                newWidth = Math.Max(newWidth, control.Right);
-                newHeight = Math.Max(newHeight, control.Bottom);
-            }
-            newWidth += 35;
-            newHeight += 100;
-            this.Size = new Size(newWidth, newHeight);
-        }
-
-        private List<string> GetItemNames()
-        {
-            return itemlistController.GetItemName(); 
-        }
-
-        private List<string> GetTownshipNames()
-        {
-            return townshipController.GetTownshipName();
-        }
-
-        private List<string> GetWarehouseNames(int id)
-        {
-            return warehouseController.GetWarehouseName(id);
-        }
-
-        private int GetTownshipId(string tName)
-        {
-            return townshipController.GetTownshipId(tName);
-        }
-
-        private List<string> GetItemNameList()
-        {
-            List<string> list = new List<string>();
-            foreach (var name in ItemsControls)
-            {
-                if (name.SelectedIndex == -1)
-                {
-                    continue;
-                }
-                list.Add(name.Text);
-            }
-            return list;
-        }
-
-        private List<int> GetItemIdList()
-        {
-            List<int> list = new List<int>();
-            foreach(var name in ItemsControls)
-            {
-                if (name.SelectedIndex == -1)
-                {
-                    continue;
-                }
-                list.Add(itemlistController.GetItemId(name.Text));
-            }
-            return list;
-        }
-
-        private List<int> GetItemQuantityList()
-        {
-            List<int> list = new List<int>();
-            foreach (var quantitiy in QuantityControls)
-            {
-                if (String.IsNullOrEmpty(quantitiy.Text))
-                {
-                    continue;
-                }
-                list.Add(int.Parse(quantitiy.Text));
-            }
-            return list;
-        }
-
-        private List<int> GetStatusIdList()
-        {
-            List<int> list = new List<int>();
-            foreach (var status in StatusControls)
-            {
-                if(status.SelectedIndex == -1)
-                {
-                    continue;
-                }
-                list.Add(status.SelectedIndex + 1);
-            }
-            return list;
-        }
-
-        private bool CheckWarehouseCapacity(List<int> quantity, List<int>stid, int warehouseid)
-        {
-            bool check = true;
-            int capacity = warehouseController.GetWarehouseCapacity(warehouseid);
-            int total = 0;
-            for (int i = 0; i < quantity.Count; i++)
-            {
-                if(capacity < quantity[i])
-                {
-                    return false;
-                }
-                if (stid[i] == 2 || stid[i] == 4 || stid[i] == 5)
-                {
-                    total -= quantity[i];
-                }
-                else
-                {
-                    total += quantity[i];
-                }
-            }
-            if(capacity < total)
-            {
-                check = false;
-            }
-            return check;
-        }
-
-        //private void RegistrationStatus()
-        //{
-        //    foreach (var cmbStatus in StatusControls)
-        //    {
-        //        if (cmbStatus.SelectedIndex == -1)
-        //        {
-        //            continue;
-        //        }
-        //        statusController.RegistrationStatus(cmbStatus.SelectedIndex + 1);
-        //    }
-        //}
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void ScheduleRegistrationForm_Load(object sender, EventArgs e)
         {
             dtpSchedule.Value = DateTime.Now;
             dtpSchedule.MinDate = DateTime.Now;
-            cmbTownship.Items.AddRange(GetTownshipNames().ToArray());
-            CreatecmbStatus();
-            //ResizeForm();
-        }
-
-        private void cmbWarehouse_SelectedIndexChanged(object sender, EventArgs e)
-        {
+            UpdataCmbwarehouse();
         }
 
         private void cmbTownship_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cmbWarehouse.Items.Clear();
-            string tName = cmbTownship.Text;
-            int id = GetTownshipId(tName);
-            cmbWarehouse.Items.AddRange(GetWarehouseNames(id).ToArray());
+            UpdataCmbwarehouse();
         }
 
         private void btnRegistration_Click(object sender, EventArgs e)
         {
-            List<string> itemName = GetItemNameList();
-            int checkcount = itemName.Count;
-            List<int> itemId = GetItemIdList();
-            List<int> itemQuantity = GetItemQuantityList();
-            List<int> stId = GetStatusIdList();
-            //List<int> itemId = new List<int>();
-            DateTime TransactionDate = dtpSchedule.Value;
-            int townshipId = townshipController.GetTownshipId(cmbTownship.Text);
-            int warehouseId = warehouseController.GetWarehouseId(cmbWarehouse.Text);
-            if(checkcount != itemId.Count || checkcount != itemQuantity.Count || checkcount != stId.Count)
+            List<ScheduleModel> signupSchedule = new List<ScheduleModel>();
+            DateTime dateTime = dtpSchedule.Value;
+            int townshipId = (int)cmbTownship.SelectedValue;
+            if(cmbWarehouse.SelectedIndex == -1)
             {
-                MessageBox.Show("いずれかの取引に入力漏れがあります。");
+                MessageBox.Show("倉庫を選択してください。");
                 return;
             }
-            if (!CheckWarehouseCapacity(itemQuantity, stId, warehouseId))
+            int warehouseId = (int)cmbWarehouse.SelectedValue;
+            foreach(DataGridViewRow row in dgvSchedule.Rows)
             {
-                MessageBox.Show("倉庫の容積を超えています。");
-                return;
+                if (!row.IsNewRow)
+                {
+                    ScheduleModel schedule = new ScheduleModel();
+                    schedule.Schedule = dateTime;
+                    schedule.Townshipid = townshipId;
+                    schedule.Warehouseid = warehouseId;
+
+                    if(row.Cells["itemname"].Value == null)
+                    {
+                        MessageBox.Show("商品を選択してください。");
+                        return;
+                    }
+                    schedule.Itemid = (int)row.Cells["itemname"].Value;
+                    string str = row.Cells["itemquantity"].Value.ToString();
+                    if (string.IsNullOrEmpty(str))
+                    {
+                        MessageBox.Show("数量を設定してください。");
+                        return;
+                    }
+                    schedule.Itemquantity = (int)row.Cells["itemquantity"].Value;
+                    if (row.Cells["status"].Value == null)
+                    {
+                        MessageBox.Show("取引内容を選択してください。");
+                        return;
+                    }
+                    schedule.Statusid = (int)row.Cells["status"].Value;
+
+                    signupSchedule.Add(schedule);
+                }
             }
-            shipingController.RegistrationSchedule(TransactionDate, itemQuantity,townshipId, warehouseId, stId, itemId, itemName);
+            transactionController.RegistrationSchedule(signupSchedule);
             MessageBox.Show("登録が完了しました。");
-            
-            //int number;
-            //if(!int.TryParse(QuantityControls[i].Text,out number))
-            //{
-            //    MessageBox.Show("個数を設定してください。");
-            //    return;
-            //}
-            //stNumber.Add(StatusControls[i].SelectedIndex + 1);
-            //itemName.Add(ItemsControls[i].SelectedItem.ToString());
-            //itemQuantity.Add(int.Parse(QuantityControls[i].Text));
         }
 
         private void dtpSchedule_KeyPress(object sender, KeyPressEventArgs e)
         {
-            e.Handled = true;
+            //0～9と、バックスペース以外の時は、イベントをキャンセルする
+            if ((e.KeyChar < '0' || '9' < e.KeyChar) && e.KeyChar != '\b')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void UpdataCmbwarehouse()
+        {
+            if (cmbTownship.SelectedValue != null)
+            {
+                cmbWarehouse.DataSource = null;
+                sortedwarehouselist.Clear();
+                foreach (var item in warehouseslist)
+                {
+                    if (item.Townshipid == (int)cmbTownship.SelectedValue)
+                    {
+                        sortedwarehouselist.Add(item);
+                    }
+                }
+                cmbWarehouse.DataSource = sortedwarehouselist;
+                cmbWarehouse.DisplayMember = "Name";
+                cmbWarehouse.ValueMember = "Id";
+            }
+            else
+            {
+                cmbWarehouse.DataSource = null;
+            }
+        }
+
+        private bool CheckInput(List<ScheduleModel> schedules)
+        {
+            foreach (var item in schedules)
+            {
+                
+                
+            }
+            return true;
+        }
+
+        private void dgvSchedule_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView dgv = (DataGridView)sender;
+            if (dgv.Columns[e.ColumnIndex].Name == "itemname" || dgv.Columns[e.ColumnIndex].Name == "status")
+            {
+                dgv.BeginEdit(false);
+                ((DataGridViewComboBoxEditingControl)dgv.EditingControl).DroppedDown = true;
+            }
+        }
+
+        private void dgvSchedule_EditingControlShowing_1(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            //表示されているコントロールがDataGridViewTextBoxEditingControlか調べる
+            if (e.Control is DataGridViewTextBoxEditingControl)
+            {
+                DataGridView dgv = (DataGridView)sender;
+
+                //編集のために表示されているコントロールを取得
+                DataGridViewTextBoxEditingControl tb =
+                    (DataGridViewTextBoxEditingControl)e.Control;
+
+                //イベントハンドラを削除
+                tb.KeyPress -=
+                    new KeyPressEventHandler(dtpSchedule_KeyPress);
+
+                //該当する列か調べる
+                if (dgv.CurrentCell.OwningColumn.Name == "itemquantity")
+                {
+                    //KeyPressイベントハンドラを追加
+                    tb.KeyPress +=
+                        new KeyPressEventHandler(dtpSchedule_KeyPress);
+                }
+            }
+        }
+
+        private void dgvSchedule_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+
+        }
+
+        private void dgvSchedule_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }

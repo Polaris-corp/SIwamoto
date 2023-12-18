@@ -23,14 +23,13 @@ namespace Inventorycontrol.Forms
         TransactionController transactionController = new TransactionController();
         TownshipController townshipController = new TownshipController();
         WarehouseController warehouseController = new WarehouseController();
-        TransactionStatus transactionStatus = new TransactionStatus();
-
+        
 
         private void StockcheckForm_Load(object sender, EventArgs e)
         {
             cmbTownship.Items.AddRange(townshipController.GetTownshipName().ToArray());
+            cmbTownship.Items.Add("");
             cmbWarehouse.Items.AddRange(warehouseController.GetAllWarehouseName().ToArray());
-            cmbStatus.Items.AddRange(transactionStatus.StatusArray);
         }
 
         private void Registrationbutton_Click(object sender, EventArgs e)
@@ -58,10 +57,27 @@ namespace Inventorycontrol.Forms
             dgvSchedule.Columns["id"].HeaderText = "取引ID";
             dgvSchedule.Columns["schedule"].HeaderText = "取引予定日";
             dgvSchedule.Columns["itemquantity"].HeaderText = "取引個数";
-            dgvSchedule.Columns["townshipid"].HeaderText = "エリアID";
-            dgvSchedule.Columns["warehouseid"].HeaderText = "倉庫ID";
-            dgvSchedule.Columns["statusid"].HeaderText = "ステータス";
+            dgvSchedule.Columns["areaname"].HeaderText = "エリア";
+            dgvSchedule.Columns["warehousename"].HeaderText = "倉庫";
+            dgvSchedule.Columns["status"].HeaderText = "ステータス";
             dgvSchedule.Columns["itemname"].HeaderText = "商品名";
+            
+        }
+
+        private void cmbTownship_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cmbWarehouse.Items.Clear();
+            string tName = cmbTownship.Text;
+            if(tName == "")
+            {
+                cmbWarehouse.Items.AddRange(warehouseController.GetAllWarehouseName().ToArray());
+            }
+            else
+            {
+                int id = townshipController.GetTownshipId(tName);
+                //cmbWarehouse.Items.AddRange(warehouseController.GetWarehouseName(id).ToArray());
+            }
+            
         }
     }
 }

@@ -13,14 +13,14 @@ namespace Inventorycontrol.Controller
     {
 
         TownshipService service = new TownshipService();
-        public DataTable SearchTownship(string name,bool deleted)
+        public DataTable SearchTownship(TownshipInfoModel township)
         {
-            return service.ResultSearchTownship(name,deleted);
+            return service.ResultSearchTownship(township);
         }
 
-        public void RegistrationTownship(string name)
+        public void RegistrationTownship(TownshipInfoModel township)
         {
-            service.RegistrationTownship(name);
+            service.RegistrationTownship(township);
         }
 
         public void UpdateTownship(TownshipInfoModel info)
@@ -46,7 +46,7 @@ namespace Inventorycontrol.Controller
         {
             return service.GetTownshipId(tName);
         }
-        public Dictionary<string, int> GetTownshipInfotoCMB()
+        public List<TownshipInfoModel> GetTownshipInfotoCMB()
         {
             return service.GetTownshipInfoToCMB();
         }

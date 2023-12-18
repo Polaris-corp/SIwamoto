@@ -33,10 +33,8 @@ namespace Inventorycontrol.Forms
             this.cmbTownship = new System.Windows.Forms.ComboBox();
             this.dtpEnd = new System.Windows.Forms.DateTimePicker();
             this.dtpStart = new System.Windows.Forms.DateTimePicker();
-            this.txtItem = new System.Windows.Forms.TextBox();
             this.cmbStatus = new System.Windows.Forms.ComboBox();
             this.cmbWarehouse = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -44,16 +42,25 @@ namespace Inventorycontrol.Forms
             this.label7 = new System.Windows.Forms.Label();
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnRegistration = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.txtItem = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchedule)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvSchedule
             // 
+            this.dgvSchedule.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvSchedule.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvSchedule.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dgvSchedule.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSchedule.Location = new System.Drawing.Point(225, 45);
+            this.dgvSchedule.Location = new System.Drawing.Point(225, 27);
             this.dgvSchedule.Name = "dgvSchedule";
+            this.dgvSchedule.RowHeadersVisible = false;
             this.dgvSchedule.RowTemplate.Height = 21;
-            this.dgvSchedule.Size = new System.Drawing.Size(563, 444);
+            this.dgvSchedule.Size = new System.Drawing.Size(563, 492);
             this.dgvSchedule.TabIndex = 0;
             // 
             // cmbTownship
@@ -64,6 +71,7 @@ namespace Inventorycontrol.Forms
             this.cmbTownship.Name = "cmbTownship";
             this.cmbTownship.Size = new System.Drawing.Size(180, 32);
             this.cmbTownship.TabIndex = 1;
+            this.cmbTownship.SelectedIndexChanged += new System.EventHandler(this.cmbTownship_SelectedIndexChanged);
             // 
             // dtpEnd
             // 
@@ -72,7 +80,6 @@ namespace Inventorycontrol.Forms
             this.dtpEnd.Name = "dtpEnd";
             this.dtpEnd.Size = new System.Drawing.Size(184, 23);
             this.dtpEnd.TabIndex = 10;
-            this.dtpEnd.Value = new System.DateTime(2023, 12, 11, 0, 0, 0, 0);
             // 
             // dtpStart
             // 
@@ -81,15 +88,6 @@ namespace Inventorycontrol.Forms
             this.dtpStart.Name = "dtpStart";
             this.dtpStart.Size = new System.Drawing.Size(184, 23);
             this.dtpStart.TabIndex = 11;
-            // 
-            // txtItem
-            // 
-            this.txtItem.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.txtItem.Location = new System.Drawing.Point(12, 60);
-            this.txtItem.Multiline = true;
-            this.txtItem.Name = "txtItem";
-            this.txtItem.Size = new System.Drawing.Size(184, 30);
-            this.txtItem.TabIndex = 12;
             // 
             // cmbStatus
             // 
@@ -108,16 +106,6 @@ namespace Inventorycontrol.Forms
             this.cmbWarehouse.Name = "cmbWarehouse";
             this.cmbWarehouse.Size = new System.Drawing.Size(180, 32);
             this.cmbWarehouse.TabIndex = 14;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label2.Location = new System.Drawing.Point(12, 36);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 16);
-            this.label2.TabIndex = 15;
-            this.label2.Text = "商品名";
             // 
             // label3
             // 
@@ -191,11 +179,44 @@ namespace Inventorycontrol.Forms
             this.btnRegistration.UseVisualStyleBackColor = true;
             this.btnRegistration.Click += new System.EventHandler(this.Registrationbutton_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label2.Location = new System.Drawing.Point(9, 27);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 16);
+            this.label2.TabIndex = 46;
+            this.label2.Text = "商品名";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Font = new System.Drawing.Font("HGP明朝E", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.checkBox1.Location = new System.Drawing.Point(12, 82);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(107, 16);
+            this.checkBox1.TabIndex = 45;
+            this.checkBox1.Text = "削除済みを表示";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // txtItem
+            // 
+            this.txtItem.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.txtItem.Location = new System.Drawing.Point(12, 46);
+            this.txtItem.Multiline = true;
+            this.txtItem.Name = "txtItem";
+            this.txtItem.Size = new System.Drawing.Size(180, 30);
+            this.txtItem.TabIndex = 44;
+            // 
             // SchedulecheckForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(810, 541);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.txtItem);
             this.Controls.Add(this.btnRegistration);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.label7);
@@ -203,10 +224,8 @@ namespace Inventorycontrol.Forms
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.cmbWarehouse);
             this.Controls.Add(this.cmbStatus);
-            this.Controls.Add(this.txtItem);
             this.Controls.Add(this.dtpStart);
             this.Controls.Add(this.dtpEnd);
             this.Controls.Add(this.cmbTownship);
@@ -226,10 +245,8 @@ namespace Inventorycontrol.Forms
         private System.Windows.Forms.ComboBox cmbTownship;
         private System.Windows.Forms.DateTimePicker dtpEnd;
         private System.Windows.Forms.DateTimePicker dtpStart;
-        private System.Windows.Forms.TextBox txtItem;
         private System.Windows.Forms.ComboBox cmbStatus;
         private System.Windows.Forms.ComboBox cmbWarehouse;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
@@ -237,5 +254,8 @@ namespace Inventorycontrol.Forms
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Button btnRegistration;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.TextBox txtItem;
     }
 }

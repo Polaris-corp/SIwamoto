@@ -21,16 +21,16 @@ namespace Inventorycontrol.Forms
             warehouse = warehouseinfo;
 
             township = townshipController.GetTownshipInfotoCMB();
-            cmbTownship.DataSource = new BindingSource(township, null);
-            cmbTownship.DisplayMember = "Key";
-            cmbTownship.ValueMember = "Value";
+            cmbTownship.DataSource = township;
+            cmbTownship.DisplayMember = "Name";
+            cmbTownship.ValueMember = "Id";
 
             txtWarehouse.Text = warehouse.Name;
             txtCapacity.Text = warehouse.Capacity.ToString();
             cmbTownship.SelectedItem = warehouseinfo.Townshipid;
         }
 
-        Dictionary<string, int> township = new Dictionary<string, int>();
+        List<TownshipInfoModel> township = new List<TownshipInfoModel>();
         WarehouseModel warehouse;
         WarehouseController controller = new WarehouseController();
         TownshipController townshipController = new TownshipController();
@@ -48,16 +48,16 @@ namespace Inventorycontrol.Forms
             warehouse.Capacity = int.Parse(txtCapacity.Text);
             try
             {
-                if (!check.CheckIfWarehouseNameExists(warehouse.Name) && check.CheckIfTownshipIdExists(warehouse.Townshipid))
+                if (!check.CheckIfWarehouseNameExists(warehouse.Name))
                 {
                     controller.UpdateWarehouse(warehouse);
-                    MessageBox.Show("登録が完了しました。");
+                    MessageBox.Show("更新が完了しました。");
                     this.Close();
                 }
                 else
                 {
                     MessageBox.Show("登録済みまたは、以前削除された倉庫です。");
-                    DialogResult result = MessageBox.Show("復旧しますか？",
+                    DialogResult result = MessageBox.Show("復旧または情報を更新しますか？",
                 "復旧", MessageBoxButtons.YesNo
                       , MessageBoxIcon.Exclamation
                       , MessageBoxDefaultButton.Button2);

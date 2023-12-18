@@ -32,9 +32,10 @@ namespace Inventorycontrol.Forms
             this.dgvItems = new System.Windows.Forms.DataGridView();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
+            this.btnRegistration = new System.Windows.Forms.Button();
             this.txtItem = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.btnRegistration = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,25 +81,6 @@ namespace Inventorycontrol.Forms
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // txtItem
-            // 
-            this.txtItem.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.txtItem.Location = new System.Drawing.Point(22, 150);
-            this.txtItem.Multiline = true;
-            this.txtItem.Name = "txtItem";
-            this.txtItem.Size = new System.Drawing.Size(160, 30);
-            this.txtItem.TabIndex = 25;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(22, 128);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(104, 16);
-            this.checkBox1.TabIndex = 26;
-            this.checkBox1.Text = "削除済みを表示";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
             // btnRegistration
             // 
             this.btnRegistration.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -110,11 +92,42 @@ namespace Inventorycontrol.Forms
             this.btnRegistration.UseVisualStyleBackColor = true;
             this.btnRegistration.Click += new System.EventHandler(this.btnRegistration_Click);
             // 
+            // txtItem
+            // 
+            this.txtItem.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.txtItem.Location = new System.Drawing.Point(21, 120);
+            this.txtItem.Multiline = true;
+            this.txtItem.Name = "txtItem";
+            this.txtItem.Size = new System.Drawing.Size(160, 30);
+            this.txtItem.TabIndex = 25;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Font = new System.Drawing.Font("HGP明朝E", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.checkBox1.Location = new System.Drawing.Point(21, 156);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(107, 16);
+            this.checkBox1.TabIndex = 26;
+            this.checkBox1.Text = "削除済みを表示";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label2.Location = new System.Drawing.Point(18, 101);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 16);
+            this.label2.TabIndex = 43;
+            this.label2.Text = "商品名";
+            // 
             // ItemsListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 514);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnRegistration);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.txtItem);
@@ -134,8 +147,9 @@ namespace Inventorycontrol.Forms
         private System.Windows.Forms.DataGridView dgvItems;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.Button btnRegistration;
         private System.Windows.Forms.TextBox txtItem;
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button btnRegistration;
+        private System.Windows.Forms.Label label2;
     }
 }

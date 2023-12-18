@@ -5,24 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using MySqlConnector;
 using Inventorycontrol.Common;
+using Inventorycontrol.Model;
+
 
 namespace Inventorycontrol.Service
 {
     public class StatusService
     {
-        public void RegistrationStatusInfo(int status)
+        public List<StatusModel> GetStatuses()
         {
-            ExecutionSql(CreateInsertStatusInfoSql(status));
+            return DataReaderStatusSql(CreateSelectStatusSql());
         }
-
-        public List<int> GetStatusIdList(int count)
+        public List<StatusModel> DataReaderStatusSql(MySqlCommand command)
         {
-            return DataReaderSql(CreateSelectStatusIdSql(count));
-        }
-
-        public List<int> DataReaderSql(MySqlCommand command)
-        {
-            List<int> items = new List<int>();
+            List<StatusModel> list = new List<StatusModel>();
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
             {
                 command.Connection = connection;
@@ -32,12 +28,16 @@ namespace Inventorycontrol.Service
                 {
                     while (dr.Read())
                     {
-                        items.Add((int)dr["id"]);
+                        StatusModel status = new StatusModel();
+                        status.Id = ((int)dr["id"]);
+                        status.Status = ((string)dr["status"]);
+
+                        list.Add(status);
                     }
                 }
                 connection.Close();
             }
-            return items;
+            return list;
         }
 
         private void ExecutionSql(MySqlCommand command)
@@ -62,19 +62,15 @@ namespace Inventorycontrol.Service
             }
         }
 
-        private MySqlCommand CreateInsertStatusInfoSql(int status)
-        {
-            string query = @"INSERT INTO mstatus (status)VALUES (@status)";
-            MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@status", status);
-            return command;
-        }
 
-        private MySqlCommand CreateSelectStatusIdSql(int count)
+        private MySqlCommand CreateSelectStatusSql()
         {
-            string query = @"SELECT id FROM mstatus ORDER BY id DESC LIMIT @count";
+            string query = @"SELECT 
+                                     id
+                                     ,status
+                             FROM
+                                     mstatus_alternative";
             MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@count", count);
             return command;
         }
     }

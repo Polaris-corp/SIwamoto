@@ -12,9 +12,9 @@ namespace Inventorycontrol.Controller
     public class WarehouseController
     {
         WarehouseService service = new WarehouseService();
-        public DataTable SearchWarehouse(string name,string townshipName,bool deleted)
+        public DataTable SearchWarehouse(WarehouseModel warehouse,string townshipName)
         {
-            return service.ResaultSearchWarehouse(name,townshipName,deleted);
+            return service.ResaultSearchWarehouse(warehouse,townshipName);
         }
 
         public DataTable GetWarehouse(int townshipId)
@@ -22,9 +22,9 @@ namespace Inventorycontrol.Controller
             return service.SearchWarehouse(townshipId);
         }
 
-        public void RegistrationWarehouse(string name,int townshipId,int capacity)
+        public void RegistrationWarehouse(WarehouseModel warehouse)
         {
-            service.InsertWarehouseInfo(name,townshipId,capacity);
+            service.InsertWarehouseInfo(warehouse);
         }
 
         public void UpdateWarehouse(WarehouseModel warehouse)
@@ -37,10 +37,6 @@ namespace Inventorycontrol.Controller
             service.DeleteWarehouse(warehouse);
         }
 
-        public List<string> GetWarehouseName(int id)
-        {
-            return service.GetWarehouseName(id);
-        }
         public int GetWarehouseId(string name)
         {
             return service.GetWarehouseId(name);
@@ -55,5 +51,6 @@ namespace Inventorycontrol.Controller
         {
             return service.GetAllWarehouseName();
         }
+
     }
 }

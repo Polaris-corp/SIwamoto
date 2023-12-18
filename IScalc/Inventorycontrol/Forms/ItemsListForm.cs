@@ -53,9 +53,11 @@ namespace Inventorycontrol.Forms
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            string item = txtItem.Text;
+            ItemInfoModel item = new ItemInfoModel();
+            item.Name = txtItem.Text;
+            item.Deleted = checkBox1.Checked;
 
-            dt = ItemlistController.SearchItems(item,checkBox1.Checked);
+            dt = ItemlistController.SearchItems(item);
             dgvItems.DataSource = dt;
 
             dgvItems.Columns["id"].HeaderText = "商品ID";

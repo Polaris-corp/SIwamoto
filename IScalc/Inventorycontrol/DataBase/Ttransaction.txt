@@ -13,3 +13,5 @@
     , FOREIGN KEY (itemid) REFERENCES mitems(id)
 )
 
+ALTER TABLE ttransaction ADD COLUMN deleted BOOLEAN NOT NULL DEFAULT false
+

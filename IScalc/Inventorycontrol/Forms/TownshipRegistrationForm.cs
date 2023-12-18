@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Inventorycontrol.Controller;
 using Inventorycontrol.Common;
+using Inventorycontrol.Model;
 
 namespace Inventorycontrol.Forms
 {
@@ -25,12 +26,13 @@ namespace Inventorycontrol.Forms
 
         private void btnRegistration_Click(object sender, EventArgs e)
         {
-            string name = txtTownship.Text;
+            TownshipInfoModel township = new TownshipInfoModel();
+            township.Name = txtTownship.Text;
             try
             {
-                if (!check.CheckIfTownshipNameExists(name))
+                if (!check.CheckIfTownshipNameExists(township.Name))
                 {
-                    controller.RegistrationTownship(name);
+                    controller.RegistrationTownship(township);
                     MessageBox.Show("登録が完了しました。");
                     DialogResult result = MessageBox.Show("続けて登録しますか？", "登録", MessageBoxButtons.YesNo
                                                                                        , MessageBoxIcon.Question

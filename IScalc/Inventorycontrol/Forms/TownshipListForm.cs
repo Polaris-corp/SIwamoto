@@ -26,8 +26,10 @@ namespace Inventorycontrol.Forms
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            string item = txtName.Text;
-            dt = controller.SearchTownship(item, chkDelete.Checked);
+            TownshipInfoModel township = new TownshipInfoModel();
+            township.Name = txtName.Text;
+            township.Deleted = chkDelete.Checked;
+            dt = controller.SearchTownship(township);
             dgvTownship.DataSource = dt;
 
             dgvTownship.Columns["id"].HeaderText = "エリアID";

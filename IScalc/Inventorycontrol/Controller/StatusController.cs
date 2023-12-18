@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Inventorycontrol.Service;
+using Inventorycontrol.Model;
 
 namespace Inventorycontrol.Controller
 {
@@ -11,14 +12,9 @@ namespace Inventorycontrol.Controller
     {
         StatusService statusService = new StatusService();
         
-        public void RegistrationStatus(int status)
+       public List<StatusModel> GetStatusList()
         {
-            statusService.RegistrationStatusInfo(status);
-        }
-
-        public List<int> GetStatusId(int count)
-        {
-            return statusService.GetStatusIdList(count);
+            return statusService.GetStatuses();
         }
     }
 }
