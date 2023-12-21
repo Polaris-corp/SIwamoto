@@ -44,7 +44,7 @@ namespace Inventorycontrol.Controller
 
         public int GetWarehouseCapacity(int id)
         {
-            return service.GetWarehouseCapacity(id);
+            return service.GetWarehouseActualCap(id);
         }
 
         public List<string> GetAllWarehouseName()

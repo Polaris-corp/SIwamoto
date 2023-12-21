@@ -21,7 +21,10 @@ namespace Inventorycontrol.Controller
                 transactionservice.RegistrationInfo(schedule);
             }
         }
-
+        public void RegistrationCap(int cap,int warehouseId)
+        {
+            warehouseService.UpdateWarehouseActualCap(cap, warehouseId);
+        }
         public DataTable GetTransactionInfo(string name, DateTime start, DateTime end, int townshipId, int warehouseId, int statusId)
         {
             return transactionservice.SearchTranasctionInfo(name, start, end, townshipId, warehouseId, statusId);
@@ -29,7 +32,15 @@ namespace Inventorycontrol.Controller
 
         public List<WarehouseModel> GetWarehouseList()
         {
-            return warehouseService.GetWarehouseInfo();
+            return warehouseService.GetWarehouseList();
+        }
+        public WarehouseModel GetWarehouse(ScheduleModel schedule)
+        {
+            return warehouseService.GetWarehouse(schedule);
+        }
+        public int GetWarehouseActualCap(int warehouseId)
+        {
+            return warehouseService.GetWarehouseActualCap(warehouseId);
         }
     }
 }

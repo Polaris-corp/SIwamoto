@@ -36,7 +36,10 @@ namespace Inventorycontrol.Service
         {
             ExecutionSql(CreateDeleteWarehouseSql(warehouse));
         }
-
+        public void UpdateWarehouseActualCap(int cap,int id)
+        {
+            ExecutionSql(UpdateActualCapSql(cap, id));
+        }
         public List<string> GetAllWarehouseName()
         {
             return DataReaderSql(CreateSelectWarehouseAllInfoSql());
@@ -46,14 +49,19 @@ namespace Inventorycontrol.Service
             return GetIdDataReaderSql(CreateSelectIdSql(name));
         }
 
-        public int GetWarehouseCapacity(int id)
+        public int GetWarehouseActualCap(int id)
         {
             return GetCapacityDataReaderSql(CreateSelectCapacitySql(id));
         }
 
-        public List<WarehouseModel> GetWarehouseInfo()
+        public List<WarehouseModel> GetWarehouseList()
         {
-            return GetTownshipToComboBox(CreateSelectWarehouseAllInfoSql());
+            return GetWarehouseInfoList(CreateSelectWarehouseAllInfoSql());
+        }
+
+        public WarehouseModel GetWarehouse(ScheduleModel schedule)
+        {
+            return GetWarehouseInfo(SelectActualCapacity(schedule));
         }
         public DataTable Warehousetable(MySqlCommand command)
         {
@@ -142,7 +150,7 @@ namespace Inventorycontrol.Service
             return capacity;
         }
 
-        public List<WarehouseModel> GetTownshipToComboBox(MySqlCommand command)
+        public List<WarehouseModel> GetWarehouseInfoList(MySqlCommand command)
         {
             List<WarehouseModel> list = new List<WarehouseModel>();
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
@@ -167,6 +175,30 @@ namespace Inventorycontrol.Service
                 }
             }
             return list;
+        }
+
+        public WarehouseModel GetWarehouseInfo(MySqlCommand command)
+        {
+            WarehouseModel warehouse = new WarehouseModel();
+            using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
+            {
+                command.Connection = connection;
+
+                connection.Open();
+                using (MySqlDataReader dr = command.ExecuteReader())
+                {
+                    if (dr.Read())
+                    { 
+                        warehouse.Id = (int)dr["id"];
+                        warehouse.Name = (string)dr["name"];
+                        warehouse.Townshipid = (int)dr["townshipid"];
+                        warehouse.Capacity = (int)dr["capacity"];
+                        warehouse.ActualCapacity = (int)dr["actualcapacity"];
+                        warehouse.Deleted = (bool)dr["deleted"];
+                    }
+                }
+            }
+            return warehouse;
         }
         
         private MySqlCommand CreateSelectSql(WarehouseModel warehouse,string townshipName)
@@ -295,18 +327,6 @@ namespace Inventorycontrol.Service
             return command;
         }
 
-        private MySqlCommand CreateSelectAllWarehouseNameSql()
-        {
-            string query = @"SELECT
-                                     name 
-                             FROM 
-                                     mwarehouse 
-                             WHERE 
-                                     deleted = false";
-            MySqlCommand command = new MySqlCommand(query);
-            return command;
-        }
-
         private MySqlCommand CreateSelectIdSql(string name)
         {
             string query = @"SELECT
@@ -322,7 +342,7 @@ namespace Inventorycontrol.Service
         private MySqlCommand CreateSelectCapacitySql(int id)
         {
             string query = @"SELECT
-                                     capacity
+                                     actualcapacity
                              FROM
                                      mwarehouse
                              WHERE
@@ -342,6 +362,36 @@ namespace Inventorycontrol.Service
                              WHERE 
                                      deleted = false";
             MySqlCommand command = new MySqlCommand(query);
+            return command;
+        }
+        private MySqlCommand SelectActualCapacity(ScheduleModel schedule)
+        {
+            string query = @"SELECT 
+                                     id
+                                     ,name
+                                     ,townshipid
+                                     ,capacity
+                                     ,actualcapacity
+                                     ,deleted
+                             FROM
+                                     mwarehouse
+                             WHERE
+                                     id = @id";
+            MySqlCommand command = new MySqlCommand(query);
+            command.Parameters.AddWithValue("@id", schedule.Warehouseid);
+            return command;
+        }
+        private MySqlCommand UpdateActualCapSql(int cap,int id)
+        {
+            string query = @"UPDATE
+                                      mwarehouse
+                             SET
+                                      actualcapacity = @actualcapacity
+                             WHERE
+                                      id = @id";
+            MySqlCommand command = new MySqlCommand(query);
+            command.Parameters.AddWithValue("@actualcapacity", cap);
+            command.Parameters.AddWithValue("@id", id);
             return command;
         }
     }

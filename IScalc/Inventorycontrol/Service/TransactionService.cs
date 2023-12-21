@@ -145,5 +145,7 @@ namespace Inventorycontrol.Service
             command.Parameters.AddWithValue("@name", "%" + name + "%");
             return command;
         }
+
+        
     }
 }

@@ -105,13 +105,14 @@ namespace Inventorycontrol.Forms
             List<ScheduleModel> signupSchedule = new List<ScheduleModel>();
             DateTime dateTime = dtpSchedule.Value;
             int townshipId = (int)cmbTownship.SelectedValue;
-            if(cmbWarehouse.SelectedIndex == -1)
+            if (cmbWarehouse.SelectedIndex == -1)
             {
                 MessageBox.Show("倉庫を選択してください。");
                 return;
             }
             int warehouseId = (int)cmbWarehouse.SelectedValue;
-            foreach(DataGridViewRow row in dgvSchedule.Rows)
+            int warehouseQuantity = transactionController.GetWarehouseActualCap(warehouseId);
+            foreach (DataGridViewRow row in dgvSchedule.Rows)
             {
                 if (!row.IsNewRow)
                 {
@@ -120,7 +121,7 @@ namespace Inventorycontrol.Forms
                     schedule.Townshipid = townshipId;
                     schedule.Warehouseid = warehouseId;
 
-                    if(row.Cells["itemname"].Value == null)
+                    if (row.Cells["itemname"].Value == null)
                     {
                         MessageBox.Show("商品を選択してください。");
                         return;
@@ -139,12 +140,28 @@ namespace Inventorycontrol.Forms
                         return;
                     }
                     schedule.Statusid = (int)row.Cells["status"].Value;
-
+                    if (schedule.Statusid == 1 || schedule.Statusid == 3)
+                    {
+                        warehouseQuantity -= schedule.Itemquantity;
+                    }
+                    else
+                    {
+                        warehouseQuantity += schedule.Itemquantity;
+                    }
                     signupSchedule.Add(schedule);
                 }
             }
-            transactionController.RegistrationSchedule(signupSchedule);
-            MessageBox.Show("登録が完了しました。");
+            if (CheckCapacity(signupSchedule))
+            {
+                transactionController.RegistrationSchedule(signupSchedule);
+                transactionController.RegistrationCap(warehouseQuantity, warehouseId);
+                MessageBox.Show("登録が完了しました。");
+            }
+            else
+            {
+                MessageBox.Show("倉庫容量を超えない範囲で取引を登録してください。");
+                return;
+            }
         }
 
         private void dtpSchedule_KeyPress(object sender, KeyPressEventArgs e)
@@ -179,14 +196,30 @@ namespace Inventorycontrol.Forms
             }
         }
 
-        private bool CheckInput(List<ScheduleModel> schedules)
+        private bool CheckCapacity(List<ScheduleModel> signupSchedule)
         {
-            foreach (var item in schedules)
+            WarehouseModel capacity = transactionController.GetWarehouse(signupSchedule[0]);
+            int actualCap = capacity.ActualCapacity;
+            foreach(var schedule in signupSchedule)
             {
-                
-                
+                WarehouseModel warehouse =  transactionController.GetWarehouse(schedule);
+                if(schedule.Statusid == 1 || schedule.Statusid == 3)
+                {
+                    actualCap -= schedule.Itemquantity;
+                }
+                else
+                {
+                    actualCap += schedule.Itemquantity;
+                }
             }
-            return true;
+            if (actualCap <= 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         private void dgvSchedule_CellEnter(object sender, DataGridViewCellEventArgs e)
