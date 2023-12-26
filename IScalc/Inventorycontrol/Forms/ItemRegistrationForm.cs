@@ -22,22 +22,25 @@ namespace Inventorycontrol.Forms
         }
 
         ItemlistController itemlistController = new ItemlistController();
-        CheckItemExists check = new CheckItemExists();
 
         private void btnRegistration_Click(object sender, EventArgs e)
         {
             ItemInfoModel item = new ItemInfoModel();
+            if (string.IsNullOrEmpty(txtItem.Text))
+            {
+                MessageBox.Show("商品名を設定してください。");
+                return;
+            }
             item.Name = txtItem.Text;
             try
             {
-                if (!check.CheckIfItemNameExists(item.Name))
+                if (itemlistController.InsertItemInfo(item))
                 {
-                    itemlistController.InsertItemInfo(item);
+                    MessageBox.Show("登録が完了しました。");
                 }
                 else
                 {
-                    MessageBox.Show("登録済みまたは、以前削除された商品です。");
-                    MessageBox.Show("復旧したい場合は「削除済みを表示」にチェックを入れ検索、更新ボタンを押して更新してください。");
+                    MessageBox.Show("商品名が重複しています。");
                     return;
                 }
             }
@@ -48,11 +51,6 @@ namespace Inventorycontrol.Forms
             }
         }
 
-        private void txtItem_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void txtItemcount_KeyPress(object sender, KeyPressEventArgs e)
         {
             //0～9と、バックスペース以外の時は、イベントをキャンセルする
@@ -61,7 +59,5 @@ namespace Inventorycontrol.Forms
                 e.Handled = true;
             }
         }
-
-        
     }
 }

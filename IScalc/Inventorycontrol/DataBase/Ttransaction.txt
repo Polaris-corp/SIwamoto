@@ -1,17 +1,16 @@
 ﻿CREATE TABLE ttransaction( 
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
-    , schedule DATETIME NOT NULL
+    , schedule DATE NOT NULL
     , itemquantity INT NOT NULL
     , townshipid INT NOT NULL
     , warehouseid INT NOT NULL
     , statusid INT NOT NULL
     , itemid INT NOT NULL
-    , itemname VARCHAR (255) NOT NULL
+    , deleted BOOLEAN NOT NULL DEFAULT false
     , FOREIGN KEY (townshipid) REFERENCES mtownship(id)
     , FOREIGN KEY (warehouseid) REFERENCES mwarehouse(id)
     , FOREIGN KEY (statusid) REFERENCES mstatus_alternative(id)
     , FOREIGN KEY (itemid) REFERENCES mitems(id)
 )
 
-ALTER TABLE ttransaction ADD COLUMN deleted BOOLEAN NOT NULL DEFAULT false
 

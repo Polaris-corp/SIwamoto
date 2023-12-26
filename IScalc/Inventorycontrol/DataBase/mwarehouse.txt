@@ -1,9 +1,10 @@
-﻿ CREATE TABLE mwarehouse( 
+﻿CREATE TABLE mwarehouse( 
      id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY
      , name VARCHAR (255) NOT NULL UNIQUE KEY
      , townshipid INT NOT NULL
      , deleted BOOLEAN NOT NULL DEFAULT FALSE
+     ,capacity INT NOT NULL DEFAULT 0
+     ,actualcapacity INT NOT NULL
      , FOREIGN KEY (townshipid) REFERENCES mtownship(id)
+     , CHECK (actualcapacity >= 0 AND actualcapacity <= capacity)
  )
-ALTER TABLE mwarehouse ADD capacity INT NOT NULL DEFAULT 0;
-ALTER TABLE mwarehouse ADD actualcapacity INT;

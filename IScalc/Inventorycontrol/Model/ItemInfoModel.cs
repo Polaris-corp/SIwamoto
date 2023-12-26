@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Inventorycontrol.Model.InterFace;
 
 namespace Inventorycontrol.Model
 {
-    public class ItemInfoModel
+    public class ItemInfoModel : IitemInfoInterface
     {
         public ItemInfoModel()
         {

@@ -123,6 +123,7 @@ namespace Inventorycontrol.Forms
             this.btnSpecificWarehouse.TabIndex = 39;
             this.btnSpecificWarehouse.Text = "倉庫詳細";
             this.btnSpecificWarehouse.UseVisualStyleBackColor = true;
+            this.btnSpecificWarehouse.Click += new System.EventHandler(this.btnSpecificWarehouse_Click);
             // 
             // label1
             // 

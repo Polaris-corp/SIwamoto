@@ -39,23 +39,6 @@ namespace Inventorycontrol.Forms
             dgvWarehouse.Columns["areaname"].HeaderText = "エリア";
             dgvWarehouse.Columns["capacity"].HeaderText = "最大収容量";
             dgvWarehouse.Columns["actualcapacity"].HeaderText = "空き収容量";
-
-            //DataTable townshipTable = new DataTable("Township");
-            //townshipTable.Columns.Add("Display", typeof(string));
-            //townshipTable.Columns.Add("Value", typeof(int));
-            //string[] area = townshipController.GetTownshipName().ToArray();
-            //int[] areaId = townshipController.GetAllTownshipId().ToArray();
-            //for (int i = 0; i < area.Length; i++)
-            //{
-            //    townshipTable.Rows.Add(area[i], areaId[i]);
-            //}
-            //column.DataPropertyName = dgvWarehouse.Columns["townshipid"].DataPropertyName;
-            //dgvWarehouse.Columns.Insert(dgvWarehouse.Columns["townshipid"].Index, column);
-            //column.DataSource = townshipTable;
-            //column.ValueMember = "Value";
-            //column.DisplayMember = "Display";
-            //dgvWarehouse.Columns.Remove("townshipid");
-            //column.Name = "エリア";
         }
 
         List<TownshipInfoModel> township_keyValue = new List<TownshipInfoModel>();
@@ -88,24 +71,6 @@ namespace Inventorycontrol.Forms
             dgvWarehouse.Columns["areaname"].HeaderText = "エリア";
             dgvWarehouse.Columns["capacity"].HeaderText = "最大収容量";
             dgvWarehouse.Columns["actualcapacity"].HeaderText = "空き収容量";
-
-            //DataTable townshipTable = new DataTable("Township");
-            //townshipTable.Columns.Add("Display", typeof(string));
-            //townshipTable.Columns.Add("Value", typeof(int));
-            //string[] area = townshipController.GetTownshipName().ToArray();
-            //int[] areaId = townshipController.GetAllTownshipId().ToArray();
-            //for (int i = 0; i < area.Length; i++)
-            //{
-            //    townshipTable.Rows.Add(area[i], areaId[i]);
-            //}
-            //column.DataPropertyName = dgvWarehouse.Columns["townshipid"].DataPropertyName;
-            //dgvWarehouse.Columns.Insert(dgvWarehouse.Columns["townshipid"].Index, column);
-            //column.DataSource = townshipTable;
-            //column.ValueMember = "Value";
-            //column.DisplayMember = "Display";
-            //dgvWarehouse.Columns.Remove("townshipid");
-            //column.Name = "エリア";
-
         }
 
         private void btnRegistration_Click(object sender, EventArgs e)
@@ -118,6 +83,13 @@ namespace Inventorycontrol.Forms
         {
             WarehouseUpdateForm warehouseUpdateForm = new WarehouseUpdateForm(GetWarehouseInfo());
             warehouseUpdateForm.ShowDialog();
+        }
+
+        private void btnSpecificWarehouse_Click(object sender, EventArgs e)
+        {
+            WarehouseModel warehouse = GetWarehouseInfo();
+            SchedulecheckForm schedulecheckForm = new SchedulecheckForm(warehouse);
+            schedulecheckForm.ShowDialog();
         }
     }
 }

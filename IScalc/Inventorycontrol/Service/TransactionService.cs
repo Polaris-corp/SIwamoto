@@ -35,7 +35,7 @@ namespace Inventorycontrol.Service
             }
         }
 
-        private void ExecutionSql(MySqlCommand command)
+        public void ExecutionSql(MySqlCommand command)
         {
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
             {
@@ -79,16 +79,34 @@ namespace Inventorycontrol.Service
             command.Parameters.AddWithValue("@itemid", schedules.Itemid);
             return command;
         }
-
+        public MySqlCommand CreateUpDateSql(ScheduleModel schedule)
+        {
+            string query = @"UPDATE 
+                                     ttransaction
+                             SET 
+                                     schedule = @schedule
+                                     ,itemquantity = @itemquantity
+                                     ,deleted = @deleted
+                             WHERE 
+                                     id = @id";
+            MySqlCommand command = new MySqlCommand(query);
+            command.Parameters.AddWithValue("@schedule", schedule.Schedule);
+            command.Parameters.AddWithValue("@itemquantity",schedule.Itemquantity);
+            command.Parameters.AddWithValue("@deleted",schedule.Deleted);
+            command.Parameters.AddWithValue("@id",schedule.Id);
+            return command;
+        }
         public MySqlCommand CreateSelectInfoSql(string name, DateTime start, DateTime end, int townshipId, int warehouseId, int statusId)
         {
-            string query = @"SELECT tran.id
+            string query = @"SELECT 
+                                    tran.id
                                     ,tran.schedule
                                     ,tran.itemquantity
-                                    ,town.name AS areaname
-                                    ,ware.name AS warehousename
-                                    ,status.status AS status
-                                    ,item.name AS itemname
+                                    ,town.id AS areaid
+                                    ,ware.id AS warehouseid
+                                    ,status.id AS statusid
+                                    ,item.id AS itemid
+                                    ,tran.deleted
                              FROM 
                                     ttransaction AS tran 
                              LEFT JOIN 
@@ -127,7 +145,9 @@ namespace Inventorycontrol.Service
                 query += " AND status.id = @statusid ";
             }
             query += " AND item.name LIKE @name";
-            MySqlCommand command = new MySqlCommand(query);
+            query += " ORDER BY tran.schedule";
+            MySqlCommand command = new MySqlCommand();
+            command.CommandText = query;
             command.Parameters.AddWithValue("@start", start);
             command.Parameters.AddWithValue("@end", end);
             if (0 < townshipId)

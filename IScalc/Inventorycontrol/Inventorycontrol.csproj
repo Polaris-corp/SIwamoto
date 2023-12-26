@@ -75,7 +75,8 @@
     <Compile Include="Common\CheckItemExists.cs" />
     <Compile Include="Common\CheckTownshipExists.cs" />
     <Compile Include="Common\CheckWarehouseExists.cs" />
-    <Compile Include="Common\DataTimePickerToDGV.cs" />
+    <Compile Include="Common\DataGridViewDataTimePickerColumn.cs" />
+    <Compile Include="Common\DataGridViewTimePickerSample.cs" />
     <Compile Include="Common\DBConnection.cs" />
     <Compile Include="Controller\ItemlistController.cs" />
     <Compile Include="Controller\TransactionController.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="Forms\WarehouseUpdateForm.Designer.cs">
       <DependentUpon>WarehouseUpdateForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\InterFace\IitemInfoInterface.cs" />
     <Compile Include="Model\ItemInfoModel.cs" />
     <Compile Include="Model\ScheduleModel.cs" />
     <Compile Include="Model\StatusModel.cs" />

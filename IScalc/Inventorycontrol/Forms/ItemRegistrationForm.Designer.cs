@@ -37,7 +37,7 @@ namespace Inventorycontrol.Forms
             // btnRegistration
             // 
             this.btnRegistration.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnRegistration.Location = new System.Drawing.Point(118, 176);
+            this.btnRegistration.Location = new System.Drawing.Point(131, 176);
             this.btnRegistration.Name = "btnRegistration";
             this.btnRegistration.Size = new System.Drawing.Size(117, 38);
             this.btnRegistration.TabIndex = 24;
@@ -49,7 +49,7 @@ namespace Inventorycontrol.Forms
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label2.Location = new System.Drawing.Point(151, 62);
+            this.label2.Location = new System.Drawing.Point(161, 62);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(56, 16);
             this.label2.TabIndex = 25;
@@ -59,11 +59,9 @@ namespace Inventorycontrol.Forms
             // 
             this.txtItem.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.txtItem.Location = new System.Drawing.Point(72, 81);
-            this.txtItem.Multiline = true;
             this.txtItem.Name = "txtItem";
-            this.txtItem.Size = new System.Drawing.Size(234, 30);
+            this.txtItem.Size = new System.Drawing.Size(234, 31);
             this.txtItem.TabIndex = 26;
-            this.txtItem.TextChanged += new System.EventHandler(this.txtItem_TextChanged);
             // 
             // ItemRegistrationForm
             // 

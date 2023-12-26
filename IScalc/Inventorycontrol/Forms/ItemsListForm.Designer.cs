@@ -36,6 +36,7 @@ namespace Inventorycontrol.Forms
             this.txtItem = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,6 +50,7 @@ namespace Inventorycontrol.Forms
             this.dgvItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvItems.Location = new System.Drawing.Point(197, 36);
+            this.dgvItems.MultiSelect = false;
             this.dgvItems.Name = "dgvItems";
             this.dgvItems.ReadOnly = true;
             this.dgvItems.RowHeadersVisible = false;
@@ -56,13 +58,12 @@ namespace Inventorycontrol.Forms
             this.dgvItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvItems.Size = new System.Drawing.Size(563, 444);
             this.dgvItems.TabIndex = 1;
-            this.dgvItems.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvItems_CellValidating);
-            this.dgvItems.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvItems_CellValueChanged);
+            this.dgvItems.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvItems_RowEnter);
             // 
             // btnUpdate
             // 
             this.btnUpdate.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnUpdate.Location = new System.Drawing.Point(44, 392);
+            this.btnUpdate.Location = new System.Drawing.Point(44, 356);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(117, 38);
             this.btnUpdate.TabIndex = 22;
@@ -84,7 +85,7 @@ namespace Inventorycontrol.Forms
             // btnRegistration
             // 
             this.btnRegistration.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnRegistration.Location = new System.Drawing.Point(44, 285);
+            this.btnRegistration.Location = new System.Drawing.Point(44, 271);
             this.btnRegistration.Name = "btnRegistration";
             this.btnRegistration.Size = new System.Drawing.Size(117, 38);
             this.btnRegistration.TabIndex = 27;
@@ -96,9 +97,8 @@ namespace Inventorycontrol.Forms
             // 
             this.txtItem.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.txtItem.Location = new System.Drawing.Point(21, 120);
-            this.txtItem.Multiline = true;
             this.txtItem.Name = "txtItem";
-            this.txtItem.Size = new System.Drawing.Size(160, 30);
+            this.txtItem.Size = new System.Drawing.Size(160, 31);
             this.txtItem.TabIndex = 25;
             // 
             // checkBox1
@@ -122,11 +122,23 @@ namespace Inventorycontrol.Forms
             this.label2.TabIndex = 43;
             this.label2.Text = "商品名";
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.btnDelete.Location = new System.Drawing.Point(44, 441);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(117, 38);
+            this.btnDelete.TabIndex = 44;
+            this.btnDelete.Text = "削除";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // ItemsListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 514);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnRegistration);
             this.Controls.Add(this.checkBox1);
@@ -151,5 +163,6 @@ namespace Inventorycontrol.Forms
         private System.Windows.Forms.TextBox txtItem;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnDelete;
     }
 }

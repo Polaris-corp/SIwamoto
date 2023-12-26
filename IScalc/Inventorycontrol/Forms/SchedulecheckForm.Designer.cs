@@ -45,11 +45,14 @@ namespace Inventorycontrol.Forms
             this.label2 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.txtItem = new System.Windows.Forms.TextBox();
+            this.btnEdit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchedule)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvSchedule
             // 
+            this.dgvSchedule.AllowUserToAddRows = false;
+            this.dgvSchedule.AllowUserToDeleteRows = false;
             this.dgvSchedule.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -60,8 +63,15 @@ namespace Inventorycontrol.Forms
             this.dgvSchedule.Name = "dgvSchedule";
             this.dgvSchedule.RowHeadersVisible = false;
             this.dgvSchedule.RowTemplate.Height = 21;
-            this.dgvSchedule.Size = new System.Drawing.Size(563, 492);
+            this.dgvSchedule.Size = new System.Drawing.Size(563, 555);
             this.dgvSchedule.TabIndex = 0;
+            this.dgvSchedule.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSchedule_CellEndEdit);
+            this.dgvSchedule.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSchedule_CellEnter);
+            this.dgvSchedule.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSchedule_CellValidated);
+            this.dgvSchedule.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvSchedule_CellValidating);
+            this.dgvSchedule.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSchedule_CellValueChanged_1);
+            this.dgvSchedule.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvSchedule_CurrentCellDirtyStateChanged);
+            this.dgvSchedule.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvSchedule_EditingControlShowing);
             // 
             // cmbTownship
             // 
@@ -76,6 +86,7 @@ namespace Inventorycontrol.Forms
             // dtpEnd
             // 
             this.dtpEnd.Font = new System.Drawing.Font("ＭＳ 明朝", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.dtpEnd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpEnd.Location = new System.Drawing.Point(12, 177);
             this.dtpEnd.Name = "dtpEnd";
             this.dtpEnd.Size = new System.Drawing.Size(184, 23);
@@ -84,6 +95,7 @@ namespace Inventorycontrol.Forms
             // dtpStart
             // 
             this.dtpStart.Font = new System.Drawing.Font("ＭＳ 明朝", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.dtpStart.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpStart.Location = new System.Drawing.Point(12, 122);
             this.dtpStart.Name = "dtpStart";
             this.dtpStart.Size = new System.Drawing.Size(184, 23);
@@ -171,7 +183,7 @@ namespace Inventorycontrol.Forms
             // btnRegistration
             // 
             this.btnRegistration.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnRegistration.Location = new System.Drawing.Point(44, 481);
+            this.btnRegistration.Location = new System.Drawing.Point(44, 544);
             this.btnRegistration.Name = "btnRegistration";
             this.btnRegistration.Size = new System.Drawing.Size(117, 38);
             this.btnRegistration.TabIndex = 22;
@@ -209,11 +221,23 @@ namespace Inventorycontrol.Forms
             this.txtItem.Size = new System.Drawing.Size(180, 30);
             this.txtItem.TabIndex = 44;
             // 
+            // btnEdit
+            // 
+            this.btnEdit.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.btnEdit.Location = new System.Drawing.Point(44, 479);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(117, 38);
+            this.btnEdit.TabIndex = 47;
+            this.btnEdit.Text = "編集";
+            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
             // SchedulecheckForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(810, 541);
+            this.ClientSize = new System.Drawing.Size(810, 604);
+            this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.txtItem);
@@ -257,5 +281,6 @@ namespace Inventorycontrol.Forms
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.TextBox txtItem;
+        private System.Windows.Forms.Button btnEdit;
     }
 }

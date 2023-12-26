@@ -11,8 +11,11 @@ namespace Inventorycontrol.Controller
 {
     public class TransactionController
     {
+        TownshipService townshipService = new TownshipService();
         WarehouseService warehouseService = new WarehouseService();
         TransactionService transactionservice = new TransactionService();
+        ItemlistService itemlistService = new ItemlistService();
+        StatusService statusService = new StatusService();
         public void RegistrationSchedule(List<ScheduleModel> schedules)
         {
             for(int i = 0; i < schedules.Count; i++)
@@ -20,6 +23,10 @@ namespace Inventorycontrol.Controller
                 ScheduleModel schedule = schedules[i];
                 transactionservice.RegistrationInfo(schedule);
             }
+        }
+        public void UpdateSchedule(ScheduleModel schedule)
+        {
+            transactionservice.ExecutionSql(transactionservice.CreateUpDateSql(schedule));
         }
         public void RegistrationCap(int cap,int warehouseId)
         {
@@ -41,6 +48,18 @@ namespace Inventorycontrol.Controller
         public int GetWarehouseActualCap(int warehouseId)
         {
             return warehouseService.GetWarehouseActualCap(warehouseId);
+        }
+        public List<StatusModel> GetStatusModels()
+        {
+            return statusService.GetStatuses();
+        }
+        public List<TownshipInfoModel> GetTownshipInfos()
+        {
+            return townshipService.GetTownshipInfo();
+        }
+        public List<ItemInfoModel> GetItemInfos()
+        {
+            return itemlistService.GetItemInfos();
         }
     }
 }

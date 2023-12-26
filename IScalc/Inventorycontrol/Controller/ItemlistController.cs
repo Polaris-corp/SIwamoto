@@ -18,31 +18,15 @@ namespace Inventorycontrol.Controller
             return itemlistService.ResaultSearchItem(item);
         }
 
-        public void InsertItemInfo(ItemInfoModel item)
+        public bool InsertItemInfo(ItemInfoModel item)
         {
-            itemlistService.RegistrationItemInfo(item);
+            return itemlistService.RegistrationItemInfo(item);
         }
 
-        public void UpdateItemInfo(ItemInfoModel items)
+        public bool UpdateItemInfo(ItemInfoModel items)
         {
-            itemlistService.UpdateItemInfo(items);
+            return itemlistService.UpdateItemInfo(items);
         }
-
-        public void DeleteItemInfo(ItemInfoModel items)
-        {
-            itemlistService.DeleteItemInfo(items);
-        }
-
-        public List<string> GetItemName()
-        {
-            return itemlistService.GetItemName();
-        }
-
-        public int GetItemId(ItemInfoModel item)
-        {
-            return itemlistService.GetItemId(item);
-        }
-
         public List<ItemInfoModel> GetItemList()
         {
             return itemlistService.GetItemInfos();

@@ -16,33 +16,14 @@ namespace Inventorycontrol.Service
         {
             return Itemstable(CreateSelectSql(item));
         }
-
-
-        public void RegistrationItemInfo(ItemInfoModel item)
+        public bool RegistrationItemInfo(ItemInfoModel item)
         {
-            ExecutionSql(CreateInsertItemInfoSql(item));
+            return ExecutionSql(CreateInsertItemInfoSql(item));
         }
-
-        public void UpdateItemInfo(ItemInfoModel item)
+        public bool UpdateItemInfo(ItemInfoModel item)
         {
-            ExecutionSql(CreateUpdateInfoSql(item));
+            return ExecutionSql(CreateUpdateInfoSql(item));
         }
-
-        public void DeleteItemInfo(ItemInfoModel item)
-        {
-            ExecutionSql(CreateDeleteInfoSql(item));
-        }
-
-        public List<string> GetItemName()
-        {
-            return DataReaderSql(CreateSelectItemNameSql());
-        }
-
-        public int GetItemId(ItemInfoModel item)
-        {
-            return GetIdDataReaderSql(CreateSelectItemIdSql(item));
-        }
-
         public List<ItemInfoModel> GetItemInfos()
         {
             return DataReaderItemInfoSql(CreateSelectItemInfoSql());
@@ -59,59 +40,23 @@ namespace Inventorycontrol.Service
                 return dt;
             }
         }
-
-        private void ExecutionSql(MySqlCommand command)
+        private bool ExecutionSql(MySqlCommand command)
         {
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
             {
                 command.Connection = connection;
-
+                
                 connection.Open();
                 try
                 {
-                    command.ExecuteNonQuery();
+                    return command.ExecuteNonQuery() == 1;
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex);
+                    return false;
                 }
             }
-        }
-        public List<string> DataReaderSql(MySqlCommand command)
-        {
-            List<string> items = new List<string>();
-            using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
-            {
-                command.Connection = connection;
-
-                connection.Open();
-                using (MySqlDataReader dr = command.ExecuteReader())
-                {
-                    while (dr.Read())
-                    {
-                        items.Add(dr["name"].ToString());
-                    }
-                }
-            }
-            return items;
-        }
-        public int GetIdDataReaderSql(MySqlCommand command)
-        {
-            int id = 0;
-            using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
-            {
-                command.Connection = connection;
-
-                connection.Open();
-                using (MySqlDataReader dr = command.ExecuteReader())
-                {
-                    if (dr.Read())
-                    {
-                        id = dr.GetInt32(0);
-                    }
-                }
-            }
-            return id;
         }
         public List<ItemInfoModel> DataReaderItemInfoSql(MySqlCommand command)
         {
@@ -140,6 +85,7 @@ namespace Inventorycontrol.Service
             string query = @"SELECT
                                      id
                                      ,name
+                                     ,deleted
                              FROM
                                      mitems
                              WHERE
@@ -159,6 +105,7 @@ namespace Inventorycontrol.Service
             string query = @"SELECT
                                      id
                                      ,name
+                                     ,deleted
                              FROM
                                      mitems
                              WHERE
@@ -194,43 +141,5 @@ namespace Inventorycontrol.Service
             command.Parameters.AddWithValue("@id", item.Id);
             return command;
         }
-
-        private MySqlCommand CreateDeleteInfoSql(ItemInfoModel item)
-        {
-            string query = @"UPDATE 
-                                     mitems
-                             SET
-                                     deleted = true
-                             WHERE
-                                     id = @id";
-            MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@id", item.Id);
-            return command;
-        }
-
-        private MySqlCommand CreateSelectItemNameSql()
-        {
-            string query = @"SELECT
-                                     name
-                             FROM
-                                     mitems
-                             WHERE
-                                     deleted = false";
-            MySqlCommand command = new MySqlCommand(query);
-            return command;
-        }
-
-        private MySqlCommand CreateSelectItemIdSql(ItemInfoModel item)
-        {
-            string query = @"SELECT
-                                     id
-                             FROM
-                                     mitems
-                             WHERE
-                                     name = @name";
-            MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@name", item.Name);
-            return command;
-        } 
     }
 }

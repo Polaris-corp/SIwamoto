@@ -12,12 +12,12 @@ namespace Inventorycontrol.Common
     {
         public bool CheckIfWarehouseNameExists(string inputName)
         {
-            string query = @"SELECT COUNT
-                                           (*)
+            string query = @"SELECT
+                                    COUNT(*) 
                              FROM
-                                           mwarehouse
+                                    mwarehouse 
                              WHERE
-                                           name = @name";
+                                    name = @name";
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
             {
                 using (MySqlCommand command = new MySqlCommand(query, connection))
@@ -34,12 +34,12 @@ namespace Inventorycontrol.Common
 
         public bool CheckIfTownshipIdExists(int id)
         {
-            string query = @"SELECT COUNT
-                                           (*)
+            string query = @"SELECT
+                                    COUNT(*) 
                              FROM
-                                           mtownship
+                                    mtownship 
                              WHERE
-                                           id = @id";
+                                    id = @id";
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
             {
                 using (MySqlCommand command = new MySqlCommand(query, connection))

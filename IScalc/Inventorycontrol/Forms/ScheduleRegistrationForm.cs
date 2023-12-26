@@ -110,58 +110,66 @@ namespace Inventorycontrol.Forms
                 MessageBox.Show("倉庫を選択してください。");
                 return;
             }
-            int warehouseId = (int)cmbWarehouse.SelectedValue;
-            int warehouseQuantity = transactionController.GetWarehouseActualCap(warehouseId);
-            foreach (DataGridViewRow row in dgvSchedule.Rows)
+            try
             {
-                if (!row.IsNewRow)
+                int warehouseId = (int)cmbWarehouse.SelectedValue;
+                int warehouseQuantity = transactionController.GetWarehouseActualCap(warehouseId);
+                foreach (DataGridViewRow row in dgvSchedule.Rows)
                 {
-                    ScheduleModel schedule = new ScheduleModel();
-                    schedule.Schedule = dateTime;
-                    schedule.Townshipid = townshipId;
-                    schedule.Warehouseid = warehouseId;
+                    if (!row.IsNewRow)
+                    {
+                        ScheduleModel schedule = new ScheduleModel();
+                        schedule.Schedule = dateTime;
+                        schedule.Townshipid = townshipId;
+                        schedule.Warehouseid = warehouseId;
 
-                    if (row.Cells["itemname"].Value == null)
-                    {
-                        MessageBox.Show("商品を選択してください。");
-                        return;
+                        if (row.Cells["itemname"].Value == null)
+                        {
+                            MessageBox.Show("商品を選択してください。");
+                            return;
+                        }
+                        schedule.Itemid = (int)row.Cells["itemname"].Value;
+                        string str = row.Cells["itemquantity"].Value.ToString();
+                        if (string.IsNullOrEmpty(str))
+                        {
+                            MessageBox.Show("数量を設定してください。");
+                            return;
+                        }
+                        schedule.Itemquantity = (int)row.Cells["itemquantity"].Value;
+                        if (row.Cells["status"].Value == null)
+                        {
+                            MessageBox.Show("取引内容を選択してください。");
+                            return;
+                        }
+                        schedule.Statusid = (int)row.Cells["status"].Value;
+                        if (schedule.Statusid == 1 || schedule.Statusid == 3)
+                        {
+                            warehouseQuantity -= schedule.Itemquantity;
+                        }
+                        else
+                        {
+                            warehouseQuantity += schedule.Itemquantity;
+                        }
+                        signupSchedule.Add(schedule);
                     }
-                    schedule.Itemid = (int)row.Cells["itemname"].Value;
-                    string str = row.Cells["itemquantity"].Value.ToString();
-                    if (string.IsNullOrEmpty(str))
-                    {
-                        MessageBox.Show("数量を設定してください。");
-                        return;
-                    }
-                    schedule.Itemquantity = (int)row.Cells["itemquantity"].Value;
-                    if (row.Cells["status"].Value == null)
-                    {
-                        MessageBox.Show("取引内容を選択してください。");
-                        return;
-                    }
-                    schedule.Statusid = (int)row.Cells["status"].Value;
-                    if (schedule.Statusid == 1 || schedule.Statusid == 3)
-                    {
-                        warehouseQuantity -= schedule.Itemquantity;
-                    }
-                    else
-                    {
-                        warehouseQuantity += schedule.Itemquantity;
-                    }
-                    signupSchedule.Add(schedule);
+                }
+                if (CheckCapacity(signupSchedule))
+                {
+                    transactionController.RegistrationSchedule(signupSchedule);
+                    transactionController.RegistrationCap(warehouseQuantity, warehouseId);
+                    MessageBox.Show("登録が完了しました。");
+                }
+                else
+                {
+                    MessageBox.Show("倉庫容量を超えない範囲で取引を登録してください。");
+                    return;
                 }
             }
-            if (CheckCapacity(signupSchedule))
+            catch(Exception ex)
             {
-                transactionController.RegistrationSchedule(signupSchedule);
-                transactionController.RegistrationCap(warehouseQuantity, warehouseId);
-                MessageBox.Show("登録が完了しました。");
+
             }
-            else
-            {
-                MessageBox.Show("倉庫容量を超えない範囲で取引を登録してください。");
-                return;
-            }
+            
         }
 
         private void dtpSchedule_KeyPress(object sender, KeyPressEventArgs e)
@@ -202,7 +210,6 @@ namespace Inventorycontrol.Forms
             int actualCap = capacity.ActualCapacity;
             foreach(var schedule in signupSchedule)
             {
-                WarehouseModel warehouse =  transactionController.GetWarehouse(schedule);
                 if(schedule.Statusid == 1 || schedule.Statusid == 3)
                 {
                     actualCap -= schedule.Itemquantity;
@@ -212,7 +219,7 @@ namespace Inventorycontrol.Forms
                     actualCap += schedule.Itemquantity;
                 }
             }
-            if (actualCap <= 0)
+            if (actualCap < 0)
             {
                 return false;
             }
@@ -221,7 +228,11 @@ namespace Inventorycontrol.Forms
                 return true;
             }
         }
-
+        /// <summary>
+        /// 一回の選択でコンボボックスのドロップダウンリストが表示される
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgvSchedule_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
             DataGridView dgv = (DataGridView)sender;

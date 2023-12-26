@@ -48,7 +48,7 @@ namespace Inventorycontrol.Controller
         }
         public List<TownshipInfoModel> GetTownshipInfotoCMB()
         {
-            return service.GetTownshipInfoToCMB();
+            return service.GetTownshipInfo();
         }
     }
 }

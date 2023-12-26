@@ -31,7 +31,6 @@ namespace Inventorycontrol.Forms
         {
             this.label1 = new System.Windows.Forms.Label();
             this.btnUpdate = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
             this.txtItem = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
@@ -56,24 +55,12 @@ namespace Inventorycontrol.Forms
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
-            // btnDelete
-            // 
-            this.btnDelete.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnDelete.Location = new System.Drawing.Point(142, 219);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(117, 38);
-            this.btnDelete.TabIndex = 32;
-            this.btnDelete.Text = "削除";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
             // txtItem
             // 
             this.txtItem.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.txtItem.Location = new System.Drawing.Point(83, 59);
-            this.txtItem.Multiline = true;
             this.txtItem.Name = "txtItem";
-            this.txtItem.Size = new System.Drawing.Size(234, 30);
+            this.txtItem.Size = new System.Drawing.Size(234, 31);
             this.txtItem.TabIndex = 33;
             // 
             // ItemInfoUpdateForm
@@ -82,7 +69,6 @@ namespace Inventorycontrol.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(401, 307);
             this.Controls.Add(this.txtItem);
-            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnUpdate);
             this.Name = "ItemInfoUpdateForm";
@@ -96,7 +82,6 @@ namespace Inventorycontrol.Forms
         #endregion
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnUpdate;
-        private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.TextBox txtItem;
     }
 }

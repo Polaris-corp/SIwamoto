@@ -47,9 +47,9 @@ namespace Inventorycontrol.Service
             return GetIdDataReaderSql(CreateSelectTownshipIdSql(tName));
         }
 
-        public List<TownshipInfoModel> GetTownshipInfoToCMB()
+        public List<TownshipInfoModel> GetTownshipInfo()
         {
-            return GetTownshipToComboBox(CreateSelectTownshipInfo());
+            return GetTownshipInfoReader(CreateSelectTownshipInfo());
         }
         public DataTable Townshiptable(MySqlCommand command)
         {
@@ -138,7 +138,7 @@ namespace Inventorycontrol.Service
             return id;
         }
 
-        public List<TownshipInfoModel> GetTownshipToComboBox(MySqlCommand command)
+        public List<TownshipInfoModel> GetTownshipInfoReader(MySqlCommand command)
         {
             List<TownshipInfoModel> list = new List<TownshipInfoModel>();
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
