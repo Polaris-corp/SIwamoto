@@ -19,11 +19,15 @@ namespace Inventorycontrol.Forms
         {
             InitializeComponent();
             items = item;
+            if (items.Deleted)
+            {
+                chkDelete.Text = "復旧";
+            }
+            this.DialogResult = DialogResult.None;
         }
 
         ItemInfoModel items;
         ItemlistController ItemlistController = new ItemlistController();
-
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
@@ -36,14 +40,37 @@ namespace Inventorycontrol.Forms
                 }
                 
                 items.Name = txtItem.Text;
-                if (ItemlistController.UpdateItemInfo(items))
+                if(chkDelete.Text == "復旧")
                 {
-                    MessageBox.Show("更新が完了しました。");
-                    this.Close();
+                    items.Deleted = !chkDelete.Checked;
                 }
                 else
                 {
-                    MessageBox.Show("商品名が重複しています。");
+                    items.Deleted = chkDelete.Checked;
+                }
+                if(chkDelete.Text == "復旧" && !chkDelete.Checked)
+                {
+                    MessageBox.Show("復旧する場合はチェックを入れてください。");
+                    return;
+                }
+                if (ItemlistController.UpdateItemInfo(items))
+                {
+                    if (!items.Deleted)
+                    {
+                        MessageBox.Show("更新が完了しました。");
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("削除が完了しました。");
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("更新が失敗しました。");
                     return;
                 }
             }

@@ -32,6 +32,7 @@ namespace Inventorycontrol.Forms
             this.label1 = new System.Windows.Forms.Label();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.txtItem = new System.Windows.Forms.TextBox();
+            this.chkDelete = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -63,11 +64,23 @@ namespace Inventorycontrol.Forms
             this.txtItem.Size = new System.Drawing.Size(234, 31);
             this.txtItem.TabIndex = 33;
             // 
+            // chkDelete
+            // 
+            this.chkDelete.AutoSize = true;
+            this.chkDelete.Font = new System.Drawing.Font("HGP明朝E", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.chkDelete.Location = new System.Drawing.Point(170, 96);
+            this.chkDelete.Name = "chkDelete";
+            this.chkDelete.Size = new System.Drawing.Size(59, 20);
+            this.chkDelete.TabIndex = 34;
+            this.chkDelete.Text = "削除";
+            this.chkDelete.UseVisualStyleBackColor = true;
+            // 
             // ItemInfoUpdateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(401, 307);
+            this.ClientSize = new System.Drawing.Size(401, 237);
+            this.Controls.Add(this.chkDelete);
             this.Controls.Add(this.txtItem);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnUpdate);
@@ -83,5 +96,6 @@ namespace Inventorycontrol.Forms
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.TextBox txtItem;
+        private System.Windows.Forms.CheckBox chkDelete;
     }
 }
