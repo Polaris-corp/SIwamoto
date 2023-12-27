@@ -12,43 +12,28 @@ namespace Inventorycontrol.Controller
     public class TownshipController
     {
 
-        TownshipService service = new TownshipService();
-        public DataTable SearchTownship(TownshipInfoModel township)
+        TownshipService townshipService = new TownshipService();
+        public DataTable SearchTownship(TownshipModel township)
         {
-            return service.ResultSearchTownship(township);
+            return townshipService.ResultSearchTownship(township);
         }
 
-        public void RegistrationTownship(TownshipInfoModel township)
+        public bool RegistrationTownship(TownshipModel township)
         {
-            service.RegistrationTownship(township);
+            return townshipService.RegistrationTownship(township);
         }
 
-        public void UpdateTownship(TownshipInfoModel info)
+        public bool UpdateTownship(TownshipModel info)
         {
-            service.UpdateTownship(info);
-        }
-
-        public void DeleteTownship(TownshipInfoModel info)
-        {
-            service.DeleteTownship(info);
-        }
-
-        public List<string> GetTownshipName()
-        {
-            return service.GetTownshipName();
-        }
-
-        public List<int> GetAllTownshipId()
-        {
-            return service.GetAllTownshipId();
+           return townshipService.UpdateTownship(info);
         }
         public int GetTownshipId(string tName)
         {
-            return service.GetTownshipId(tName);
+            return townshipService.GetTownshipId(tName);
         }
-        public List<TownshipInfoModel> GetTownshipInfotoCMB()
+        public List<TownshipModel> GetTownshipInfotoCMB()
         {
-            return service.GetTownshipInfo();
+            return townshipService.GetTownshipInfo();
         }
     }
 }

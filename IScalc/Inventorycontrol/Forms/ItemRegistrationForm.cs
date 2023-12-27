@@ -25,7 +25,7 @@ namespace Inventorycontrol.Forms
 
         private void btnRegistration_Click(object sender, EventArgs e)
         {
-            ItemInfoModel item = new ItemInfoModel();
+            ItemModel item = new ItemModel();
             if (string.IsNullOrEmpty(txtItem.Text))
             {
                 MessageBox.Show("商品名を設定してください。");
@@ -37,10 +37,17 @@ namespace Inventorycontrol.Forms
                 if (itemlistController.InsertItemInfo(item))
                 {
                     MessageBox.Show("登録が完了しました。");
+                    DialogResult result = MessageBox.Show("続けて登録しますか？", "登録", MessageBoxButtons.YesNo
+                                                                                       , MessageBoxIcon.Question
+                                                                                       , MessageBoxDefaultButton.Button2);
+                    if (result == DialogResult.No)
+                    {
+                        this.Close();
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("商品名が重複しています。");
+                    MessageBox.Show("登録に失敗しました。");
                     return;
                 }
             }

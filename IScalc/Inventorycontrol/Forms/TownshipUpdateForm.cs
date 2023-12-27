@@ -15,15 +15,21 @@ namespace Inventorycontrol.Forms
 {
     public partial class TownshipUpdateForm : Form
     {
-        public TownshipUpdateForm(TownshipInfoModel townshipInfomodel)
+        public TownshipUpdateForm(TownshipModel townshipInfomodel)
         {
             InitializeComponent();
-            townshipInfo = townshipInfomodel;
+
+            township = townshipInfomodel;
+            if (township.Deleted)
+            {
+                chkDelete.Text = "復旧";
+            }
+            
+            this.DialogResult = DialogResult.None;
         }
 
-        TownshipInfoModel townshipInfo;
+        TownshipModel township;
         TownshipController townshipController = new TownshipController();
-        CheckTownshipExists check = new CheckTownshipExists();
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
@@ -32,58 +38,52 @@ namespace Inventorycontrol.Forms
                 MessageBox.Show("エリア名を設定してください。");
                 return;
             }
+            township.Name = txtTownship.Text;
+            township.Deleted = chkDelete.Checked;
+
+            if(chkDelete.Text == "復旧")
+            {
+                township.Deleted = !chkDelete.Checked;
+            }
+
+            if(chkDelete.Text == "復旧" && !chkDelete.Checked)
+            {
+                MessageBox.Show("復旧する場合はチェックを入れてください。");
+                return;
+            }
+
             try
             {
-                if (!check.CheckIfTownshipNameExists(txtTownship.Text))
+                if (townshipController.UpdateTownship(township))
                 {
-                    townshipController.UpdateTownship(townshipInfo);
-                    this.Close();
+                    if (!township.Deleted)
+                    {
+                        MessageBox.Show("更新が完了しました。");
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("削除が完了しました。");
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("登録済みまたは、以前削除されたエリアです。");
-                    DialogResult result = MessageBox.Show("復旧しますか？",
-                "復旧", MessageBoxButtons.YesNo
-                      , MessageBoxIcon.Exclamation
-                      , MessageBoxDefaultButton.Button2);
-                    if(result == DialogResult.Yes)
-                    {
-                        townshipController.UpdateTownship(townshipInfo);
-                        this.Close();
-                    }
-                    else if (result == DialogResult.No)
-                    {
-                        return;
-                    }
+                    MessageBox.Show("更新に失敗しました。");
+                    return;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
                 Console.WriteLine(ex);
-            }
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("本当に削除しますか？",
-                "削除", MessageBoxButtons.YesNo
-                      , MessageBoxIcon.Exclamation
-                      , MessageBoxDefaultButton.Button2);
-            if (result == DialogResult.Yes)
-            {
-                townshipController.DeleteTownship(townshipInfo);
-                this.Close();
-            }
-            else if (result == DialogResult.No)
-            {
-                return;
             }
         }
 
         private void TownshipUpdateForm_Load(object sender, EventArgs e)
         {
-            txtTownship.Text = townshipInfo.Name;
+            txtTownship.Text = township.Name;
         }
     }
 }

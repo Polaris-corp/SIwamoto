@@ -20,21 +20,43 @@ namespace Inventorycontrol.Forms
             InitializeComponent();
             warehouse = warehouseinfo;
 
-            township = townshipController.GetTownshipInfotoCMB();
-            cmbTownship.DataSource = township;
+            township = warehouseController.GetTownshipModels();
+            foreach (var item in township)
+            {
+                string townName = "";
+                TownshipModel model = new TownshipModel();
+                model.Id = item.Id;
+                if (item.Deleted)
+                {
+                    townName = item.Name + "(削除済)";
+                }
+                else
+                {
+                    townName = item.Name;
+                }
+                model.Name = townName;
+                model.Deleted = item.Deleted;
+                township_keyValue.Add(model);
+            }
+            cmbTownship.DataSource = township_keyValue;
             cmbTownship.DisplayMember = "Name";
             cmbTownship.ValueMember = "Id";
 
             txtWarehouse.Text = warehouse.Name;
             txtCapacity.Text = warehouse.Capacity.ToString();
-            cmbTownship.SelectedItem = warehouseinfo.Townshipid;
+            cmbTownship.SelectedValue = warehouseinfo.Townshipid;
+            if (warehouse.Deleted)
+            {
+                chkDelete.Text = "復旧";
+            }
+
+            this.DialogResult = DialogResult.None;
         }
 
-        List<TownshipInfoModel> township = new List<TownshipInfoModel>();
+        List<TownshipModel> township = new List<TownshipModel>();
+        List<TownshipModel> township_keyValue = new List<TownshipModel>();
         WarehouseModel warehouse;
-        WarehouseController controller = new WarehouseController();
-        TownshipController townshipController = new TownshipController();
-        CheckWarehouseExists check = new CheckWarehouseExists();
+        WarehouseController warehouseController = new WarehouseController();
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
@@ -46,30 +68,40 @@ namespace Inventorycontrol.Forms
             warehouse.Name = txtWarehouse.Text;
             warehouse.Townshipid = (int)cmbTownship.SelectedValue;
             warehouse.Capacity = int.Parse(txtCapacity.Text);
+            warehouse.Deleted = chkDelete.Checked;
+            
+            if(chkDelete.Text == "復旧")
+            {
+                warehouse.Deleted = !chkDelete.Checked;
+            }
+            
+            if (chkDelete.Text == "復旧" && !chkDelete.Checked)
+            {
+                MessageBox.Show("復旧する場合はチェックを入れてください。");
+                return;
+            }
+            
             try
             {
-                if (!check.CheckIfWarehouseNameExists(warehouse.Name))
+                if (warehouseController.UpdateWarehouse(warehouse))
                 {
-                    controller.UpdateWarehouse(warehouse);
-                    MessageBox.Show("更新が完了しました。");
-                    this.Close();
+                    if (!warehouse.Deleted)
+                    {
+                        MessageBox.Show("更新が完了しました。");
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("削除が完了しました。");
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("登録済みまたは、以前削除された倉庫です。");
-                    DialogResult result = MessageBox.Show("復旧または情報を更新しますか？",
-                "復旧", MessageBoxButtons.YesNo
-                      , MessageBoxIcon.Exclamation
-                      , MessageBoxDefaultButton.Button2);
-                    if (result == DialogResult.Yes)
-                    {
-                        controller.UpdateWarehouse(warehouse);
-                        this.Close();
-                    }
-                    else if (result == DialogResult.No)
-                    {
-                        return;
-                    }
+                    MessageBox.Show("更新に失敗しました。");
+                    this.Close();
                 }
             }
             catch (Exception ex)
@@ -79,20 +111,12 @@ namespace Inventorycontrol.Forms
             }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void txtCapacity_KeyPress(object sender, KeyPressEventArgs e)
         {
-            DialogResult result = MessageBox.Show("本当に削除しますか？",
-                "削除", MessageBoxButtons.YesNo
-                      , MessageBoxIcon.Exclamation
-                      , MessageBoxDefaultButton.Button2);
-            if (result == DialogResult.Yes)
+            //0～9と、バックスペース以外の時は、イベントをキャンセルする
+            if ((e.KeyChar < '0' || '9' < e.KeyChar) && e.KeyChar != '\b')
             {
-                controller.DeleteWarehouse(warehouse);
-                this.Close();
-            }
-            else if (result == DialogResult.No)
-            {
-                return;
+                e.Handled = true;
             }
         }
     }

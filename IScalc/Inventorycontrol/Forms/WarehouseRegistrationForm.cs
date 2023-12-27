@@ -18,17 +18,10 @@ namespace Inventorycontrol.Forms
         public WarehouseRegistrationForm()
         {
             InitializeComponent();
-            
-            township = townshipController.GetTownshipInfotoCMB();
-            cmbTownship.DataSource = township;
-            cmbTownship.DisplayMember = "Name";
-            cmbTownship.ValueMember = "Id";
         }
 
-        List<TownshipInfoModel> township = new List<TownshipInfoModel>();
-        CheckWarehouseExists check = new CheckWarehouseExists();
-        WarehouseController controller = new WarehouseController();
-        TownshipController townshipController = new TownshipController();
+        List<TownshipModel> township = new List<TownshipModel>();
+        WarehouseController warehouseController = new WarehouseController();
 
         private void btnRegistration_Click(object sender, EventArgs e)
         {
@@ -38,9 +31,9 @@ namespace Inventorycontrol.Forms
             warehouse.Capacity = int.Parse(txtCapacity.Text);
             try
             {
-                if (!check.CheckIfWarehouseNameExists(warehouse.Name) && check.CheckIfTownshipIdExists(warehouse.Townshipid))
+                if (warehouseController.RegistrationWarehouse(warehouse))
                 {
-                    controller.RegistrationWarehouse(warehouse);
+                    
                     MessageBox.Show("登録が完了しました。");
                     DialogResult result = MessageBox.Show("続けて登録しますか？", "登録", MessageBoxButtons.YesNo
                                                                                        , MessageBoxIcon.Question
@@ -52,8 +45,7 @@ namespace Inventorycontrol.Forms
                 }
                 else
                 {
-                    MessageBox.Show("登録済み又は削除済み倉庫、もしくは存在しないエリアが指定されています。" +
-                                     "削除済み倉庫を再度登録したい場合は「削除済みを表示」にチェックを入れ検索、更新してください。");
+                    MessageBox.Show("登録に失敗しました。");
                     return;
                 }
             }
@@ -61,6 +53,24 @@ namespace Inventorycontrol.Forms
             {
                 MessageBox.Show(ex.Message);
                 Console.WriteLine(ex);
+            }
+        }
+
+        private void WarehouseRegistrationForm_Load(object sender, EventArgs e)
+        {
+            township = warehouseController.GetTownshipModels();
+            
+            cmbTownship.DataSource = township;
+            cmbTownship.DisplayMember = "Name";
+            cmbTownship.ValueMember = "Id";
+        }
+
+        private void txtCapacity_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //0～9と、バックスペース以外の時は、イベントをキャンセルする
+            if ((e.KeyChar < '0' || '9' < e.KeyChar) && e.KeyChar != '\b')
+            {
+                e.Handled = true;
             }
         }
     }

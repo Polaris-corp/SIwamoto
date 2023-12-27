@@ -46,9 +46,8 @@ namespace Inventorycontrol.Forms
             // 
             this.txtName.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.txtName.Location = new System.Drawing.Point(22, 51);
-            this.txtName.Multiline = true;
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(160, 30);
+            this.txtName.Size = new System.Drawing.Size(160, 31);
             this.txtName.TabIndex = 30;
             // 
             // btnSearch
@@ -95,6 +94,7 @@ namespace Inventorycontrol.Forms
             this.dgvWarehouse.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dgvWarehouse.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvWarehouse.Location = new System.Drawing.Point(206, 35);
+            this.dgvWarehouse.MultiSelect = false;
             this.dgvWarehouse.Name = "dgvWarehouse";
             this.dgvWarehouse.ReadOnly = true;
             this.dgvWarehouse.RowHeadersVisible = false;

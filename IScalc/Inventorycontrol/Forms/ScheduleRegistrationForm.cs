@@ -61,8 +61,8 @@ namespace Inventorycontrol.Forms
         }
 
         List<StatusModel> statuslist = new List<StatusModel>();
-        List<ItemInfoModel> itemlist = new List<ItemInfoModel>();
-        List<TownshipInfoModel> townshiplist = new List<TownshipInfoModel>();
+        List<ItemModel> itemlist = new List<ItemModel>();
+        List<TownshipModel> townshiplist = new List<TownshipModel>();
         List<WarehouseModel> warehouseslist = new List<WarehouseModel>();
         List<WarehouseModel> sortedwarehouselist = new List<WarehouseModel>();
 

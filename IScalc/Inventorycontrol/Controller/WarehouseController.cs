@@ -1,56 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
+﻿using Inventorycontrol.Model;
 using Inventorycontrol.Service;
-using Inventorycontrol.Model;
+using System.Collections.Generic;
+using System.Data;
 
 namespace Inventorycontrol.Controller
 {
     public class WarehouseController
     {
-        WarehouseService service = new WarehouseService();
-        public DataTable SearchWarehouse(WarehouseModel warehouse,string townshipName)
+        WarehouseService warehouseService = new WarehouseService();
+        TownshipService townshipService = new TownshipService();
+        public DataTable SearchWarehouse(WarehouseModel warehouse)
         {
-            return service.ResaultSearchWarehouse(warehouse,townshipName);
+            return warehouseService.ResaultSearchWarehouse(warehouse);
         }
-
+        public List<TownshipModel> GetTownshipModels()
+        {
+            return townshipService.GetTownshipInfo();
+        }
         public DataTable GetWarehouse(int townshipId)
         {
-            return service.SearchWarehouse(townshipId);
+            return warehouseService.SearchWarehouse(townshipId);
         }
-
-        public void RegistrationWarehouse(WarehouseModel warehouse)
+        public int GetTownshipId(string townshipName)
         {
-            service.InsertWarehouseInfo(warehouse);
+            return townshipService.GetTownshipId(townshipName);
         }
-
-        public void UpdateWarehouse(WarehouseModel warehouse)
+        public bool RegistrationWarehouse(WarehouseModel warehouse)
         {
-            service.UpdateWarehouse(warehouse);
+            return warehouseService.InsertWarehouseInfo(warehouse);
         }
 
-        public void DeleteWarehouse(WarehouseModel warehouse)
+        public bool UpdateWarehouse(WarehouseModel warehouse)
         {
-            service.DeleteWarehouse(warehouse);
+            return warehouseService.UpdateWarehouse(warehouse);
         }
-
-        public int GetWarehouseId(string name)
-        {
-            return service.GetWarehouseId(name);
-        }
-
-        public int GetWarehouseCapacity(int id)
-        {
-            return service.GetWarehouseActualCap(id);
-        }
-
-        public List<string> GetAllWarehouseName()
-        {
-            return service.GetAllWarehouseName();
-        }
-
     }
 }

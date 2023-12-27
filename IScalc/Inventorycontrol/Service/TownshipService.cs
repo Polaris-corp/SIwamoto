@@ -12,42 +12,26 @@ namespace Inventorycontrol.Service
 {
     public class TownshipService
     {
-        public DataTable ResultSearchTownship(TownshipInfoModel township)
+        public DataTable ResultSearchTownship(TownshipModel township)
         {
             return Townshiptable(CreateSelectSql(township));
         }
 
-        public void RegistrationTownship(TownshipInfoModel township)
+        public bool RegistrationTownship(TownshipModel township)
         {
-            ExecutionSql(CreateInsertTownshipInfoSql(township));
+            return ExecutionSql(CreateInsertTownshipInfoSql(township));
         }
 
-        public void UpdateTownship(TownshipInfoModel info)
+        public bool UpdateTownship(TownshipModel info)
         {
-            ExecutionSql(CreateUpdateTownshipInfoSql(info));
+            return ExecutionSql(CreateUpdateTownshipInfoSql(info));
         }
-
-        public void DeleteTownship(TownshipInfoModel info)
-        {
-            ExecutionSql(CreateDeleteInfoSql(info));
-        }
-
-        public List<string> GetTownshipName()
-        {
-            return GetNameDataReaderSql(CreateSelectTownshipNameSql());
-        }
-
-        public List<int> GetAllTownshipId()
-        {
-            return GetAllIdDataReaderSql(CreateSelectAllTownshipIdSql());
-        }
-
         public int GetTownshipId(string tName)
         {
             return GetIdDataReaderSql(CreateSelectTownshipIdSql(tName));
         }
 
-        public List<TownshipInfoModel> GetTownshipInfo()
+        public List<TownshipModel> GetTownshipInfo()
         {
             return GetTownshipInfoReader(CreateSelectTownshipInfo());
         }
@@ -64,7 +48,7 @@ namespace Inventorycontrol.Service
             }
         }
 
-        private void ExecutionSql(MySqlCommand command)
+        private bool ExecutionSql(MySqlCommand command)
         {
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
             {
@@ -73,52 +57,16 @@ namespace Inventorycontrol.Service
                 connection.Open();
                 try
                 {
-                    command.ExecuteNonQuery();
+                    return command.ExecuteNonQuery() == 1;
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex);
+                    return false;
                 }
             }
         }
 
-        public List<string> GetNameDataReaderSql(MySqlCommand command)
-        {
-            List<string> items = new List<string>();
-            using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
-            {
-                command.Connection = connection;
-
-                connection.Open();
-                using (MySqlDataReader dr = command.ExecuteReader())
-                {
-                    while (dr.Read())
-                    {
-                        items.Add(dr["name"].ToString());
-                    }
-                }
-            }
-            return items;
-        }
-
-        public List<int> GetAllIdDataReaderSql(MySqlCommand command)
-        {
-            List<int> items = new List<int>();
-            using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
-            {
-                command.Connection = connection;
-
-                connection.Open();
-                using (MySqlDataReader dr = command.ExecuteReader())
-                {
-                    while (dr.Read())
-                    {
-                        items.Add((int)dr["id"]);
-                    }
-                }
-            }
-            return items;
-        }
         public int GetIdDataReaderSql(MySqlCommand command)
         {
             int id = 0;
@@ -138,9 +86,9 @@ namespace Inventorycontrol.Service
             return id;
         }
 
-        public List<TownshipInfoModel> GetTownshipInfoReader(MySqlCommand command)
+        public List<TownshipModel> GetTownshipInfoReader(MySqlCommand command)
         {
-            List<TownshipInfoModel> list = new List<TownshipInfoModel>();
+            List<TownshipModel> list = new List<TownshipModel>();
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
             {
                 command.Connection = connection;
@@ -150,9 +98,10 @@ namespace Inventorycontrol.Service
                 {
                     while (dr.Read())
                     {
-                        TownshipInfoModel townshipInfo = new TownshipInfoModel();
+                        TownshipModel townshipInfo = new TownshipModel();
                         townshipInfo.Id = (int)dr["id"];
                         townshipInfo.Name = (string)dr["name"];
+                        townshipInfo.Deleted = (bool)dr["deleted"];
 
                         list.Add(townshipInfo);
                     }
@@ -160,11 +109,12 @@ namespace Inventorycontrol.Service
             }
             return list;
         }
-        private MySqlCommand CreateSelectSql(TownshipInfoModel township)
+        private MySqlCommand CreateSelectSql(TownshipModel township)
         {
             string query = @"SELECT
                                        id
                                        ,name
+                                       ,deleted
                              FROM 
                                        mtownship 
                              WHERE 
@@ -177,7 +127,7 @@ namespace Inventorycontrol.Service
             return command;
         }
 
-        private MySqlCommand CreateInsertTownshipInfoSql(TownshipInfoModel township)
+        private MySqlCommand CreateInsertTownshipInfoSql(TownshipModel township)
         {
             string query = @"INSERT INTO
                                          mtownship
@@ -189,7 +139,7 @@ namespace Inventorycontrol.Service
             return command;
         }
 
-        private MySqlCommand CreateUpdateTownshipInfoSql(TownshipInfoModel info)
+        private MySqlCommand CreateUpdateTownshipInfoSql(TownshipModel info)
         {
             string query = @"UPDATE
                                      mtownship
@@ -205,7 +155,7 @@ namespace Inventorycontrol.Service
             return command;
         }
 
-        private MySqlCommand CreateDeleteInfoSql(TownshipInfoModel info)
+        private MySqlCommand CreateDeleteInfoSql(TownshipModel info)
         {
             string query = @"UPDATE
                                       mtownship
@@ -260,10 +210,9 @@ namespace Inventorycontrol.Service
             string query = @"SELECT 
                                      id
                                      ,name
+                                     ,deleted
                              FROM
-                                     mtownship
-                             WHERE
-                                     deleted = false";
+                                     mtownship";
             MySqlCommand command = new MySqlCommand(query);
             return command;
         }

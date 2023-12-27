@@ -17,72 +17,151 @@ namespace Inventorycontrol.Forms
         public WarehouseListForm()
         {
             InitializeComponent();
-            township_keyValue = townshipController.GetTownshipInfotoCMB();
-            cmbTownship.DataSource = township_keyValue;
+            
+            township_keyValue_base = warehouseController.GetTownshipModels();
+            
+            TownshipModel blank = new TownshipModel();
+            blank.Name = "";
+            blank.Id = -1;
+            township_keyValue_base.Add(blank);
+
+            foreach (var item in township_keyValue_base)
+            {
+                string townName = "";
+                TownshipModel model = new TownshipModel();
+                model.Id = item.Id;
+                if (item.Deleted)
+                {
+                    townName = item.Name + "(削除済)";
+                }
+                else
+                {
+                    townName = item.Name;
+                }
+                model.Name = townName;
+                model.Deleted = item.Deleted;
+                township_keyvalue.Add(model);
+            }
+
+            cmbTownship.DataSource = township_keyvalue;
+            
             cmbTownship.DisplayMember = "Name";
             cmbTownship.ValueMember = "Id";
+
+            cmbTownship.SelectedValue = -1;
         }
 
         public WarehouseListForm(int townshipId)
         {
             InitializeComponent();
-            township_keyValue = townshipController.GetTownshipInfotoCMB();
-            cmbTownship.DataSource = township_keyValue;
+            
+            township_keyValue_base = warehouseController.GetTownshipModels();
+            
+            TownshipModel blank = new TownshipModel();
+            blank.Name = "";
+            blank.Id = -1;
+            township_keyValue_base.Add(blank);
+
+            foreach (var item in township_keyValue_base)
+            {
+                string townName = "";
+                TownshipModel model = new TownshipModel();
+                model.Id = item.Id;
+                if (item.Deleted)
+                {
+                    townName = item.Name + "(削除済)";
+                }
+                else
+                {
+                    townName = item.Name;
+                }
+                model.Name = townName;
+                model.Deleted = item.Deleted;
+                township_keyvalue.Add(model);
+            }
+
+            cmbTownship.DataSource = township_keyvalue;
+            
             cmbTownship.DisplayMember = "Name";
             cmbTownship.ValueMember = "Id";
 
-            dt = warehousecontroller.GetWarehouse(townshipId);
-            
+            cmbTownship.SelectedValue = townshipId;
+
+            dt = warehouseController.GetWarehouse(townshipId);
             dgvWarehouse.DataSource = dt;
+           
             dgvWarehouse.Columns["id"].HeaderText = "倉庫ID";
+            
             dgvWarehouse.Columns["name"].HeaderText = "倉庫名";
+            
             dgvWarehouse.Columns["areaname"].HeaderText = "エリア";
+            
             dgvWarehouse.Columns["capacity"].HeaderText = "最大収容量";
+            
             dgvWarehouse.Columns["actualcapacity"].HeaderText = "空き収容量";
         }
 
-        List<TownshipInfoModel> township_keyValue = new List<TownshipInfoModel>();
+        List<TownshipModel> township_keyValue_base = new List<TownshipModel>();
+        List<TownshipModel> township_keyvalue = new List<TownshipModel>();
+
         DataTable dt = new DataTable();
-        TownshipController townshipController = new TownshipController();
-        WarehouseController warehousecontroller = new WarehouseController();
-        DataGridViewComboBoxColumn column = new DataGridViewComboBoxColumn();
+        
+        WarehouseController warehouseController = new WarehouseController();
 
         public WarehouseModel GetWarehouseInfo()
         {
             DataGridViewRow dataGridViewRow = dgvWarehouse.SelectedRows[0];
+            
             WarehouseModel warehouse = new WarehouseModel();
             warehouse.Id = (int)dataGridViewRow.Cells["id"].Value;
             warehouse.Name = dataGridViewRow.Cells["name"].Value.ToString();
-            warehouse.Townshipid = townshipController.GetTownshipId(dataGridViewRow.Cells["areaname"].Value.ToString());
+            warehouse.Townshipid = warehouseController.GetTownshipId(dataGridViewRow.Cells["areaname"].Value.ToString());
             warehouse.Capacity = (int)dataGridViewRow.Cells["capacity"].Value;
+            warehouse.ActualCapacity = (int)dataGridViewRow.Cells["actualcapacity"].Value;
+            warehouse.Deleted = (bool)dataGridViewRow.Cells["deleted"].Value;
+
             return warehouse;
         }
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            WarehouseModel warehouse = new WarehouseModel();
-            warehouse.Name = txtName.Text;
-            string townshipName = cmbTownship.Text;
-
-            dt = warehousecontroller.SearchWarehouse(warehouse,townshipName);
-
-            dgvWarehouse.DataSource = dt;
-            dgvWarehouse.Columns["id"].HeaderText = "倉庫ID";
-            dgvWarehouse.Columns["name"].HeaderText = "倉庫名";
-            dgvWarehouse.Columns["areaname"].HeaderText = "エリア";
-            dgvWarehouse.Columns["capacity"].HeaderText = "最大収容量";
-            dgvWarehouse.Columns["actualcapacity"].HeaderText = "空き収容量";
+            SearchWarehouse();
         }
 
         private void btnRegistration_Click(object sender, EventArgs e)
         {
             WarehouseRegistrationForm warehouseRegistrationForm = new WarehouseRegistrationForm();
             warehouseRegistrationForm.ShowDialog();
+
+            SearchWarehouse();
+            int row = dgvWarehouse.Rows.GetLastRow(DataGridViewElementStates.Visible);
+            dgvWarehouse.FirstDisplayedScrollingRowIndex = row;
+            dgvWarehouse.Rows[row].Selected = true;
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            WarehouseUpdateForm warehouseUpdateForm = new WarehouseUpdateForm(GetWarehouseInfo());
-            warehouseUpdateForm.ShowDialog();
+            if(0 < dgvWarehouse.SelectedRows.Count)
+            {
+                int row = dgvWarehouse.SelectedRows[0].Index;
+                WarehouseUpdateForm warehouseUpdateForm = new WarehouseUpdateForm(GetWarehouseInfo());
+                DialogResult dialog = warehouseUpdateForm.ShowDialog();
+                SearchWarehouse();
+                if(dialog == DialogResult.OK)
+                {
+                    row -= 1;
+                }
+
+                if (0 <= row)
+                {
+                    dgvWarehouse.Rows[row].Selected = true;
+                    dgvWarehouse.FirstDisplayedScrollingRowIndex = row;
+                }
+            }
+            else
+            {
+                MessageBox.Show("倉庫を選択してください。");
+                return;
+            }
         }
 
         private void btnSpecificWarehouse_Click(object sender, EventArgs e)
@@ -90,6 +169,29 @@ namespace Inventorycontrol.Forms
             WarehouseModel warehouse = GetWarehouseInfo();
             SchedulecheckForm schedulecheckForm = new SchedulecheckForm(warehouse);
             schedulecheckForm.ShowDialog();
+        }
+
+        private void SearchWarehouse()
+        {
+            WarehouseModel warehouse = new WarehouseModel();
+            warehouse.Name = txtName.Text;
+            warehouse.Townshipid = (int)cmbTownship.SelectedValue;
+            warehouse.Deleted = chkDelete.Checked;
+
+            dt = warehouseController.SearchWarehouse(warehouse);
+            dgvWarehouse.DataSource = dt;
+
+            dgvWarehouse.Columns["id"].HeaderText = "倉庫ID";
+
+            dgvWarehouse.Columns["name"].HeaderText = "倉庫名";
+
+            dgvWarehouse.Columns["areaname"].HeaderText = "エリア";
+
+            dgvWarehouse.Columns["capacity"].HeaderText = "最大収容量";
+
+            dgvWarehouse.Columns["actualcapacity"].HeaderText = "空き収容量";
+
+            dgvWarehouse.Columns["deleted"].HeaderText = "削除済";
         }
     }
 }

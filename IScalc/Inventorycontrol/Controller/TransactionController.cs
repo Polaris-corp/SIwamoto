@@ -53,11 +53,11 @@ namespace Inventorycontrol.Controller
         {
             return statusService.GetStatuses();
         }
-        public List<TownshipInfoModel> GetTownshipInfos()
+        public List<TownshipModel> GetTownshipInfos()
         {
             return townshipService.GetTownshipInfo();
         }
-        public List<ItemInfoModel> GetItemInfos()
+        public List<ItemModel> GetItemInfos()
         {
             return itemlistService.GetItemInfos();
         }

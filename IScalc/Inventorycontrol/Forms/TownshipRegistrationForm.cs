@@ -15,24 +15,26 @@ namespace Inventorycontrol.Forms
 {
     public partial class TownshipRegistrationForm : Form
     {
-
-        TownshipController controller = new TownshipController();
-        CheckTownshipExists check = new CheckTownshipExists();
-
         public TownshipRegistrationForm()
         {
             InitializeComponent();
         }
 
+        TownshipController townshipController = new TownshipController();
+
         private void btnRegistration_Click(object sender, EventArgs e)
         {
-            TownshipInfoModel township = new TownshipInfoModel();
+            TownshipModel township = new TownshipModel();
+            if (string.IsNullOrEmpty(txtTownship.Text))
+            {
+                MessageBox.Show("エリア名を入力してください。");
+                return;
+            }
             township.Name = txtTownship.Text;
             try
             {
-                if (!check.CheckIfTownshipNameExists(township.Name))
+                if (townshipController.RegistrationTownship(township))
                 {
-                    controller.RegistrationTownship(township);
                     MessageBox.Show("登録が完了しました。");
                     DialogResult result = MessageBox.Show("続けて登録しますか？", "登録", MessageBoxButtons.YesNo
                                                                                        , MessageBoxIcon.Question
@@ -44,8 +46,7 @@ namespace Inventorycontrol.Forms
                 }
                 else
                 {
-                    MessageBox.Show(@"登録済みまたは、以前削除されたエリアです。
-                                      復旧したい場合は「削除済みを表示」にチェックを入れ検索、更新ボタンを押して更新してください。");
+                    MessageBox.Show("登録に失敗しました。");
                     return;
                 }
             }

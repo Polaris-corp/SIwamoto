@@ -25,7 +25,7 @@ namespace Inventorycontrol.Forms
             itemlist = transactionController.GetItemInfos();
 
             townshiplistToCmb = townshipController.GetTownshipInfotoCMB();
-            TownshipInfoModel blankTownship = new TownshipInfoModel();
+            TownshipModel blankTownship = new TownshipModel();
             blankTownship.Id = -1;
             blankTownship.Name = "";
             townshiplistToCmb.Add(blankTownship);
@@ -64,7 +64,7 @@ namespace Inventorycontrol.Forms
             itemlist = transactionController.GetItemInfos();
 
             townshiplistToCmb = townshipController.GetTownshipInfotoCMB();
-            TownshipInfoModel blankTownship = new TownshipInfoModel();
+            TownshipModel blankTownship = new TownshipModel();
             blankTownship.Id = -1;
             blankTownship.Name = "";
             townshiplistToCmb.Add(blankTownship);
@@ -225,9 +225,9 @@ namespace Inventorycontrol.Forms
 
         List<StatusModel> statuslistToCmb = new List<StatusModel>();
         List<StatusModel> statuslist = new List<StatusModel>();
-        List<ItemInfoModel> itemlist = new List<ItemInfoModel>();
-        List<TownshipInfoModel> townshiplistToCmb = new List<TownshipInfoModel>();
-        List<TownshipInfoModel> townshiplist = new List<TownshipInfoModel>();
+        List<ItemModel> itemlist = new List<ItemModel>();
+        List<TownshipModel> townshiplistToCmb = new List<TownshipModel>();
+        List<TownshipModel> townshiplist = new List<TownshipModel>();
         List<WarehouseModel> warehouseslistToCmb = new List<WarehouseModel>();
         List<WarehouseModel> warehouseslist = new List<WarehouseModel>();
         List<WarehouseModel> sortedwarehouselist = new List<WarehouseModel>();

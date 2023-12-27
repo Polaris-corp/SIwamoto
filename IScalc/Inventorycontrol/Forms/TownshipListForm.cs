@@ -21,122 +21,93 @@ namespace Inventorycontrol.Forms
 
         TownshipController controller = new TownshipController();
         DataTable dt = new DataTable();
-        List<TownshipInfoModel> SignupTownships = new List<TownshipInfoModel>();
-        List<TownshipInfoModel> UpdateTownships = new List<TownshipInfoModel>();
+        
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            TownshipInfoModel township = new TownshipInfoModel();
-            township.Name = txtName.Text;
-            township.Deleted = chkDelete.Checked;
-            dt = controller.SearchTownship(township);
-            dgvTownship.DataSource = dt;
-
-            dgvTownship.Columns["id"].HeaderText = "エリアID";
-            dgvTownship.Columns["name"].HeaderText = "エリア名";
+            SearchTownships();
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            TownshipUpdateForm updateForm = new TownshipUpdateForm(GetTownshipInfo());
-            updateForm.ShowDialog();
-            //if (SignupTownships.Count == 0 && UpdateTownships.Count == 0)
-            //{
-            //    MessageBox.Show("登録、更新するエリアがありません。");
-            //    return;
-            //}
-            //foreach (var item in UpdateTownships)
-            //{
-            //    controller.UpdateTownship(item);
-            //}
+            if (0 < dgvTownship.SelectedRows.Count)
+            {
+                int row = dgvTownship.SelectedRows[0].Index;
+                TownshipUpdateForm updateForm = new TownshipUpdateForm(GetTownshipInfo());
+                DialogResult dialogResult =  updateForm.ShowDialog();
+                SearchTownships();
+                if (dialogResult == DialogResult.OK)
+                {
+                    row -= 1;
+                }
 
-            //foreach (var item in SignupTownships)
-            //{
-            //    controller.RegistrationTownship(item.Name);
-            //}
-            //MessageBox.Show("登録、更新が完了しました。");
-            //UpdateTownships.Clear();
-            //SignupTownships.Clear();
-        }
-
-        private void dgvTownship_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            //if (0 <= e.RowIndex && 0 <= e.ColumnIndex)
-            //{
-            //    DataGridView dataGridView = (DataGridView)sender;
-            //    TownshipInfoModel newTownship = new TownshipInfoModel();
-
-            //    if (dataGridView.Rows[e.RowIndex].Cells["id"].Value != null && !string.IsNullOrEmpty(dataGridView.Rows[e.RowIndex].Cells["id"].Value.ToString()))
-            //    {
-            //        newTownship.Id = (int)dataGridView.Rows[e.RowIndex].Cells["id"].Value;
-            //        newTownship.Name = (string)dataGridView.Rows[e.RowIndex].Cells["name"].Value;
-            //        newTownship.Deleted = (bool)dataGridView.Rows[e.RowIndex].Cells["deleted"].Value;
-            //        UpdateTownships.Add(newTownship);
-            //    }
-            //    else
-            //    {
-            //        newTownship.Name = (string)dataGridView.Rows[e.RowIndex].Cells["name"].Value;
-            //        SignupTownships.Add(newTownship);
-            //    }
-            //}
-        }
-
-        private void dgvTownship_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
-        {
-            //var rowIndex = e.RowIndex;
-            //var columnIndex = e.ColumnIndex;
-            //if (rowIndex < 0 || columnIndex < 0)
-            //{
-            //    return;
-            //}
-            //if (columnIndex == 0)
-            //{
-            //    return;
-            //}
-            //DataGridView dataGridView = (DataGridView)sender;
-            //string oldValue = dataGridView.Rows[rowIndex].Cells[columnIndex].Value.ToString();
-            //string newValue = e.FormattedValue.ToString();
-            //if (e.RowIndex == dataGridView.NewRowIndex || !dataGridView.IsCurrentCellDirty)
-            //{
-            //    return;
-            //}
-            //if (oldValue.Equals(newValue))
-            //{
-            //    return;
-            //}
-            //if (string.IsNullOrEmpty(newValue))
-            //{
-            //    MessageBox.Show("エリア名が入力されていません。");
-            //    dataGridView.Rows[rowIndex].Cells[columnIndex].Value = oldValue;
-            //    dataGridView.CancelEdit();
-            //    //e.Cancel = true;
-            //    return;
-            //}
+                if(0 <= row)
+                {
+                    dgvTownship.Rows[row].Selected = true;
+                    dgvTownship.FirstDisplayedScrollingRowIndex = row;
+                }
+            }
+            else
+            {
+                MessageBox.Show("エリアを選択してください。");
+                return;
+            }
         }
 
         private void btnTownshipdetail_Click_1(object sender, EventArgs e)
         {
-            DataGridViewRow dataGridViewRow = dgvTownship.SelectedRows[0];
-            int id = (int)dataGridViewRow.Cells["id"].Value;
-            WarehouseListForm warehouseListForm = new WarehouseListForm(id);
-            warehouseListForm.ShowDialog();
+            if(0 < dgvTownship.SelectedRows.Count)
+            {
+                DataGridViewRow dataGridViewRow = dgvTownship.SelectedRows[0];
+                int id = (int)dataGridViewRow.Cells["id"].Value;
+
+                WarehouseListForm warehouseListForm = new WarehouseListForm(id);
+                warehouseListForm.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("エリアを選択してください。");
+                return;
+            }
         }
 
         private void btnRegistration_Click(object sender, EventArgs e)
         {
             TownshipRegistrationForm registrationForm = new TownshipRegistrationForm();
             registrationForm.ShowDialog();
+
+            SearchTownships();
+            int row = dgvTownship.Rows.GetLastRow(DataGridViewElementStates.Visible);
+            dgvTownship.FirstDisplayedScrollingRowIndex = row;
+            dgvTownship.Rows[row].Selected = true;
         }
 
-        private TownshipInfoModel GetTownshipInfo()
+        private TownshipModel GetTownshipInfo()
         {
             DataGridViewRow dataGridViewRow = dgvTownship.SelectedRows[0];
             
-            TownshipInfoModel townshipInfo = new TownshipInfoModel();
+            TownshipModel townshipInfo = new TownshipModel();
             townshipInfo.Id = (int)dataGridViewRow.Cells["id"].Value;
             townshipInfo.Name = (string)dataGridViewRow.Cells["name"].Value;
+            townshipInfo.Deleted = (bool)dataGridViewRow.Cells["deleted"].Value;
             
             return townshipInfo;
+        }
+
+        private void SearchTownships()
+        {
+            TownshipModel township = new TownshipModel();
+            township.Name = txtName.Text;
+            township.Deleted = chkDelete.Checked;
+
+            dt = controller.SearchTownship(township);
+            dgvTownship.DataSource = dt;
+
+            dgvTownship.Columns["id"].HeaderText = "エリアID";
+           
+            dgvTownship.Columns["name"].HeaderText = "エリア名";
+            
+            dgvTownship.Columns["deleted"].HeaderText = "削除済";
         }
     }
 }

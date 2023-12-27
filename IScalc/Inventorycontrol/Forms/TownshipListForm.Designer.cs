@@ -44,9 +44,8 @@ namespace Inventorycontrol.Forms
             // 
             this.txtName.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.txtName.Location = new System.Drawing.Point(31, 101);
-            this.txtName.Multiline = true;
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(160, 30);
+            this.txtName.Size = new System.Drawing.Size(160, 31);
             this.txtName.TabIndex = 35;
             // 
             // btnSearch
@@ -82,6 +81,7 @@ namespace Inventorycontrol.Forms
             this.dgvTownship.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dgvTownship.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTownship.Location = new System.Drawing.Point(208, 39);
+            this.dgvTownship.MultiSelect = false;
             this.dgvTownship.Name = "dgvTownship";
             this.dgvTownship.ReadOnly = true;
             this.dgvTownship.RowHeadersVisible = false;
@@ -89,8 +89,6 @@ namespace Inventorycontrol.Forms
             this.dgvTownship.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvTownship.Size = new System.Drawing.Size(563, 444);
             this.dgvTownship.TabIndex = 31;
-            this.dgvTownship.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvTownship_CellValidating);
-            this.dgvTownship.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTownship_CellValueChanged);
             // 
             // chkDelete
             // 

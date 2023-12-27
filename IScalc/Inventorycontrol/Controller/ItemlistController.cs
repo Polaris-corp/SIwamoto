@@ -13,21 +13,21 @@ namespace Inventorycontrol.Controller
     {
         ItemlistService itemlistService = new ItemlistService();
         
-        public DataTable SearchItems(ItemInfoModel item)
+        public DataTable SearchItems(ItemModel item)
         {
             return itemlistService.ResaultSearchItem(item);
         }
 
-        public bool InsertItemInfo(ItemInfoModel item)
+        public bool InsertItemInfo(ItemModel item)
         {
             return itemlistService.RegistrationItemInfo(item);
         }
 
-        public bool UpdateItemInfo(ItemInfoModel items)
+        public bool UpdateItemInfo(ItemModel items)
         {
             return itemlistService.UpdateItemInfo(items);
         }
-        public List<ItemInfoModel> GetItemList()
+        public List<ItemModel> GetItemList()
         {
             return itemlistService.GetItemInfos();
         }

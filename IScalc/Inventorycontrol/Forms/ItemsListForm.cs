@@ -61,14 +61,16 @@ namespace Inventorycontrol.Forms
             registrationForm.ShowDialog();
 
             SearchItems();
-            dgvItems.FirstDisplayedScrollingRowIndex = dgvItems.Rows.GetLastRow(DataGridViewElementStates.Visible);
+            int row = dgvItems.Rows.GetLastRow(DataGridViewElementStates.Visible);
+            dgvItems.FirstDisplayedScrollingRowIndex = row;
+            dgvItems.Rows[row].Selected = true;
         }
 
-        public ItemInfoModel GetItemInfo()
+        public ItemModel GetItemInfo()
         {
             DataGridViewRow dataGridViewRow = dgvItems.SelectedRows[0];
 
-            ItemInfoModel item = new ItemInfoModel();
+            ItemModel item = new ItemModel();
             item.Id = (int)dataGridViewRow.Cells["id"].Value;
             item.Name = (string)dataGridViewRow.Cells["name"].Value;
             item.Deleted = (bool)dataGridViewRow.Cells["deleted"].Value;
@@ -78,7 +80,7 @@ namespace Inventorycontrol.Forms
 
         private void SearchItems() 
         {
-            ItemInfoModel item = new ItemInfoModel();
+            ItemModel item = new ItemModel();
             item.Name = txtItem.Text;
             item.Deleted = checkBox1.Checked;
 

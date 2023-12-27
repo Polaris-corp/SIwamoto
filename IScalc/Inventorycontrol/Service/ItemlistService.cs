@@ -12,19 +12,19 @@ namespace Inventorycontrol.Service
 {
     class ItemlistService
     {
-        public DataTable ResaultSearchItem(ItemInfoModel item)
+        public DataTable ResaultSearchItem(ItemModel item)
         {
             return Itemstable(CreateSelectSql(item));
         }
-        public bool RegistrationItemInfo(ItemInfoModel item)
+        public bool RegistrationItemInfo(ItemModel item)
         {
             return ExecutionSql(CreateInsertItemInfoSql(item));
         }
-        public bool UpdateItemInfo(ItemInfoModel item)
+        public bool UpdateItemInfo(ItemModel item)
         {
             return ExecutionSql(CreateUpdateInfoSql(item));
         }
-        public List<ItemInfoModel> GetItemInfos()
+        public List<ItemModel> GetItemInfos()
         {
             return DataReaderItemInfoSql(CreateSelectItemInfoSql());
         }
@@ -58,9 +58,9 @@ namespace Inventorycontrol.Service
                 }
             }
         }
-        public List<ItemInfoModel> DataReaderItemInfoSql(MySqlCommand command)
+        public List<ItemModel> DataReaderItemInfoSql(MySqlCommand command)
         {
-            List<ItemInfoModel> list = new List<ItemInfoModel>();
+            List<ItemModel> list = new List<ItemModel>();
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
             {
                 command.Connection = connection;
@@ -70,7 +70,7 @@ namespace Inventorycontrol.Service
                 {
                     while (dr.Read())
                     {
-                        ItemInfoModel item = new ItemInfoModel();
+                        ItemModel item = new ItemModel();
                         item.Id = ((int)dr["id"]);
                         item.Name = ((string)dr["name"]);
 
@@ -80,7 +80,7 @@ namespace Inventorycontrol.Service
             }
             return list;
         }
-        private MySqlCommand CreateSelectSql(ItemInfoModel item)
+        private MySqlCommand CreateSelectSql(ItemModel item)
         {
             string query = @"SELECT
                                      id
@@ -114,7 +114,7 @@ namespace Inventorycontrol.Service
             MySqlCommand command = new MySqlCommand(query);
             return command;
         }
-        private MySqlCommand CreateInsertItemInfoSql(ItemInfoModel item)
+        private MySqlCommand CreateInsertItemInfoSql(ItemModel item)
         {
             string query = @"INSERT INTO 
                                           mitems 
@@ -126,7 +126,7 @@ namespace Inventorycontrol.Service
             return command;
         }
 
-        private MySqlCommand CreateUpdateInfoSql(ItemInfoModel item)
+        private MySqlCommand CreateUpdateInfoSql(ItemModel item)
         {
             string query = @"UPDATE
                                      mitems

@@ -15,7 +15,7 @@ namespace Inventorycontrol.Forms
 {
     public partial class ItemInfoUpdateForm : Form
     {
-        public ItemInfoUpdateForm(ItemInfoModel item)
+        public ItemInfoUpdateForm(ItemModel item)
         {
             InitializeComponent();
             items = item;
@@ -26,7 +26,7 @@ namespace Inventorycontrol.Forms
             this.DialogResult = DialogResult.None;
         }
 
-        ItemInfoModel items;
+        ItemModel items;
         ItemlistController ItemlistController = new ItemlistController();
 
         private void btnUpdate_Click(object sender, EventArgs e)
@@ -40,14 +40,13 @@ namespace Inventorycontrol.Forms
                 }
                 
                 items.Name = txtItem.Text;
+                items.Deleted = chkDelete.Checked;
+
                 if(chkDelete.Text == "復旧")
                 {
                     items.Deleted = !chkDelete.Checked;
                 }
-                else
-                {
-                    items.Deleted = chkDelete.Checked;
-                }
+                
                 if(chkDelete.Text == "復旧" && !chkDelete.Checked)
                 {
                     MessageBox.Show("復旧する場合はチェックを入れてください。");

@@ -12,9 +12,9 @@ namespace Inventorycontrol.Service
 {
     public class WarehouseService
     {
-        public DataTable ResaultSearchWarehouse(WarehouseModel warehouse,string townshipName)
+        public DataTable ResaultSearchWarehouse(WarehouseModel warehouse)
         {
-            return Warehousetable(CreateSelectSql(warehouse,townshipName));
+            return Warehousetable(CreateSelectSql(warehouse));
         }
 
         public DataTable SearchWarehouse(int townshipId)
@@ -22,14 +22,14 @@ namespace Inventorycontrol.Service
             return Warehousetable(CreateSelectAreaWarehouseSql(townshipId));
         }
 
-        public void InsertWarehouseInfo(WarehouseModel warehouse)
+        public bool InsertWarehouseInfo(WarehouseModel warehouse)
         {
-            ExecutionSql(CreateInsertWarehouseInfoSql(warehouse));
+           return ExecutionSql(CreateInsertWarehouseInfoSql(warehouse));
         }
 
-        public void UpdateWarehouse(WarehouseModel warehouse)
+        public bool UpdateWarehouse(WarehouseModel warehouse)
         {
-            ExecutionSql(CreateUpdateWarehouseInfoSql(warehouse));
+            return ExecutionSql(CreateUpdateWarehouseInfoSql(warehouse));
         }
 
         public void DeleteWarehouse(WarehouseModel warehouse)
@@ -40,15 +40,6 @@ namespace Inventorycontrol.Service
         {
             ExecutionSql(UpdateActualCapSql(cap, id));
         }
-        public List<string> GetAllWarehouseName()
-        {
-            return DataReaderSql(CreateSelectWarehouseAllInfoSql());
-        }
-        public int GetWarehouseId(string name)
-        {
-            return GetIdDataReaderSql(CreateSelectIdSql(name));
-        }
-
         public int GetWarehouseActualCap(int id)
         {
             return GetCapacityDataReaderSql(CreateSelectCapacitySql(id));
@@ -76,7 +67,7 @@ namespace Inventorycontrol.Service
             }
         }
 
-        private void ExecutionSql(MySqlCommand command)
+        private bool ExecutionSql(MySqlCommand command)
         {
             using (MySqlConnection connection = new MySqlConnection(DBConnection.connectionStr))
             {
@@ -85,11 +76,12 @@ namespace Inventorycontrol.Service
                 connection.Open();
                 try
                 {
-                    command.ExecuteNonQuery();
+                    return command.ExecuteNonQuery() == 1;
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex);
+                    return false;
                 }
             }
         }
@@ -201,7 +193,7 @@ namespace Inventorycontrol.Service
             return warehouse;
         }
         
-        private MySqlCommand CreateSelectSql(WarehouseModel warehouse,string townshipName)
+        private MySqlCommand CreateSelectSql(WarehouseModel warehouse)
         {
             string query = @"SELECT
                                       ware.id
@@ -209,6 +201,7 @@ namespace Inventorycontrol.Service
                                       , town.name AS areaname
                                       , ware.capacity
                                       , ware.actualcapacity 
+                                      , ware.deleted
                              FROM
                                       mwarehouse AS ware 
                              LEFT JOIN
@@ -220,15 +213,19 @@ namespace Inventorycontrol.Service
                              AND
                                       ware.name
                              LIKE
-                                      @name
-                             AND 
-                                      town.name
-                             LIKE
-                                      @areaname";
+                                      @name";
+                            
+            if(warehouse.Townshipid != -1)
+            {
+                query += " AND ware.townshipid = @townshipid";
+            }
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@deleted", warehouse.Deleted);
             command.Parameters.AddWithValue("@name", "%" + warehouse.Name + "%");
-            command.Parameters.AddWithValue("@areaname", "%" + townshipName + "%");
+            if (warehouse.Townshipid != -1)
+            {
+                command.Parameters.AddWithValue("@townshipid", warehouse.Townshipid);
+            }
             return command;
         }
 
@@ -286,13 +283,15 @@ namespace Inventorycontrol.Service
                                      name = @name
                                      ,deleted = false
                                      ,townshipid = @townshipid
-                                     ,capacity = @capacity 
+                                     ,capacity = @capacity
+                                     ,deleted = @deleted
                              WHERE 
                                      id = @id";
             MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", warehouse.Name);
             command.Parameters.AddWithValue("@townshipid", warehouse.Townshipid);
             command.Parameters.AddWithValue("@capacity", warehouse.Capacity);
+            command.Parameters.AddWithValue("@deleted", warehouse.Deleted);
             command.Parameters.AddWithValue("@id", warehouse.Id);
             return command;
         }

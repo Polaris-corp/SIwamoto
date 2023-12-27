@@ -162,10 +162,10 @@
       <DependentUpon>WarehouseUpdateForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\InterFace\IitemInfoInterface.cs" />
-    <Compile Include="Model\ItemInfoModel.cs" />
+    <Compile Include="Model\ItemModel.cs" />
     <Compile Include="Model\ScheduleModel.cs" />
     <Compile Include="Model\StatusModel.cs" />
-    <Compile Include="Model\TownshipInfoModel.cs" />
+    <Compile Include="Model\TownshipModel.cs" />
     <Compile Include="Model\WarehouseModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

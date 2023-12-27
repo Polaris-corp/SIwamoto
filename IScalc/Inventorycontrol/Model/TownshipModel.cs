@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Inventorycontrol.Model.InterFace;
 
 namespace Inventorycontrol.Model
 {
-    public class ItemInfoModel : IitemInfoInterface
+    public class TownshipModel
     {
-        public ItemInfoModel()
+        public TownshipModel()
         {
             Id = 0;
             Name = "";
